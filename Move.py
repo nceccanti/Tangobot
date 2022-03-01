@@ -15,7 +15,7 @@ class Move:
 
     def writeCMD(self, c, target, type, limit):
         print(c, target, type, limit)
-        if target <= (limit + self.center) and target >= (self.center + limit):
+        if target <= (limit + self.center) and target >= (self.center - limit):
             lsb =  target &0x7F
             msb = (target >> 7) & 0x7F
             cmd = chr(0xaa) + chr(0xC) + chr(0x04) + c + chr(lsb) + chr(msb)
