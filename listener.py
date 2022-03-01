@@ -41,6 +41,7 @@ except:
         sys.exit(0)
 
 robot = Move(500, usb)
+robot.stop()
 
 win = tk.Tk()
 keys = KeyControl()
