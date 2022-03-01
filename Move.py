@@ -2,9 +2,14 @@ import serial, time, sys
 
 class Move:
     def __init__(self, magnitude, usb):
-        self.magnitude =  magnitude
+        self.magnitude = 500
         self.usb = usb
-        self.center = 5869
+        self.targetLinear = 5869
+        self.targetPivot = 5869
+        self.targetWaist = 5869
+        self.targetNeckVert = 5869
+        self.targetNeckHort = 5869
+
     def writeCMD(self, c, target, type):
         lsb =  target &0x7F
         msb = (target >> 7) & 0x7F
@@ -13,52 +18,42 @@ class Move:
         self.usb.write(cmd.encode('utf-8'))
         print('reading', type)
 
-    # def controller(self, c):
-
-
-    # def stop(self):
-    #     self.writeCMD(chr(0x00), self.center, "waist halt")
-    #     self.writeCMD(chr(0x01), self.center, "move halt")
-    #     self.writeCMD(chr(0x02), self.center, "pivot halt")
-    #     self.writeCMD(chr(0x03), self.center, "neckside halt")
-    #     self.writeCMD(chr(0x04), self.center, "neckvert halt")
-
     def forwardWheel(self):
-        target = self.center - self.magnitude
-        self.writeCMD(chr(0x01), target, "forward move")
+        self.targetLinear -= self.magnitude
+        self.writeCMD(chr(0x01), self.targetLinear, "forward move")
 
     def backwardWheel(self):
-        target = self.center + self.magnitude
-        self.writeCMD(chr(0x01), target, "backward move")
+        self.targetLinear += self.magnitude
+        self.writeCMD(chr(0x01), self.targetLinear, "backward move")
 
     def pivotLeft(self):
-        target = self.center - self.magnitude
-        self.writeCMD(chr(0x02), target, "pivot left")
+        self.targetPivot -= self.magnitude
+        self.writeCMD(chr(0x02), self.targetPivot, "pivot left")
 
     def pivotRight(self):
-        target = self.center + self.magnitude
-        self.writeCMD(chr(0x02), target, "pivot right")
+        self.targetPivot += self.magnitude
+        self.writeCMD(chr(0x02), self.targetPivot, "pivot right")
 
     def waistLeft(self):
-        target = self.center - self.magnitude
-        self.writeCMD(chr(0x00), target, "pivot right")
+        self.targetWaist -= self.magnitude
+        self.writeCMD(chr(0x00), self.targetWaist, "pivot right")
 
     def waistRight(self):
-        target = self.center + self.magnitude
-        self.writeCMD(chr(0x00), target, "pivot right")
+        self.targetWaist += self.magnitude
+        self.writeCMD(chr(0x00), self.targetWaist, "pivot right")
 
     def neckLeft(self):
-        target = self.center - self.magnitude
-        self.writeCMD(chr(0x03), target, "neck left")
+        self.targetNeckHort -= self.magnitude
+        self.writeCMD(chr(0x03), self.targetNeckHort, "neck left")
 
     def neckRight(self):
-        target = self.center + self.magnitude
-        self.writeCMD(chr(0x03), target, "neck right")
+        self.targetNeckHort += self.magnitude
+        self.writeCMD(chr(0x03), self.targetNeckHort, "neck right")
 
     def neckUp(self):
-        target = self.center - self.magnitude
-        self.writeCMD(chr(0x04), target, "neck up")
+        self.targetNeckVert -= self.magnitude
+        self.writeCMD(chr(0x04), self.targetNeckVert, "neck up")
 
     def neckDown(self):
-        target = self.center + self.magnitude
-        self.writeCMD(chr(0x04), target, "neck down")
+        self.targetNeckVert += self.magnitude
+        self.writeCMD(chr(0x04), self.targetNeckVert, "neck down")
