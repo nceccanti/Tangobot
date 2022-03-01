@@ -5,29 +5,29 @@ from Move import *
 class KeyControl:
 
     def arrow(self, key):
-        if key.keycode == 2113992448:
+        if key.keycode == 111:
             robot.forwardWheel()
-        elif key.keycode == 2097215233:
+        elif key.keycode == 116:
             robot.backwardWheel()
-        elif key.keycode == 2080438019:
+        elif key.keycode == 114:
             robot.pivotRight()
-        elif key.keycode == 2063660802:
+        elif key.keycode == 113:
             robot.pivotLeft()
 
     def waist(self, key):
-        if key.keycode == 97:
+        if key.keycode == 38:
             robot.waistLeft()
-        elif key.keycode == 33554532:
+        elif key.keycode == 40:
             robot.waistRight()
 
     def head(self, key):
-        if key.keycode == 570425449:
+        if key.keycode == 31:
             robot.neckUp()
-        elif key.keycode == 671088747:
+        elif key.keycode == 45:
             robot.neckDown()
-        elif key.keycode == 637534314:
+        elif key.keycode == 44:
             robot.neckLeft()
-        elif key.keycode == 620757100:
+        elif key.keycode == 46:
             robot.neckRight()
     
 
@@ -57,19 +57,3 @@ except:
         sys.exit(0)
 
 robot = Move(500, usb)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
