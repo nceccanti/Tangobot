@@ -10,11 +10,11 @@ class Move:
         self.targetWaist = self.center
         self.targetNeckVert = self.center
         self.targetNeckHort = self.center
-        self.limit = (self.magnitude * 3) + self.center
-        self.limitNeck = (self.magnitude * 5) + self.center
+        self.limit = (self.magnitude * 3)
+        self.limitNeck = (self.magnitude * 5)
 
     def writeCMD(self, c, target, type, limit):
-        if target <= limit:
+        if target <= (limit + self.center) and target >= (self.center + limit):
             lsb =  target &0x7F
             msb = (target >> 7) & 0x7F
             print(c, target, type, limit)
@@ -32,6 +32,9 @@ class Move:
         self.writeCMD(chr(0x03), self.center, "neckhort halt", self.limitNeck)
         self.writeCMD(chr(0x04), self.center, "neckvert halt", self.limitNeck)
 
+    def resetMovement(self):
+        self.writeCMD(chr(0x00), self.center, "linear halt", self.limit)
+
     def forwardWheel(self):
         self.targetLinear -= self.magnitude
         self.writeCMD(chr(0x01), self.targetLinear, "forward move", self.limit)
@@ -41,6 +44,8 @@ class Move:
         self.writeCMD(chr(0x01), self.targetLinear, "backward move", self.limit)
 
     def pivotLeft(self):
+        if self.targetLinear != self.center:
+            self.resetMovement()
         self.targetPivot -= self.magnitude
         self.writeCMD(chr(0x02), self.targetPivot, "pivot left", self.limit)
 
