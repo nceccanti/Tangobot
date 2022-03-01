@@ -30,6 +30,17 @@ class KeyControl:
         elif key.keycode == 46:
             robot.neckRight()
     
+usb = ""
+try:
+    usb = serial.Serial('/dev/ttyACM0')
+except:
+    try:
+        usb = serial.Serial('/dev/ttyACM1')
+    except:
+        print("No serial ports")
+        sys.exit(0)
+
+robot = Move(500, usb)
 
 win = tk.Tk()
 keys = KeyControl()
@@ -46,14 +57,3 @@ win.bind('<j>', keys.head)
 win.bind('<l>', keys.head)
 win.mainloop()
 
-usb = ""
-try:
-    usb = serial.Serial('/dev/ttyACM0')
-except:
-    try:
-        usb = serial.Serial('/dev/ttyACM1')
-    except:
-        print("No serial ports")
-        sys.exit(0)
-
-robot = Move(500, usb)

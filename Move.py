@@ -17,6 +17,7 @@ class Move:
         if target <= limit:
             lsb =  target &0x7F
             msb = (target >> 7) & 0x7F
+            print(c, target, type, limit)
             cmd = chr(0xaa) + chr(0xC) + chr(0x04) + c + chr(lsb) + chr(msb)
             print('writing', type)
             self.usb.write(cmd.encode('utf-8'))
@@ -30,7 +31,6 @@ class Move:
         self.writeCMD(chr(0x02), self.center, "waist halt", self.limit)
         self.writeCMD(chr(0x03), self.center, "neckhort halt", self.limitNeck)
         self.writeCMD(chr(0x04), self.center, "neckvert halt", self.limitNeck)
-
 
     def forwardWheel(self):
         self.targetLinear -= self.magnitude
