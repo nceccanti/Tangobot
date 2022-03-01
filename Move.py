@@ -14,7 +14,7 @@ class Move:
         self.limitNeck = (self.magnitude * 5)
 
     def writeCMD(self, c, target, type, limit):
-        print(c, target, type, limit)
+        print(c, target, type, limit + self.center, self.center - limit)
         if target <= (limit + self.center) and target >= (self.center - limit):
             lsb =  target &0x7F
             msb = (target >> 7) & 0x7F
