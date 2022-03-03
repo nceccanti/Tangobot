@@ -60,12 +60,14 @@ class Move:
         self.stop()
         newTarg = self.targetPivot - self.magnitude * 3
         self.writeCMD(chr(0x02), newTarg, "pivot left", self.limit)
+        self.stop()
 
     def pivotRight(self):
         # if self.targetLinear != self.center:
         #     self.resetMovement()
         self.stop()
         newTarg = self.targetPivot + self.magnitude * 3
+        self.stop()
         self.writeCMD(chr(0x02), newTarg, "pivot right", self.limit)
 
     def waistLeft(self):
