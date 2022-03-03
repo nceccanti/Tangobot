@@ -2,7 +2,7 @@ import serial, time, sys
 
 class Move:
     def __init__(self, magnitude, usb):
-        self.center = 6000
+        self.center = 6001
         self.magnitude = magnitude
         self.usb = usb
         self.targetLinear = self.center
