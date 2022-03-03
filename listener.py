@@ -44,6 +44,11 @@ except:
 
 robot = Move(500, usb)
 robot.stop()
+robot.backwardWheel()
+time.sleep(0.1)
+robot.forwardWheel()
+time.sleep(0.1)
+robot.backwardWheel()
 
 win = tk.Tk()
 keys = KeyControl()
