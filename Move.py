@@ -2,7 +2,7 @@ import serial, time, sys
 
 class Move:
     def __init__(self, magnitude, usb):
-        self.center = 6001
+        self.center = 6000
         self.magnitude = magnitude
         self.usb = usb
         self.targetLinear = self.center
@@ -51,7 +51,7 @@ class Move:
         self.writeCMD(chr(0x04), self.center, "linear halt", self.limit * 3)
 
     def resetMovement(self):
-        self.writeCMD(chr(0x01), 6001, "linear halt", self.limit * 3)
+        self.writeCMD(chr(0x01), 6000, "linear halt", self.limit * 3)
         #self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
 
     def forwardWheel(self):
