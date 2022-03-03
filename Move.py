@@ -10,31 +10,48 @@ class Move:
         self.targetWaist = self.center
         self.targetNeckVert = self.center
         self.targetNeckHort = self.center
-        self.limit = (self.magnitude * 3)
-        self.limitNeck = (self.magnitude * 5)
+        self.limit = self.magnitude
+        self.limitNeck = (self.magnitude * 2)
 
     def writeCMD(self, c, target, type, limit):
         print(c, target, type, limit + self.center, self.center - limit)
-        # if target <= (limit + self.center) and target >= (self.center - limit):
-        lsb =  target &0x7F
-        msb = (target >> 7) & 0x7F
-        cmd = chr(0xaa) + chr(0xC) + chr(0x04) + c + chr(lsb) + chr(msb)
-        print('writing', type)
-        self.usb.write(cmd.encode('utf-8'))
-        print('reading', type)
-        # else:
-        #     print("can't go faster/further")
+        if self.targetLinear > self.center + self.limit:
+            self.targetLinear = self.center + self.limit
+        if self.targetLinear < self.center - self.limit:
+            self.targetLinear = self.center - self.limit
+        if self.targetWaist > self.center + self.limit:
+            self.targetWaist = self.center + self.limit
+        if self.targetWaist < self.center - self.limit:
+            self.targetWaist = self.center - self.limit
+        if self.targetNeckVert > self.center + self.limitNeck:
+            self.targetNeckVert = self.center + self.limitNeck
+        if self.targetNeckVert < self.center - self.limitNeck:
+            self.targetNeckVert = self.center - self.limitNeck
+        if self.targetNeckHort > self.center + self.limitNeck:
+            self.targetNeckHort = self.center + self.limitNeck
+        if self.targetNeckHort < self.center - self.limitNeck:
+            self.targetNeckHort = self.center - self.limitNeck
+
+        if target <= (limit + self.center) and target >= (self.center - limit):
+            lsb = target &0x7F
+            msb = (target >> 7) & 0x7F
+            cmd = chr(0xaa) + chr(0xC) + chr(0x04) + c + chr(lsb) + chr(msb)
+            print('writing', type)
+            self.usb.write(cmd.encode('utf-8'))
+            print('reading', type)
+        else:
+            print("can't go faster/further")
 
 
     def stop(self):
-        self.writeCMD(chr(0x00), self.center, "linear halt", self.limit)
-        self.writeCMD(chr(0x01), self.center, "linear halt", self.limit)
-        self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
-        self.writeCMD(chr(0x03), self.center, "linear halt", self.limit)
-        self.writeCMD(chr(0x04), self.center, "linear halt", self.limit)
+        self.writeCMD(chr(0x00), self.center, "linear halt", self.limit * 3)
+        self.writeCMD(chr(0x01), self.center, "linear halt", self.limit * 3)
+        self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit * 3)
+        self.writeCMD(chr(0x03), self.center, "linear halt", self.limit * 3)
+        self.writeCMD(chr(0x04), self.center, "linear halt", self.limit * 3)
 
     def resetMovement(self):
-        self.writeCMD(chr(0x01), self.center, "linear halt", self.limit)
+        self.writeCMD(chr(0x01), 6001, "linear halt", self.limit)
         #self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
 
     def forwardWheel(self):
@@ -57,19 +74,19 @@ class Move:
             time.sleep(2)
 
     def pivotLeft(self):
-        # self.backwardWheel()
-        # time.sleep(0.5)
-        # self.forwardWheel()
-        time.sleep(0.5)
+        self.backwardWheel()
+        time.sleep(0.1)
+        self.forwardWheel()
+        time.sleep(0.1)
         self.resetMovement()
         newTarg = self.targetPivot - self.magnitude * 3
         self.writeCMD(chr(0x02), newTarg, "pivot left", self.limit)
 
     def pivotRight(self):
-        # self.backwardWheel()
-        # time.sleep(0.5)
-        # self.forwardWheel()
-        time.sleep(0.5)
+        self.backwardWheel()
+        time.sleep(0.1)
+        self.forwardWheel()
+        time.sleep(0.1)
         self.resetMovement()
         newTarg = self.targetPivot + self.magnitude * 3
         self.writeCMD(chr(0x02), newTarg, "pivot right", self.limit)

@@ -31,6 +31,9 @@ class KeyControl:
             robot.neckLeft()
         elif key.keycode == 46:
             robot.neckRight()
+    def reset(self, key):
+        print(key.keycode)
+        robot.stop()
     
 usb = ""
 try:
@@ -58,6 +61,7 @@ win.bind('<i>', keys.head)
 win.bind('<k>', keys.head)
 win.bind('<j>', keys.head)
 win.bind('<l>', keys.head)
+win.bind('<space>', keys.reset)
 win.mainloop()
 
 
