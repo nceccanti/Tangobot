@@ -58,7 +58,7 @@ class Move:
         # if self.targetPivot != self.center:
         #     self.resetMovement()
         if self.targetLinear == self.center:
-            self.targetLinear += 200
+            self.targetLinear -= 200
         else:
             self.targetLinear -= self.magnitude
         self.writeCMD(chr(0x01), self.targetLinear, "forward move", self.limit * 3)
