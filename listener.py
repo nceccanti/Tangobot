@@ -60,7 +60,7 @@ win.bind('<i>', keys.head)
 win.bind('<k>', keys.head)
 win.bind('<j>', keys.head)
 win.bind('<l>', keys.head)
-win.bind('<Space>', keys.reset)
+win.bind('<space>', keys.reset)
 win.mainloop()
 
 
