@@ -85,10 +85,20 @@ class Move:
             time.sleep(2)
 
     def pivotLeft(self):
+        self.backwardWheel()
+        time.sleep(0.1)
+        self.forwardWheel()
+        time.sleep(0.1)
+        self.resetMovement()
         self.writeCMD(chr(0x02), 7400, "pivot right", self.limit * 4)
         self.writeCMD(chr(0x02), 7600, "pivot right", self.limit * 4)
 
     def pivotRight(self):
+        self.backwardWheel()
+        time.sleep(0.1)
+        self.forwardWheel()
+        time.sleep(0.1)
+        self.resetMovement()
         self.writeCMD(chr(0x02), 4600, "pivot right", self.limit * 4)
         self.writeCMD(chr(0x02), 4400, "pivot right", self.limit * 4)
 
