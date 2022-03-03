@@ -66,9 +66,10 @@ class Move:
 
     def pivotRight(self):
         self.resetMovement()
+        time.sleep(0.1)
         newTarg = self.targetPivot + self.magnitude * 3
         self.writeCMD(chr(0x02), newTarg, "pivot right", self.limit)
-        time.sleep(0.3)
+        time.sleep(0.1)
         self.stop()
 
     def waistLeft(self):
