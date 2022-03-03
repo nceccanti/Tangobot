@@ -31,7 +31,8 @@ class KeyControl:
             robot.neckLeft()
         elif key.keycode == 46:
             robot.neckRight()
-    def reset(self):
+    def reset(self, key):
+        print(key.keycode)
         robot.resetMovement()
     
 usb = ""
