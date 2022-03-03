@@ -3,17 +3,19 @@ import serial, time, sys
 from Move import *
 
 class KeyControl:
+    def lateral(self, key):
+        if key.keycode == 111:
+            robot.forwardWheel()
+        elif key.keycode == 116:
+            robot.backwardWheel()
 
-    def arrow(self, key):
+    def turn(self, key):
         for i in range(3):
-            if key.keycode == 111:
-                robot.forwardWheel()
-            elif key.keycode == 116:
-                robot.backwardWheel()
-            elif key.keycode == 114:
+            if key.keycode == 114:
                 robot.pivotRight()
             elif key.keycode == 113:
                 robot.pivotLeft()
+
 
     def waist(self, key):
         if key.keycode == 38:
@@ -47,10 +49,10 @@ robot.stop()
 win = tk.Tk()
 keys = KeyControl()
 
-win.bind('<Up>', keys.arrow)
-win.bind('<Down>', keys.arrow)
-win.bind('<Left>', keys.arrow)
-win.bind('<Right>', keys.arrow)
+win.bind('<Up>', keys.lateral())
+win.bind('<Down>', keys.lateral())
+win.bind('<Left>', keys.turn)
+win.bind('<Right>', keys.turn)
 win.bind('<a>', keys.waist)
 win.bind('<d>', keys.waist)
 win.bind('<i>', keys.head)
