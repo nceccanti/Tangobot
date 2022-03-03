@@ -53,7 +53,7 @@ class Move:
         #     self.resetMovement()
         # self.targetPivot = num
         #self.targetPivot
-        self.writeCMD(chr(0x02), num, "pivot left", self.limit)
+        self.writeCMD(chr(0x01), num, "forward test", self.limit)
 
     def pivotLeft(self):
         # if self.targetLinear != self.center:
