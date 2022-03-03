@@ -2,7 +2,7 @@ import serial, time, sys
 
 class Move:
     def __init__(self, magnitude, usb):
-        self.center = 6000
+        self.center = 6001
         self.magnitude = magnitude
         self.usb = usb
         self.targetLinear = self.center
@@ -35,7 +35,7 @@ class Move:
 
     def resetMovement(self):
         self.writeCMD(chr(0x01), self.center, "linear halt", self.limit)
-        self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
+        #self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
 
     def forwardWheel(self):
         # if self.targetPivot != self.center:
@@ -57,20 +57,18 @@ class Move:
             time.sleep(2)
 
     def pivotLeft(self):
-        self.resetMovement()
-        self.writeCMD(chr(0x01), 6500, "linear halt", self.limit)
-        self.writeCMD(chr(0x01), 6000, "pivot halt", self.limit)
-        time.sleep(0.1)
+        self.backwardWheel()
+        self.forwardWheel()
         newTarg = self.targetPivot - self.magnitude * 3
         self.writeCMD(chr(0x02), newTarg, "pivot left", self.limit)
+        self.resetMovement()
 
     def pivotRight(self):
-        self.resetMovement()
-        self.writeCMD(chr(0x01), 6500, "linear halt", self.limit)
-        self.writeCMD(chr(0x01), 6000, "pivot halt", self.limit)
-        time.sleep(0.1)
+        self.backwardWheel()
+        self.forwardWheel()
         newTarg = self.targetPivot + self.magnitude * 3
         self.writeCMD(chr(0x02), newTarg, "pivot right", self.limit)
+        self.resetMovement()
 
     def waistLeft(self):
         self.targetWaist -= self.magnitude
