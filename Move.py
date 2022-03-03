@@ -15,10 +15,10 @@ class Move:
 
     def writeCMD(self, c, target, type, limit):
         print(c, target, type, limit + self.center, self.center - limit)
-        if self.targetLinear > self.center + self.limit:
-            self.targetLinear = self.center + self.limit
-        if self.targetLinear < self.center - self.limit:
-            self.targetLinear = self.center - self.limit
+        if self.targetLinear > self.center + self.limit * 3:
+            self.targetLinear = self.center + self.limit * 3
+        if self.targetLinear < self.center - self.limit * 3:
+            self.targetLinear = self.center - self.limit * 3
         if self.targetWaist > self.center + self.limit:
             self.targetWaist = self.center + self.limit
         if self.targetWaist < self.center - self.limit:
