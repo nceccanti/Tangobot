@@ -59,16 +59,16 @@ class Move:
     def pivotLeft(self):
         self.backwardWheel()
         self.forwardWheel()
+        self.resetMovement()
         newTarg = self.targetPivot - self.magnitude * 3
         self.writeCMD(chr(0x02), newTarg, "pivot left", self.limit)
-        self.resetMovement()
 
     def pivotRight(self):
         self.backwardWheel()
         self.forwardWheel()
+        self.resetMovement()
         newTarg = self.targetPivot + self.magnitude * 3
         self.writeCMD(chr(0x02), newTarg, "pivot right", self.limit)
-        self.resetMovement()
 
     def waistLeft(self):
         self.targetWaist -= self.magnitude
