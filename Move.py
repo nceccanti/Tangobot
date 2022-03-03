@@ -14,7 +14,7 @@ class Move:
         self.limitNeck = (self.magnitude * 2)
 
     def writeCMD(self, c, target, type, limit):
-        print(c, target, type, limit + self.center, self.center - limit)
+        print(c, target, type, target, self.center - limit)
         if self.targetLinear > self.center + self.limit * 3:
             self.targetLinear = self.center + self.limit * 3
         if self.targetLinear < self.center - self.limit * 3:
