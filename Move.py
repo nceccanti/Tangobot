@@ -44,11 +44,11 @@ class Move:
 
 
     def stop(self):
-        self.writeCMD(chr(0x00), self.center, "linear halt", self.limit)
-        self.writeCMD(chr(0x01), self.center, "linear halt", self.limit)
-        self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
-        self.writeCMD(chr(0x03), self.center, "linear halt", self.limit)
-        self.writeCMD(chr(0x04), self.center, "linear halt", self.limit)
+        self.writeCMD(chr(0x00), self.center, "linear halt", self.limit * 3)
+        self.writeCMD(chr(0x01), self.center, "linear halt", self.limit * 3)
+        self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit * 3)
+        self.writeCMD(chr(0x03), self.center, "linear halt", self.limit * 3)
+        self.writeCMD(chr(0x04), self.center, "linear halt", self.limit * 3)
 
     def resetMovement(self):
         self.writeCMD(chr(0x01), 6001, "linear halt", self.limit)
