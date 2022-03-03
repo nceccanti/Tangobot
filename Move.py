@@ -34,7 +34,7 @@ class Move:
         self.writeCMD(chr(0x04), self.center, "linear halt", self.limit)
 
     def resetMovement(self):
-        self.writeCMD(chr(0x01), self.center, "linear halt", self.limit)
+        self.writeCMD(chr(0x01), 6001, "linear halt", self.limit)
         #self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
 
     def forwardWheel(self):
@@ -59,12 +59,16 @@ class Move:
     def pivotLeft(self):
         self.backwardWheel()
         time.sleep(0.1)
+        self.forwardWheel()
+        time.sleep(0.1)
         self.resetMovement()
         newTarg = self.targetPivot - self.magnitude * 3
         self.writeCMD(chr(0x02), newTarg, "pivot left", self.limit)
 
     def pivotRight(self):
         self.backwardWheel()
+        time.sleep(0.1)
+        self.forwardWheel()
         time.sleep(0.1)
         self.resetMovement()
         newTarg = self.targetPivot + self.magnitude * 3
