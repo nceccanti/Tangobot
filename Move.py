@@ -56,18 +56,20 @@ class Move:
         self.writeCMD(chr(0x01), num, "forward test", self.limit)
 
     def pivotLeft(self):
-        self.stop()
         # if self.targetLinear != self.center:
         #     self.resetMovement()
         self.targetPivot -= self.magnitude
         self.writeCMD(chr(0x02), self.targetPivot, "pivot left", self.limit)
+        time.sleep(1)
+        self.stop()
 
     def pivotRight(self):
-        self.stop()
         # if self.targetLinear != self.center:
         #     self.resetMovement()
         self.targetPivot += self.magnitude
         self.writeCMD(chr(0x02), self.targetPivot, "pivot right", self.limit)
+        time.sleep(1)
+        self.stop()
 
     def waistLeft(self):
         self.targetWaist -= self.magnitude
