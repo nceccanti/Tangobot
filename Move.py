@@ -57,7 +57,7 @@ class Move:
     def forwardWheel(self):
         # if self.targetPivot != self.center:
         #     self.resetMovement()
-        if self.targetLinear == self.center:
+        if self.targetLinear == self.center or 6200 == self.targetLinear:
             self.targetLinear -= 200
         else:
             self.targetLinear -= self.magnitude
@@ -66,7 +66,7 @@ class Move:
     def backwardWheel(self):
         # if self.targetPivot != self.center:
         #     self.resetMovement()
-        if self.targetLinear == self.center:
+        if self.targetLinear == self.center or 5800 == self.targetLinear:
             self.targetLinear += 200
         else:
             self.targetLinear += self.magnitude
