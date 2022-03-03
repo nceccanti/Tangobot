@@ -52,7 +52,7 @@ except:
         print("No serial ports")
         sys.exit(0)
 
-robot = Move(200, usb)
+robot = Move(500, usb)
 robot.stop()
 
 win = tk.Tk()
