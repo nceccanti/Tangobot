@@ -90,8 +90,8 @@ class Move:
         self.forwardWheel()
         time.sleep(0.1)
         self.resetMovement()
-        self.writeCMD(chr(0x02), 7400, "pivot right", self.limit * 4)
-        self.writeCMD(chr(0x02), 7600, "pivot right", self.limit * 4)
+        self.writeCMD(chr(0x02), 6500, "pivot right", self.limit * 4)
+        self.writeCMD(chr(0x02), 6700, "pivot right", self.limit * 4)
 
     def pivotRight(self):
         self.backwardWheel()
@@ -99,8 +99,8 @@ class Move:
         self.forwardWheel()
         time.sleep(0.1)
         self.resetMovement()
-        self.writeCMD(chr(0x02), 4600, "pivot right", self.limit * 4)
-        self.writeCMD(chr(0x02), 4400, "pivot right", self.limit * 4)
+        self.writeCMD(chr(0x02), 5500, "pivot right", self.limit * 4)
+        self.writeCMD(chr(0x02), 5300, "pivot right", self.limit * 4)
 
     def waistLeft(self):
         self.targetWaist -= self.magnitude
