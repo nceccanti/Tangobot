@@ -55,15 +55,17 @@ class Move:
     def pivotLeft(self):
         # if self.targetLinear != self.center:
         #     self.resetMovement()
-            self.stop()
-            self.targetPivot -= self.magnitude
-            self.writeCMD(chr(0x02), self.targetPivot, "pivot left", self.limit)
-            time.sleep(2)
+        self.stop()
+        self.targetPivot -= self.magnitude * 3
+        self.writeCMD(chr(0x02), self.targetPivot, "pivot left", self.limit)
+        time.sleep(2)
+        self.stop()
 
     def pivotRight(self):
         # if self.targetLinear != self.center:
         #     self.resetMovement()
-        self.targetPivot += self.magnitude
+        self.stop()
+        self.targetPivot += self.magnitude * 3
         self.writeCMD(chr(0x02), self.targetPivot, "pivot right", self.limit)
         time.sleep(2)
         self.stop()
