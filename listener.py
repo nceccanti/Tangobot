@@ -42,9 +42,7 @@ except:
 
 robot = Move(500, usb)
 robot.stop()
-robot.pivotRight()
-robot.pivotRight()
-robot.pivotRight()
+robot.pivotTest(7000)
 
 
 # win = tk.Tk()

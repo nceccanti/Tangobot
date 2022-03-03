@@ -2,7 +2,7 @@ import serial, time, sys
 
 class Move:
     def __init__(self, magnitude, usb):
-        self.center = 5869
+        self.center = 6000
         self.magnitude = magnitude
         self.usb = usb
         self.targetLinear = self.center
@@ -47,6 +47,12 @@ class Move:
         #     self.resetMovement()
         self.targetLinear += self.magnitude
         self.writeCMD(chr(0x01), self.targetLinear, "backward move", self.limit)
+
+    def pivotTest(self, num):
+        # if self.targetLinear != self.center:
+        #     self.resetMovement()
+        self.targetPivot = self.num
+        self.writeCMD(chr(0x02), self.targetPivot, "pivot left", self.limit)
 
     def pivotLeft(self):
         # if self.targetLinear != self.center:
