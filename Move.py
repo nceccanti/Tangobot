@@ -49,6 +49,11 @@ class Move:
         self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit * 3)
         self.writeCMD(chr(0x03), self.center, "linear halt", self.limit * 3)
         self.writeCMD(chr(0x04), self.center, "linear halt", self.limit * 3)
+        self.targetLinear = self.center
+        self.targetPivot = self.center
+        self.targetWaist = self.center
+        self.targetNeckVert = self.center
+        self.targetNeckHort = self.center
 
     def resetMovement(self):
         self.writeCMD(chr(0x01), 6000, "linear halt", self.limit * 3)
