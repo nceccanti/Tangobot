@@ -34,8 +34,8 @@ class Move:
         self.writeCMD(chr(0x04), self.center, "linear halt", self.limit)
 
     def resetMovement(self):
-        self.writeCMD(chr(0x00), self.center, "linear halt", self.limit)
-        self.writeCMD(chr(0x01), self.center, "pivot halt", self.limit)
+        self.writeCMD(chr(0x01), self.center, "linear halt", self.limit)
+        self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
 
     def forwardWheel(self):
         # if self.targetPivot != self.center:
