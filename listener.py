@@ -5,15 +5,14 @@ from Move import *
 class KeyControl:
 
     def arrow(self, key):
-        for i in range(3):
-            if key.keycode == 111:
-                robot.forwardWheel()
-            elif key.keycode == 116:
-                robot.backwardWheel()
-            elif key.keycode == 114:
-                robot.pivotRight()
-            elif key.keycode == 113:
-                robot.pivotLeft()
+        if key.keycode == 111:
+            robot.forwardWheel()
+        elif key.keycode == 116:
+            robot.backwardWheel()
+        elif key.keycode == 114:
+            robot.pivotRight()
+        elif key.keycode == 113:
+            robot.pivotLeft()
 
     def waist(self, key):
         if key.keycode == 38:
