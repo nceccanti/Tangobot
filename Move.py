@@ -57,20 +57,24 @@ class Move:
             time.sleep(2)
 
     def pivotLeft(self):
-        self.resetMovement()
-        time.sleep(0.1)
+        self.writeCMD(chr(0x01), self.center, "linear halt", self.limit)
+        self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
+        time.sleep(1)
         newTarg = self.targetPivot - self.magnitude * 3
         self.writeCMD(chr(0x02), newTarg, "pivot left", self.limit)
         time.sleep(1)
-        self.stop()
+        self.writeCMD(chr(0x01), self.center, "linear halt", self.limit)
+        self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
 
     def pivotRight(self):
-        self.resetMovement()
-        time.sleep(0.1)
+        self.writeCMD(chr(0x01), self.center, "linear halt", self.limit)
+        self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
+        time.sleep(1)
         newTarg = self.targetPivot + self.magnitude * 3
         self.writeCMD(chr(0x02), newTarg, "pivot right", self.limit)
         time.sleep(1)
-        self.stop()
+        self.writeCMD(chr(0x01), self.center, "linear halt", self.limit)
+        self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
 
     def waistLeft(self):
         self.targetWaist -= self.magnitude
