@@ -90,7 +90,6 @@ class Move:
         self.forwardWheel()
         time.sleep(0.1)
         self.resetMovement()
-        self.writeCMD(chr(0x02), 6500, "pivot right", self.limit * 4)
         self.writeCMD(chr(0x02), 6700, "pivot right", self.limit * 4)
 
     def pivotRight(self):
@@ -99,7 +98,6 @@ class Move:
         self.forwardWheel()
         time.sleep(0.1)
         self.resetMovement()
-        self.writeCMD(chr(0x02), 5500, "pivot right", self.limit * 4)
         self.writeCMD(chr(0x02), 5300, "pivot right", self.limit * 4)
 
     def waistLeft(self):
