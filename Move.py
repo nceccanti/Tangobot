@@ -58,8 +58,8 @@ class Move:
 
     def pivotLeft(self):
         self.resetMovement()
-        self.writeCMD(chr(0x01), 6500, "linear halt", self.limit)
-        self.writeCMD(chr(0x01), 6000, "pivot halt", self.limit)
+        self.writeCMD(chr(0x01), 7001, "linear halt", self.limit)
+        self.writeCMD(chr(0x01), 6001, "pivot halt", self.limit)
         time.sleep(0.1)
         newTarg = self.targetPivot - self.magnitude * 3
         self.writeCMD(chr(0x02), newTarg, "pivot left", self.limit)
@@ -68,8 +68,8 @@ class Move:
 
     def pivotRight(self):
         self.resetMovement()
-        self.writeCMD(chr(0x01), 6500, "linear halt", self.limit)
-        self.writeCMD(chr(0x01), 6000, "pivot halt", self.limit)
+        self.writeCMD(chr(0x01), 7001, "linear halt", self.limit)
+        self.writeCMD(chr(0x01), 6001, "pivot halt", self.limit)
         time.sleep(0.1)
         newTarg = self.targetPivot + self.magnitude * 3
         self.writeCMD(chr(0x02), newTarg, "pivot right", self.limit)
