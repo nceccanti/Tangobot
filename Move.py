@@ -87,6 +87,7 @@ class Move:
     def pivotLeft(self):
         self.targetLinear = 6000
         self.writeCMD(chr(0x01), 6200, "pivot right", self.limit * 4)
+        time.sleep(0.1)
         #self.writeCMD(chr(0x01), 6000, "pivot right", self.limit * 4)
         self.writeCMD(chr(0x02), 7600, "pivot right", self.limit * 4)
         self.writeCMD(chr(0x02), 7400, "pivot right", self.limit * 4)
@@ -94,6 +95,7 @@ class Move:
     def pivotRight(self):
         self.targetLinear = 6000
         self.writeCMD(chr(0x01), 6200, "pivot right", self.limit * 4)
+        time.sleep(0.1)
         #self.writeCMD(chr(0x01), 6000, "pivot right", self.limit * 4)
         self.writeCMD(chr(0x02), 4400, "pivot right", self.limit * 4)
         self.writeCMD(chr(0x02), 4600, "pivot right", self.limit * 4)
