@@ -15,6 +15,23 @@ class Move:
 
     def writeCMD(self, c, target, type, limit):
         print(c, target, type, limit + self.center, self.center - limit)
+        if self.targetLinear > self.center + self.limit:
+            self.targetLinear = self.center + self.limit
+        if self.targetLinear < self.center - self.limit:
+            self.targetLinear = self.center - self.limit
+        if self.targetWaist > self.center + self.limit:
+            self.targetWaist = self.center + self.limit
+        if self.targetWaist < self.center - self.limit:
+            self.targetWaist = self.center - self.limit
+        if self.targetNeckVert > self.center + self.limitNeck:
+            self.targetNeckVert = self.center + self.limitNeck
+        if self.targetNeckVert < self.center - self.limitNeck:
+            self.targetNeckVert = self.center - self.limitNeck
+        if self.targetNeckHort > self.center + self.limitNeck:
+            self.targetNeckHort = self.center + self.limitNeck
+        if self.targetNeckHort < self.center - self.limitNeck:
+            self.targetNeckHort = self.center - self.limitNeck
+
         if target <= (limit + self.center) and target >= (self.center - limit):
             lsb = target &0x7F
             msb = (target >> 7) & 0x7F
@@ -76,48 +93,24 @@ class Move:
 
     def waistLeft(self):
         self.targetWaist -= self.magnitude
-        if self.targetWaist > self.limit + self.center:
-            self.targetWaist = self.limit + self.center
-        if self.targetWaist < self.center - self.limit:
-            self.targetWaist = self.center - self.limit
         self.writeCMD(chr(0x00), self.targetWaist, "pivot right", self.limit)
 
     def waistRight(self):
-        if self.targetWaist > self.limit + self.center:
-            self.targetWaist = self.limit + self.center
-        if self.targetWaist < self.center - self.limit:
-            self.targetWaist = self.center - self.limit
         self.targetWaist += self.magnitude
         self.writeCMD(chr(0x00), self.targetWaist, "pivot right", self.limit)
 
     def neckLeft(self):
         self.targetNeckHort -= self.magnitude
-        if self.targetNeckHort > self.limit + self.center:
-            self.targetNeckHort = self.limit + self.center
-        if self.targetNeckHort < self.center - self.limit:
-            self.targetNeckHort = self.center - self.limit
         self.writeCMD(chr(0x03), self.targetNeckHort, "neck left", self.limitNeck)
 
     def neckRight(self):
         self.targetNeckHort += self.magnitude
-        if self.targetNeckHort > self.limit + self.center:
-            self.targetNeckHort = self.limit + self.center
-        if self.targetNeckHort < self.center - self.limit:
-            self.targetNeckHort = self.center - self.limit
         self.writeCMD(chr(0x03), self.targetNeckHort, "neck right", self.limitNeck)
 
     def neckUp(self):
         self.targetNeckVert -= self.magnitude
-        if self.targetNeckVert > self.limit + self.center:
-            self.targetNeckVert = self.limit + self.center
-        if self.targetNeckVert < self.center - self.limit:
-            self.targetNeckVert = self.center - self.limit
         self.writeCMD(chr(0x04), self.targetNeckVert, "neck up", self.limitNeck)
 
     def neckDown(self):
         self.targetNeckVert += self.magnitude
-        if self.targetNeckVert > self.limit + self.center:
-            self.targetNeckVert = self.limit + self.center
-        if self.targetNeckVert < self.center - self.limit:
-            self.targetNeckVert = self.center - self.limit
         self.writeCMD(chr(0x04), self.targetNeckVert, "neck down", self.limitNeck)
