@@ -31,6 +31,8 @@ class KeyControl:
             robot.neckLeft()
         elif key.keycode == 46:
             robot.neckRight()
+    def reset(self):
+        robot.resetMovement()
     
 usb = ""
 try:
@@ -44,9 +46,6 @@ except:
 
 robot = Move(500, usb)
 robot.stop()
-robot.backwardWheel()
-time.sleep(0.1)
-robot.forwardWheel()
 
 win = tk.Tk()
 keys = KeyControl()
@@ -61,6 +60,7 @@ win.bind('<i>', keys.head)
 win.bind('<k>', keys.head)
 win.bind('<j>', keys.head)
 win.bind('<l>', keys.head)
+win.bind('<Space>', keys.reset)
 win.mainloop()
 
 
