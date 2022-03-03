@@ -85,7 +85,7 @@ class Move:
         # self.forwardWheel()
         # time.sleep(0.1)
         self.resetMovement()
-        newTarg = self.targetPivot - self.magnitude * 3
+        newTarg = self.targetPivot - 200
         self.writeCMD(chr(0x02), newTarg, "pivot left", self.limit * 3)
 
     def pivotRight(self):
@@ -94,7 +94,7 @@ class Move:
         # self.forwardWheel()
         # time.sleep(0.1)
         self.resetMovement()
-        newTarg = self.targetPivot + self.magnitude * 3
+        newTarg = self.targetPivot + 200
         self.writeCMD(chr(0x02), newTarg, "pivot right", self.limit * 3)
 
     def waistLeft(self):
