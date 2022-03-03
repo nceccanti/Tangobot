@@ -33,7 +33,7 @@ class KeyControl:
             robot.neckRight()
     def reset(self, key):
         print(key.keycode)
-        robot.resetMovement()
+        robot.stop()
     
 usb = ""
 try:
