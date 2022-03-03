@@ -57,13 +57,19 @@ class Move:
     def forwardWheel(self):
         # if self.targetPivot != self.center:
         #     self.resetMovement()
-        self.targetLinear -= self.magnitude
+        if self.targetLinear == self.center:
+            self.targetLinear += 200
+        else:
+            self.targetLinear -= self.magnitude
         self.writeCMD(chr(0x01), self.targetLinear, "forward move", self.limit * 3)
 
     def backwardWheel(self):
         # if self.targetPivot != self.center:
         #     self.resetMovement()
-        self.targetLinear += self.magnitude
+        if self.targetLinear == self.center:
+            self.targetLinear += 200
+        else:
+            self.targetLinear += self.magnitude
         self.writeCMD(chr(0x01), self.targetLinear, "backward move", self.limit * 3)
 
     def pivotTest(self, num):
