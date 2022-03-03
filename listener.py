@@ -42,7 +42,9 @@ except:
 
 robot = Move(500, usb)
 robot.stop()
-robot.pivotTest(7000)
+while True:
+    inp = int(input("Enter target: "))
+    robot.pivotTest(inp)
 
 
 # win = tk.Tk()
