@@ -10,8 +10,8 @@ class Move:
         self.targetWaist = self.center
         self.targetNeckVert = self.center
         self.targetNeckHort = self.center
-        self.limit = (self.magnitude * 3)
-        self.limitNeck = (self.magnitude * 5)
+        self.limit = self.magnitude
+        self.limitNeck = (self.magnitude * 2)
 
     def writeCMD(self, c, target, type, limit):
         print(c, target, type, limit + self.center, self.center - limit)
