@@ -15,15 +15,15 @@ class Move:
 
     def writeCMD(self, c, target, type, limit):
         print(c, target, type, limit + self.center, self.center - limit)
-        if target <= (limit + self.center) and target >= (self.center - limit):
-            lsb =  target &0x7F
-            msb = (target >> 7) & 0x7F
-            cmd = chr(0xaa) + chr(0xC) + chr(0x04) + c + chr(lsb) + chr(msb)
-            print('writing', type)
-            self.usb.write(cmd.encode('utf-8'))
-            print('reading', type)
-        else:
-            print("can't go faster/further")
+        # if target <= (limit + self.center) and target >= (self.center - limit):
+        lsb =  target &0x7F
+        msb = (target >> 7) & 0x7F
+        cmd = chr(0xaa) + chr(0xC) + chr(0x04) + c + chr(lsb) + chr(msb)
+        print('writing', type)
+        self.usb.write(cmd.encode('utf-8'))
+        print('reading', type)
+        # else:
+        #     print("can't go faster/further")
 
     def stop(self):
         self.writeCMD(chr(0x00), self.center, "linear halt", self.limit)
