@@ -42,24 +42,19 @@ except:
 
 robot = Move(500, usb)
 robot.stop()
-for i in range(0,10000, 50):
-    # inp = int(input("Enter target: "))
-    print(i)
-    robot.pivotTest(i)
 
+win = tk.Tk()
+keys = KeyControl()
 
-# win = tk.Tk()
-# keys = KeyControl()
-#
-# win.bind('<Up>', keys.arrow)
-# win.bind('<Down>', keys.arrow)
-# win.bind('<Left>', keys.arrow)
-# win.bind('<Right>', keys.arrow)
-# win.bind('<a>', keys.waist)
-# win.bind('<d>', keys.waist)
-# win.bind('<i>', keys.head)
-# win.bind('<k>', keys.head)
-# win.bind('<j>', keys.head)
-# win.bind('<l>', keys.head)
-# win.mainloop()
+win.bind('<Up>', keys.arrow)
+win.bind('<Down>', keys.arrow)
+win.bind('<Left>', keys.arrow)
+win.bind('<Right>', keys.arrow)
+win.bind('<a>', keys.waist)
+win.bind('<d>', keys.waist)
+win.bind('<i>', keys.head)
+win.bind('<k>', keys.head)
+win.bind('<j>', keys.head)
+win.bind('<l>', keys.head)
+win.mainloop()
 
