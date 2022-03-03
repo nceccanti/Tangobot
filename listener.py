@@ -1,6 +1,13 @@
+import os.path
 import tkinter as tk
 import serial, time, sys
 from Move import *
+# class FileControl:
+#     def readFile(self):
+#         if os.path.isfile('data.txt'):
+#             with open('data.txt', 'r') as file:
+#                 f = file.read()
+#
 
 class KeyControl:
     def lateral(self, key):
@@ -45,7 +52,7 @@ except:
         print("No serial ports")
         sys.exit(0)
 
-robot = Move(500, usb)
+robot = Move(200, usb)
 robot.stop()
 
 win = tk.Tk()
