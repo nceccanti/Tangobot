@@ -25,9 +25,13 @@ class Move:
         # else:
         #     print("can't go faster/further")
 
+
     def stop(self):
+        self.writeCMD(chr(0x00), self.center, "linear halt", self.limit)
         self.writeCMD(chr(0x01), self.center, "linear halt", self.limit)
         self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
+        self.writeCMD(chr(0x03), self.center, "linear halt", self.limit)
+        self.writeCMD(chr(0x04), self.center, "linear halt", self.limit)
 
     def resetMovement(self):
         self.writeCMD(chr(0x00), self.center, "linear halt", self.limit)
@@ -53,22 +57,16 @@ class Move:
             time.sleep(2)
 
     def pivotLeft(self):
-        # if self.targetLinear != self.center:
-        #     self.resetMovement()
         self.stop()
-        self.targetPivot -= self.magnitude * 3
-        self.writeCMD(chr(0x02), self.targetPivot, "pivot left", self.limit)
-        time.sleep(2)
-        self.stop()
+        newTarg = self.targetPivot - self.magnitude * 3
+        self.writeCMD(chr(0x02), newTarg, "pivot left", self.limit)
 
     def pivotRight(self):
         # if self.targetLinear != self.center:
         #     self.resetMovement()
         self.stop()
-        self.targetPivot += self.magnitude * 3
-        self.writeCMD(chr(0x02), self.targetPivot, "pivot right", self.limit)
-        time.sleep(2)
-        self.stop()
+        newTarg = self.targetPivot + self.magnitude * 3
+        self.writeCMD(chr(0x02), newTarg, "pivot right", self.limit)
 
     def waistLeft(self):
         self.targetWaist -= self.magnitude
