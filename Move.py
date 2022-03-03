@@ -80,14 +80,12 @@ class Move:
             time.sleep(2)
 
     def pivotLeft(self):
-        self.writeCMD(chr(0x02), 6000, "pivot right", self.limit * 3)
-        self.writeCMD(chr(0x02), 7600, "pivot right", self.limit * 3)
-        self.writeCMD(chr(0x02), 7400, "pivot right", self.limit * 3)
+        self.writeCMD(chr(0x02), 7600, "pivot right", self.limit * 4)
+        self.writeCMD(chr(0x02), 7400, "pivot right", self.limit * 4)
 
     def pivotRight(self):
-        self.writeCMD(chr(0x02), 6000, "pivot right", self.limit * 3)
-        self.writeCMD(chr(0x02), 4400, "pivot right", self.limit * 3)
-        self.writeCMD(chr(0x02), 4600, "pivot right", self.limit * 3)
+        self.writeCMD(chr(0x02), 4400, "pivot right", self.limit * 4)
+        self.writeCMD(chr(0x02), 4600, "pivot right", self.limit * 4)
 
     def waistLeft(self):
         self.targetWaist -= self.magnitude
