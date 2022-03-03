@@ -10,11 +10,10 @@ class KeyControl:
             robot.backwardWheel()
 
     def turn(self, key):
-        for i in range(3):
-            if key.keycode == 114:
-                robot.pivotRight()
-            elif key.keycode == 113:
-                robot.pivotLeft()
+        if key.keycode == 114:
+            robot.pivotRight()
+        elif key.keycode == 113:
+            robot.pivotLeft()
 
 
     def waist(self, key):
