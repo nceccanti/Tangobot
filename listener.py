@@ -1,6 +1,7 @@
 import os.path
 import tkinter as tk
 import serial, time, sys
+import speech_recognition as sr
 from Move import *
 # class FileControl:
 #     def readFile(self):
@@ -8,6 +9,34 @@ from Move import *
 #             with open('data.txt', 'r') as file:
 #                 f = file.read()
 #
+
+class VoiceControl:
+    def controller(self, s):
+        ind = []
+        if s.find("whoa girl") != -1:
+            robot.stop()
+        elif s.find("giddyup") != -1:
+            robot.forwardWheel()
+        elif s.find("reverse") != -1:
+            robot.backwardWheel()
+        elif s.find("turn left") != -1:
+            robot.pivotLeft()
+        elif s.find("turn right") != -1:
+            robot.pivotRight()
+        elif s.find("neck left") != -1:
+            robot.neckLeft()
+        elif s.find("neck right") != -1:
+            robot.neckLeft()
+        elif s.find("neck up") != -1:
+            robot.neckLeft()
+        elif s.find("neck down") != -1:
+            robot.neckLeft()
+        elif s.find("waist left") != -1:
+            robot.neckLeft()
+        elif s.find("waist right") != -1:
+            robot.neckLeft()
+
+
 
 class KeyControl:
     def lateral(self, key):
@@ -55,21 +84,42 @@ except:
 robot = Move(500, usb)
 robot.stop()
 
-win = tk.Tk()
-keys = KeyControl()
+listening = True
+while listening:
+    with sr.Microphone() as source:
+        r = sr.Recognizer()
+        r.adjust_for_ambient_noise(source)
+        r.dynamic_energythreshold = 3000
+        try:
+            print(listening)
+            audio = r.listen(source)
+            print("got audio")
+            word = r.recogize_google(audio)
+            v = VoiceControl()
+            v.controller(word)
 
-win.bind('<Up>', keys.lateral)
-win.bind('<Down>', keys.lateral)
-win.bind('<Left>', keys.turn)
-win.bind('<Right>', keys.turn)
-win.bind('<a>', keys.waist)
-win.bind('<d>', keys.waist)
-win.bind('<i>', keys.head)
-win.bind('<k>', keys.head)
-win.bind('<j>', keys.head)
-win.bind('<l>', keys.head)
-win.bind('<space>', keys.reset)
-win.mainloop()
+        except:
+            print("unknown word")
+
+
+
+
+
+# win = tk.Tk()
+# keys = KeyControl()
+
+# win.bind('<Up>', keys.lateral)
+# win.bind('<Down>', keys.lateral)
+# win.bind('<Left>', keys.turn)
+# win.bind('<Right>', keys.turn)
+# win.bind('<a>', keys.waist)
+# win.bind('<d>', keys.waist)
+# win.bind('<i>', keys.head)
+# win.bind('<k>', keys.head)
+# win.bind('<j>', keys.head)
+# win.bind('<l>', keys.head)
+# win.bind('<space>', keys.reset)
+# win.mainloop()
 
 
 
