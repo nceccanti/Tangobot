@@ -94,7 +94,7 @@ while listening:
             print(listening)
             audio = r.listen(source)
             print("got audio")
-            word = r.recogize_google(audio)
+            word = r.recognize_google(audio)
             print(word)
             v = VoiceControl()
             v.controller(word)
