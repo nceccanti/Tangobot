@@ -16,9 +16,11 @@ class VoiceControl:
         if s.find("girl") != -1 or s.find("stop") != -1:
             print("command stop")
             robot.stop()
-        elif s.find("giddyup") != -1 or s.find("giddy up") != -1:
-            print("command forward")
-            robot.forwardWheel()
+        elif s.find("giddy") != -1:
+            n = s.count("giddy")
+            for i in range(n):
+                print("command forward")
+                robot.forwardWheel()
         elif s.find("reverse") != -1:
             print("command backward")
             robot.backwardWheel()
