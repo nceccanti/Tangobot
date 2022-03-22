@@ -21,6 +21,7 @@ class VoiceControl:
             for i in range(n):
                 print("command forward")
                 robot.forwardWheel()
+                time.sleep(0.3)
         elif s.find("reverse") != -1:
             print("command backward")
             robot.backwardWheel()
