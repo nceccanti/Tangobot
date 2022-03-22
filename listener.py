@@ -13,10 +13,10 @@ from Move import *
 class VoiceControl:
     def controller(self, s):
         ind = []
-        if s.find("whoa girl") != -1 or s.find("wow girl") or s.find("woah girl") or s.find("stop"):
+        if s.find("whoa girl") != -1 or s.find("wow girl") != -1or s.find("woah girl") != -1 or s.find("stop") != -1:
             print("command stop")
             robot.stop()
-        elif s.find("giddyup") != -1 or s.find("giddy up"):
+        elif s.find("giddyup") != -1 or s.find("giddy up") != -1:
             print("command forward")
             robot.forwardWheel()
         elif s.find("reverse") != -1:
