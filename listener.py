@@ -26,29 +26,45 @@ class VoiceControl:
             print("command backward")
             robot.backwardWheel()
         elif s.find("turn left") != -1:
-            print("command left")
-            robot.pivotLeft()
+            n = s.count("left")
+            for i in range(n):
+                print("command left")
+                robot.pivotLeft()
         elif s.find("turn right") != -1:
-            print("command right")
-            robot.pivotRight()
+            n = s.count("right")
+            for i in range(n):
+                print("command right")
+                robot.pivotRight()
         elif s.find("neck left") != -1:
-            print("command neck left")
-            robot.neckLeft()
+            n = s.count("left")
+            for i in range(n):
+                print("command neck left")
+                robot.neckLeft()
         elif s.find("neck right") != -1:
-            print("command neck right")
-            robot.neckRight()
+            n = s.count("right")
+            for i in range(n):
+                print("command neck right")
+                robot.neckRight()
         elif s.find("neck up") != -1:
-            print("command neckup")
-            robot.neckUp()
+            n = s.count("up")
+            for i in range(n):
+                print("command neckup")
+                robot.neckUp()
         elif s.find("neck down") != -1:
-            print("command neckdown")
-            robot.neckDown()
+            n = s.count("down")
+            for i in range(n):
+                print("command neckdown")
+                robot.neckDown()
         elif s.find("waist left") != -1:
-            print("command waist left")
-            robot.waistLeft()
+            n = s.count("left")
+            for i in range(n):
+                print("command waist left")
+                robot.waistLeft()
         elif s.find("waist right") != -1:
-            print("command stop")
-            robot.waistRight()
+            n = s.count("right")
+            for i in range(n):
+                print("command stop")
+                robot.waistRight()
 
 
 
