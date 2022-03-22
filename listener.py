@@ -14,27 +14,38 @@ class VoiceControl:
     def controller(self, s):
         ind = []
         if s.find("whoa girl") != -1 or s.find("wow girl") or s.find("woah girl") or s.find("stop"):
+            print("command stop")
             robot.stop()
         elif s.find("giddyup") != -1 or s.find("giddy up"):
+            print("command forward")
             robot.forwardWheel()
         elif s.find("reverse") != -1:
+            print("command backward")
             robot.backwardWheel()
         elif s.find("turn left") != -1:
+            print("command left")
             robot.pivotLeft()
         elif s.find("turn right") != -1:
+            print("command right")
             robot.pivotRight()
         elif s.find("neck left") != -1:
+            print("command neck left")
             robot.neckLeft()
         elif s.find("neck right") != -1:
-            robot.neckLeft()
+            print("command neck right")
+            robot.neckRight()
         elif s.find("neck up") != -1:
-            robot.neckLeft()
+            print("command neckup")
+            robot.neckUp()
         elif s.find("neck down") != -1:
-            robot.neckLeft()
+            print("command neckdown")
+            robot.neckDown()
         elif s.find("waist left") != -1:
-            robot.neckLeft()
+            print("command waist left")
+            robot.waistLeft()
         elif s.find("waist right") != -1:
-            robot.neckLeft()
+            print("command stop")
+            robot.waistRight()
 
 
 
