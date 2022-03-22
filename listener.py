@@ -61,7 +61,7 @@ class VoiceControl:
                 print("command neckdown")
                 robot.neckDown()
                 time.sleep(0.3)
-        elif s.find("waist left") != -1:
+        elif s.find("waist left") != -1  or s.find("waste left") != -1:
             n = s.count("left")
             for i in range(n):
                 print("command waist left")
