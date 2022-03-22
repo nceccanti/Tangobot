@@ -111,7 +111,7 @@ while listening:
             v.controller(word)
 
         except sr.UnknownValueError:
-            print("unknown word")
+            print("unknown words")
 
 
 
