@@ -95,10 +95,11 @@ while listening:
             audio = r.listen(source)
             print("got audio")
             word = r.recogize_google(audio)
+            print(word)
             v = VoiceControl()
             v.controller(word)
 
-        except:
+        except sr.UnknownValueError:
             print("unknown word")
 
 
