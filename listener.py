@@ -46,7 +46,7 @@ class VoiceControl:
                 print("command neck left")
                 robot.neckLeft()
                 time.sleep(0.3)
-        elif s.find("neck right") != -1:
+        elif s.find("neck right") != -1 or s.find("Nick Wright") != -1:
             n = s.count("right")
             for i in range(n):
                 print("command neck right")
