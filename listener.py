@@ -65,13 +65,13 @@ class VoiceControl:
             n = s.count("left")
             for i in range(n):
                 print("command waist left")
-                robot.waistRight()
+                robot.waistLeft()
                 time.sleep(0.3)
         elif s.find("waist right") != -1 or s.find("waste right") != -1:
             n = s.count("right")
             for i in range(n):
                 print("command stop")
-                robot.waistLeft()
+                robot.waistRight()
                 time.sleep(0.3)
 
 
