@@ -27,6 +27,7 @@ class VoiceControl:
             for i in range(n):
                 print("command backward")
                 robot.backwardWheel()
+                time.sleep(0.3)
         elif s.find("turn left") != -1:
             n = s.count("left")
             for i in range(n):
