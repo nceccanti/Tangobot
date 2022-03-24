@@ -41,37 +41,37 @@ class VoiceControl:
             n = s.count("left")
             for i in range(n):
                 print("command neck left")
-                robot.neckLeft()
+                robot.neckRight()
                 time.sleep(0.3)
         elif s.find("neck right") != -1:
             n = s.count("right")
             for i in range(n):
                 print("command neck right")
-                robot.neckRight()
+                robot.neckLeft()
                 time.sleep(0.3)
         elif s.find("neck up") != -1:
             n = s.count("up")
             for i in range(n):
                 print("command neckup")
-                robot.neckUp()
+                robot.neckDown()
                 time.sleep(0.3)
         elif s.find("neck down") != -1:
             n = s.count("down")
             for i in range(n):
                 print("command neckdown")
-                robot.neckDown()
+                robot.neckUp()
                 time.sleep(0.3)
         elif s.find("waist left") != -1  or s.find("waste left") != -1:
             n = s.count("left")
             for i in range(n):
                 print("command waist left")
-                robot.waistLeft()
+                robot.waistRight()
                 time.sleep(0.3)
         elif s.find("waist right") != -1 or s.find("waste right") != -1:
             n = s.count("right")
             for i in range(n):
                 print("command stop")
-                robot.waistRight()
+                robot.waistLeft()
                 time.sleep(0.3)
 
 
