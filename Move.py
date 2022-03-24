@@ -109,17 +109,17 @@ class Move:
         self.writeCMD(chr(0x00), self.targetWaist, "pivot right", self.limit)
 
     def neckLeft(self):
-        self.targetNeckHort -= self.magnitude
+        self.targetNeckHort += self.magnitude
         self.writeCMD(chr(0x03), self.targetNeckHort, "neck left", self.limitNeck)
 
     def neckRight(self):
-        self.targetNeckHort += self.magnitude
+        self.targetNeckHort -= self.magnitude
         self.writeCMD(chr(0x03), self.targetNeckHort, "neck right", self.limitNeck)
 
     def neckUp(self):
-        self.targetNeckVert -= self.magnitude
+        self.targetNeckVert += self.magnitude
         self.writeCMD(chr(0x04), self.targetNeckVert, "neck up", self.limitNeck)
 
     def neckDown(self):
-        self.targetNeckVert += self.magnitude
+        self.targetNeckVert -= self.magnitude
         self.writeCMD(chr(0x04), self.targetNeckVert, "neck down", self.limitNeck)

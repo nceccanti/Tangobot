@@ -23,8 +23,10 @@ class VoiceControl:
                 robot.forwardWheel()
                 time.sleep(0.3)
         elif s.find("reverse") != -1:
-            print("command backward")
-            robot.backwardWheel()
+            n = s.count("reverse")
+            for i in range(n):
+                print("command backward")
+                robot.backwardWheel()
         elif s.find("turn left") != -1:
             n = s.count("left")
             for i in range(n):
@@ -41,25 +43,25 @@ class VoiceControl:
             n = s.count("left")
             for i in range(n):
                 print("command neck left")
-                robot.neckRight()
+                robot.neckLeft()
                 time.sleep(0.3)
         elif s.find("neck right") != -1:
             n = s.count("right")
             for i in range(n):
                 print("command neck right")
-                robot.neckLeft()
+                robot.neckRight()
                 time.sleep(0.3)
         elif s.find("neck up") != -1:
             n = s.count("up")
             for i in range(n):
                 print("command neckup")
-                robot.neckDown()
+                robot.neckUp()
                 time.sleep(0.3)
         elif s.find("neck down") != -1:
             n = s.count("down")
             for i in range(n):
                 print("command neckdown")
-                robot.neckUp()
+                robot.neckDown()
                 time.sleep(0.3)
         elif s.find("waist left") != -1  or s.find("waste left") != -1:
             n = s.count("left")
