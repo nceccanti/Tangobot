@@ -5,20 +5,17 @@ import pptree
 class Parser:
     txt = []
     lines = []
-
     def __init__(self, file):
         try:
             f = open(file, 'r')
             self.lines = f.read().split('\n')
         except:
             print("Dialogue file not found.")
-
         for i in self.lines:
             temp = i.split(":")
             temp[0] = temp[0].strip()
             if temp[0].find('#') == -1 and len(temp[0]) > 0:
                 self.txt.append(temp)
-
         print(self.txt)
 
 class TreeNode(object):
@@ -38,12 +35,12 @@ class TreeNode(object):
             return True
         else:
             return False
+
     def is_leaf(self):
         if len(self.children) == 0:
             return True
         else:
             return False
-
 
     def depth(self):
         if self.is_root():
@@ -97,6 +94,7 @@ def TreeBuilder(text):
     tree.insert(root,None)
     levelList = []
     levelList.append([root])
+    prev = -1
     for i in text:
         if i[0][len(i[0]) - 1] == "u":
             index = 1
@@ -141,23 +139,27 @@ class Dialogue:
         user = user.strip()
         prev = self.currentSpeech
         children = self.getChildren(self.currentSpeech)
+        punct = ",.<>/?;:\'\"\\|]}[{-_=+!@#$%^&*()"
+        for i in punct:
+            user = user.replace(i, '')
+        if user == "exit":
+            print("Goodbye!")
+            sys.exit(0)
         user = "(" + user + ")"
         for i in children:
             if i.find(user) != -1:
                 self.currentSpeech = i
         if prev == self.currentSpeech:
-            print("That is not an answer.  Try again")
+            print("That is not an answer. Try again.")
         else:
             print(self.currentSpeech)
         self.isEnd()
 
-
 P = Parser("chat.txt")
 newtree = TreeBuilder(P.txt)
 newtree.root.disp()
-
 D = Dialogue(newtree)
 print(D.currentSpeech)
 while True:
-    s = input("Enter speech: ")
+    s = input("Input: ")
     D.speechInput(s)
