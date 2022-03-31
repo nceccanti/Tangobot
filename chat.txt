@@ -1,0 +1,12 @@
+topic: ~introduction ()
+language:enu
+
+u:(talk about animals) do you have a cat or a dog?
+   u1:(dog) is it a big dog?
+     u2:(yes) make sure he has enough space to run
+     u2:(no) it is so cute
+   u1:(cat) do you live in the countryside?
+     u2:(yes) does your cat goes outside?
+        u3:(yes) does he hunt mouses?
+     u2:(no) i hope your flat is big enough
+   u1:(none) neither do I
