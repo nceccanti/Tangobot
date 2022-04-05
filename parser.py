@@ -1,6 +1,7 @@
 import sys
 import pptree
 import re
+import random
 
 # dict to store definitions
 definitions = {}
@@ -126,7 +127,7 @@ def TreeBuilder(text):
         if index > 0:
             try:
                 parent = levelList[index - 1][len(levelList[index - 1]) - 1]
-                current = TreeNode(i[1])
+                current = TreeNode(i[1] + "|" + i[2])
                 levelList[index].append(current)
                 tree.insert(current, parent)
             except IndexError:
@@ -140,6 +141,7 @@ class Dialogue:
     def __init__(self, t):
         self.tree = t
         self.currentSpeech = t.getRoot().children[0].name
+        self.response = None
 
     #Gets names of nodes children
     def getChildren(self, name):
@@ -151,14 +153,15 @@ class Dialogue:
     #Checks to see if dialogue is completed
     def isEnd(self):
         if len(self.tree.getNode(self.tree.search(self.currentSpeech)).children) < 1:
-            print("Goodbye!")
-            sys.exit(0)
+            return True
+        return False
 
     #Handles user input, called in while loop below
     def speechInput(self, user):
         user = user.lower()
         user = user.strip()
         prev = self.currentSpeech
+        prevR = self.response
         children = self.getChildren(self.currentSpeech)
         punct = ",.<>/?;:\'\"\\|]}[{-_=+!@#$%^&*()"
         for i in punct:
@@ -168,19 +171,46 @@ class Dialogue:
             sys.exit(0)
         user = "(" + user + ")"
         for i in children:
-            if i.find(user) != -1:
+            inter = i.split('|')
+            print
+            if inter[0].find(user) != -1:
                 self.currentSpeech = i
-        if prev == self.currentSpeech:
-            print("That is not an answer. Try again.")
+                if len(inter) > 1:
+                    self.response = inter[1]
+        if prevR != self.response:
+            self.talk(self.response)
+        if self.isEnd():
+            print("Goodbye!")
+            sys.exit(0)
         else:
-            print(self.currentSpeech)
-        self.isEnd()
+            print("That is not an answer. Try again.")
+
+    #Use this method to print to user
+    def talk(self, text):
+        punct = "()"
+        for i in punct:
+            text = text.replace(i, '')
+
+        if text.startswith("~"):
+            text = text.replace('~', '')
+            if text in definitions:
+                c = random.choice(definitions[text])
+                for i in punct:
+                    c = c.replace(i, '')
+                print(c)
+        elif text.startswith("[") and text.endswith("]"):
+            text = text.replace('[', '')
+            text = text.replace(']', '')
+            c = random.choice(text.split(" "))
+            print(c)
+        else:
+            print(text)
 
 P = Parser("chat.txt")
 newtree = TreeBuilder(P.txt)
 newtree.root.disp()
 D = Dialogue(newtree)
-print(D.currentSpeech)
+D.talk(D.currentSpeech)
 while True:
     s = input("Input: ")
     D.speechInput(s)
