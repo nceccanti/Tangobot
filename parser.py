@@ -1,5 +1,9 @@
 import sys
 import pptree
+import re
+
+# dict to store definitions
+definitions = {}
 
 #Parses text file, txt field is 2D array of text
 class Parser:
@@ -14,9 +18,26 @@ class Parser:
         for i in self.lines:
             temp = i.split(":")
             temp[0] = temp[0].strip()
-            if temp[0].find('#') == -1 and len(temp[0]) > 0:
+            if temp[0].find('~') == 0 and len(temp[0]) > 0:
+                definitions[temp[0][1:]] = self.parse_array(temp[1][2:-1])
+                print(definitions)
+            elif temp[0].find('#') == -1 and len(temp[0]) > 0:
                 self.txt.append(temp)
         print(self.txt)
+
+    # Creates array for definitions and variables using really ugly regex :( 
+    def parse_array(self, temp):
+        arr = list(temp)
+        countq = 0
+        for i in range(len(arr)):
+            if arr[i] == "\"":
+                countq += 1
+                if countq%2 != 0:
+                    arr[i] = "("
+                else:
+                    arr[i] = ")"
+        return(re.split(r"\s+(?=[^()]*(?:\(|$))", ''.join(arr)))
+
 
 class TreeNode(object):
     def __init__(self, name='root', children=None,parent=None):
