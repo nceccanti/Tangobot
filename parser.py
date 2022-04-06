@@ -208,8 +208,17 @@ class Dialogue:
         elif text.startswith("[") and text.endswith("]"):
             text = text.replace('[', '')
             text = text.replace(']', '')
-            c = random.choice(text.split(" "))
-            print(c)
+            arr = list(text)
+            countq = 0
+            for i in range(len(arr)):
+                if arr[i] == "\"":
+                    countq += 1
+                    if countq%2 != 0:
+                        arr[i] = "("
+                    else:
+                        arr[i] = ")"
+            c = random.choice(re.split(r"\s+(?=[^()]*(?:\(|$))", ''.join(arr)))
+            print(c.strip("()"))
         else:
             print(text)
 
