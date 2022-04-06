@@ -84,7 +84,7 @@ class TreeNode(object):
         self.children.append(node)
 
     def disp(self):
-        print_tree(self, 'children', 'name')
+        pptree.print_tree(self, 'children', 'name')
 
 
 class Tree:
@@ -154,6 +154,9 @@ class Dialogue:
         self.currentSpeech = t.getRoot().name
         self.response = None
 
+    def reset(self):
+        self.currentSpeech = self.tree.getRoot().name
+
     # Gets names of nodes children
     def getChildren(self, name):
         children = []
@@ -171,7 +174,6 @@ class Dialogue:
     def speechInput(self, user):
         user = user.lower()
         user = user.strip()
-        prev = self.currentSpeech
         prevR = self.response
         children = self.getChildren(self.currentSpeech)
         punct = ",.<>/?;:\'\"\\|]}[{-_=+!@#$%^&*()"
@@ -185,7 +187,6 @@ class Dialogue:
         user = "(" + user + ")"
         for i in children:
             inter = i.split('|')
-            print(i)
             if inter[0].find("~") != -1:
                 if user.strip("()") in definitions[inter[0].strip("()~")]:
                     self.currentSpeech = i
@@ -196,9 +197,6 @@ class Dialogue:
                     self.response = inter[1]
         if prevR != self.response:
             self.talk(self.response)
-            if self.isEnd():
-                print("Goodbye!")
-                sys.exit(0)
         else:
             print("That is not an answer. Try again.")
 
@@ -207,7 +205,6 @@ class Dialogue:
         punct = "()"
         for i in punct:
             text = text.replace(i, '')
-
         if text.startswith("~"):
             text = text.replace('~', '')
             if text in definitions:
@@ -252,12 +249,15 @@ class Dialogue:
         name = ''.join(nali)
         variables[name] = name
 
-
 P = Parser("chat.txt")
 newtree = TreeBuilder(P.txt)
 newtree.root.disp()
 D = Dialogue(newtree)
 D.talk(D.currentSpeech)
+
+print(variables)
 while True:
     s = input("Input: ")
     D.speechInput(s)
+    if D.isEnd():
+        D.reset()
