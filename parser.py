@@ -135,7 +135,7 @@ def TreeBuilder(text):
                 tree.insert(current, parent)
             except IndexError:
                 parent = levelList[index - 1][len(levelList[index - 1]) - 1]
-                current = TreeNode(i[1])
+                current = TreeNode(i[1] + "|" + i[2])
                 levelList.append([current])
                 tree.insert(current, parent)
     return tree
@@ -143,7 +143,7 @@ def TreeBuilder(text):
 class Dialogue:
     def __init__(self, t):
         self.tree = t
-        self.currentSpeech = t.getRoot().children[0].name
+        self.currentSpeech = t.getRoot().name
         self.response = None
 
     #Gets names of nodes children
@@ -175,16 +175,20 @@ class Dialogue:
         user = "(" + user + ")"
         for i in children:
             inter = i.split('|')
-            print(inter)
-            if inter[0].find(user) != -1:
+            print(i)
+            if inter[0].find("~") != -1:
+                if user.strip("()") in definitions[inter[0].strip("()~")]:
+                    self.currentSpeech = i
+                    self.response = inter[1]
+            elif inter[0].find(user) != -1:
                 self.currentSpeech = i
                 if len(inter) > 1:
                     self.response = inter[1]
         if prevR != self.response:
             self.talk(self.response)
-        if self.isEnd():
-            print("Goodbye!")
-            sys.exit(0)
+            if self.isEnd():
+                print("Goodbye!")
+                sys.exit(0)
         else:
             print("That is not an answer. Try again.")
 
@@ -195,7 +199,6 @@ class Dialogue:
             text = text.replace(i, '')
 
         if text.startswith("~"):
-            print(text)
             text = text.replace('~', '')
             if text in definitions:
                 c = random.choice(definitions[text])
