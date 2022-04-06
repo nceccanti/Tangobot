@@ -49,6 +49,11 @@ class Move:
         self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit * 3)
         self.writeCMD(chr(0x03), self.center, "linear halt", self.limit * 3)
         self.writeCMD(chr(0x04), self.center, "linear halt", self.limit * 3)
+        self.targetLinear = self.center
+        self.targetPivot = self.center
+        self.targetWaist = self.center
+        self.targetNeckVert = self.center
+        self.targetNeckHort = self.center
 
     def resetMovement(self):
         self.writeCMD(chr(0x01), 6000, "linear halt", self.limit * 3)
@@ -57,7 +62,7 @@ class Move:
     def forwardWheel(self):
         # if self.targetPivot != self.center:
         #     self.resetMovement()
-        if self.targetLinear == self.center:
+        if self.targetLinear == self.center or 6200 == self.targetLinear:
             self.targetLinear -= 200
         else:
             self.targetLinear -= self.magnitude
@@ -66,7 +71,7 @@ class Move:
     def backwardWheel(self):
         # if self.targetPivot != self.center:
         #     self.resetMovement()
-        if self.targetLinear == self.center:
+        if self.targetLinear == self.center or 5800 == self.targetLinear:
             self.targetLinear += 200
         else:
             self.targetLinear += self.magnitude
@@ -80,43 +85,41 @@ class Move:
             time.sleep(2)
 
     def pivotLeft(self):
-        # self.backwardWheel()
-        # time.sleep(0.1)
-        # self.forwardWheel()
-        # time.sleep(0.1)
+        self.backwardWheel()
+        time.sleep(0.1)
+        self.forwardWheel()
+        time.sleep(0.1)
         self.resetMovement()
-        newTarg = self.targetPivot - self.magnitude * 3
-        self.writeCMD(chr(0x02), newTarg, "pivot left", self.limit * 3)
+        self.writeCMD(chr(0x02), 6700, "pivot right", self.limit * 4)
 
     def pivotRight(self):
-        # self.backwardWheel()
-        # time.sleep(0.1)
-        # self.forwardWheel()
-        # time.sleep(0.1)
+        self.backwardWheel()
+        time.sleep(0.1)
+        self.forwardWheel()
+        time.sleep(0.1)
         self.resetMovement()
-        newTarg = self.targetPivot + self.magnitude * 3
-        self.writeCMD(chr(0x02), newTarg, "pivot right", self.limit * 3)
+        self.writeCMD(chr(0x02), 5300, "pivot right", self.limit * 4)
 
     def waistLeft(self):
-        self.targetWaist -= self.magnitude
-        self.writeCMD(chr(0x00), self.targetWaist, "pivot right", self.limit)
-
-    def waistRight(self):
         self.targetWaist += self.magnitude
         self.writeCMD(chr(0x00), self.targetWaist, "pivot right", self.limit)
 
+    def waistRight(self):
+        self.targetWaist -= self.magnitude
+        self.writeCMD(chr(0x00), self.targetWaist, "pivot right", self.limit)
+
     def neckLeft(self):
-        self.targetNeckHort -= self.magnitude
+        self.targetNeckHort += self.magnitude
         self.writeCMD(chr(0x03), self.targetNeckHort, "neck left", self.limitNeck)
 
     def neckRight(self):
-        self.targetNeckHort += self.magnitude
+        self.targetNeckHort -= self.magnitude
         self.writeCMD(chr(0x03), self.targetNeckHort, "neck right", self.limitNeck)
 
     def neckUp(self):
-        self.targetNeckVert -= self.magnitude
+        self.targetNeckVert += self.magnitude
         self.writeCMD(chr(0x04), self.targetNeckVert, "neck up", self.limitNeck)
 
     def neckDown(self):
-        self.targetNeckVert += self.magnitude
+        self.targetNeckVert -= self.magnitude
         self.writeCMD(chr(0x04), self.targetNeckVert, "neck down", self.limitNeck)
