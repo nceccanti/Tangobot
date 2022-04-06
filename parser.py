@@ -5,6 +5,7 @@ import random
 
 # dict to store definitions
 definitions = {}
+variables = {}
 
 #Parses text file, txt field is 2D array of text
 class Parser:
@@ -21,8 +22,10 @@ class Parser:
             temp[0] = temp[0].strip()
             if temp[0].find('~') == 0 and len(temp[0]) > 0:
                 definitions[temp[0][1:]] = self.parse_array(temp[1][2:-1])
-                print(definitions)
             elif temp[0].find('#') == -1 and len(temp[0]) > 0:
+                if len(temp) != 3:
+                    print("ERROR: ", ":".join(temp))
+                    continue
                 self.txt.append(temp)
         print(self.txt)
 
@@ -172,7 +175,7 @@ class Dialogue:
         user = "(" + user + ")"
         for i in children:
             inter = i.split('|')
-            print
+            print(inter)
             if inter[0].find(user) != -1:
                 self.currentSpeech = i
                 if len(inter) > 1:
@@ -192,6 +195,7 @@ class Dialogue:
             text = text.replace(i, '')
 
         if text.startswith("~"):
+            print(text)
             text = text.replace('~', '')
             if text in definitions:
                 c = random.choice(definitions[text])
