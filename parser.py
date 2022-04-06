@@ -20,6 +20,9 @@ class Parser:
         for i in self.lines:
             temp = i.split(":")
             temp[0] = temp[0].strip()
+            if len(temp) > 2:
+                temp[1] = temp[1].strip()
+                temp[2] = temp[2].strip()
             if temp[0].find('~') == 0 and len(temp[0]) > 0:
                 definitions[temp[0][1:]] = self.parse_array(temp[1][2:-1])
             elif temp[0].find('#') == -1 and len(temp[0]) > 0:
