@@ -7,10 +7,12 @@ import random
 definitions = {}
 variables = {}
 
-#Parses text file, txt field is 2D array of text
+
+# Parses text file, txt field is 2D array of text
 class Parser:
     txt = []
     lines = []
+
     def __init__(self, file):
         try:
             f = open(file, 'r')
@@ -32,24 +34,24 @@ class Parser:
                 self.txt.append(temp)
         print(self.txt)
 
-    # Creates array for definitions and variables using really ugly regex :( 
+    # Creates array for definitions using really ugly regex :(
     def parse_array(self, temp):
         arr = list(temp)
         countq = 0
         for i in range(len(arr)):
             if arr[i] == "\"":
                 countq += 1
-                if countq%2 != 0:
+                if countq % 2 != 0:
                     arr[i] = "("
                 else:
                     arr[i] = ")"
-        return(re.split(r"\s+(?=[^()]*(?:\(|$))", ''.join(arr)))
+        return (re.split(r"\s+(?=[^()]*(?:\(|$))", ''.join(arr)))
 
 
 class TreeNode(object):
-    def __init__(self, name='root', children=None,parent=None):
+    def __init__(self, name='root', children=None, parent=None):
         self.name = name
-        self.parent=parent
+        self.parent = parent
         self.children = []
         if children is not None:
             for child in children:
@@ -77,49 +79,51 @@ class TreeNode(object):
             return 1 + self.parent.depth()
 
     def add_child(self, node):
-        node.parent=self
+        node.parent = self
         assert isinstance(node, TreeNode)
         self.children.append(node)
 
     def disp(self):
-        pptree.print_tree(self,'children','name')
+        print_tree(self, 'children', 'name')
+
 
 class Tree:
     def __init__(self):
-       self.root=None
-       self.height=0
-       self.nodes=[]
+        self.root = None
+        self.height = 0
+        self.nodes = []
 
-    def insert(self,node,parent):
+    def insert(self, node, parent):
         if parent is not None:
             parent.add_child(node)
         else:
             if self.root is None:
-                self.root=node
+                self.root = node
         self.nodes.append(node)
 
-    def search(self,data):
-        index=-1
+    def search(self, data):
+        index = -1
         for N in self.nodes:
-            index+=1
+            index += 1
             if N.name == data:
                 break
-        if index == len(self.nodes)-1:
+        if index == len(self.nodes) - 1:
             return -1
         else:
             return index
 
-    def getNode(self,id):
+    def getNode(self, id):
         return self.nodes[id]
 
     def getRoot(self):
         return self.root
 
-#Builds generic tree
+
+# Builds generic tree
 def TreeBuilder(text):
-    root=TreeNode('root')
-    tree=Tree()
-    tree.insert(root,None)
+    root = TreeNode('root')
+    tree = Tree()
+    tree.insert(root, None)
     levelList = []
     levelList.append([root])
     prev = -1
@@ -143,26 +147,27 @@ def TreeBuilder(text):
                 tree.insert(current, parent)
     return tree
 
+
 class Dialogue:
     def __init__(self, t):
         self.tree = t
         self.currentSpeech = t.getRoot().name
         self.response = None
 
-    #Gets names of nodes children
+    # Gets names of nodes children
     def getChildren(self, name):
         children = []
         for i in self.tree.getNode(self.tree.search(name)).children:
             children.append(i.name)
         return children
 
-    #Checks to see if dialogue is completed
+    # Checks to see if dialogue is completed
     def isEnd(self):
         if len(self.tree.getNode(self.tree.search(self.currentSpeech)).children) < 1:
             return True
         return False
 
-    #Handles user input, called in while loop below
+    # Handles user input, called in while loop below
     def speechInput(self, user):
         user = user.lower()
         user = user.strip()
@@ -172,6 +177,8 @@ class Dialogue:
         punct = ",.<>/?;:\'\"\\|]}[{-_=+!@#$%^&*()"
         for i in punct:
             user = user.replace(i, '')
+        if user.find('_') > 0:
+            self.parse_variable(user)
         if user == "exit":
             print("Goodbye!")
             sys.exit(0)
@@ -195,7 +202,7 @@ class Dialogue:
         else:
             print("That is not an answer. Try again.")
 
-    #Use this method to print to user
+    # Use this method to print to user
     def talk(self, text):
         punct = "()"
         for i in punct:
@@ -216,7 +223,7 @@ class Dialogue:
             for i in range(len(arr)):
                 if arr[i] == "\"":
                     countq += 1
-                    if countq%2 != 0:
+                    if countq % 2 != 0:
                         arr[i] = "("
                     else:
                         arr[i] = ")"
@@ -224,6 +231,27 @@ class Dialogue:
             print(c.strip("()"))
         else:
             print(text)
+
+    # parses variable from user input
+    def parse_variable(self, user):
+        nali = []
+        if user.find('old') > 0:
+            age = int(re.search(r'\d+', user).group())
+            variables[age] = age
+        if user.find('name') > 0:
+            arr = list(user)
+            for i in len(arr):
+                if arr[i] == 'i':
+                    if arr[i+1] == 's':
+                        if arr[i+2] == ' ':
+                            j = i+3
+                            while arr[j] != ')':
+                                nali.append(arr[j])
+        else:
+            print("not valid input")
+        name = ''.join(nali)
+        variables[name] = name
+
 
 P = Parser("chat.txt")
 newtree = TreeBuilder(P.txt)
