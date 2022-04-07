@@ -2,7 +2,7 @@
 ~greetings: [hello howdy "hi there"]
 u:(~greetings):[hi hello "what up" sup]
     u1:(you):good
-	u1:(and):[one two]
+	u1:(and):[one "test test"]
 u:(you):Should not be here
 u:(test):two
     u1:(third):~greetings
