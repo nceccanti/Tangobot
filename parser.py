@@ -231,23 +231,23 @@ class Dialogue:
 
     # parses variable from user input
     def parse_variable(self, user):
-        nali = []
-        if user.find('old') > 0:
-            age = int(re.search(r'\d+', user).group())
-            variables[age] = age
-        if user.find('name') > 0:
-            arr = list(user)
+        temp = []
+        arr = list(user)
+        if arr.find('$') > 0:
+            var = (arr.index('$'))
+            print(var)
             for i in len(arr):
-                if arr[i] == 'i':
-                    if arr[i+1] == 's':
-                        if arr[i+2] == ' ':
-                            j = i+3
-                            while arr[j] != ')':
-                                nali.append(arr[j])
-        else:
-            print("not valid input")
-        name = ''.join(nali)
-        variables[name] = name
+                while arr[var + i] != ' ' or '':
+                    temp.append(arr[var + 1])
+            varname = ''.join(temp)
+        if arr.find('_') > 0:
+            var1 = (arr.index('_'))
+            print(var1)
+            for i in len(arr):
+                while arr[var1 + i] != ' ' or '':
+                    temp.append(arr[var1 + 1])
+            varvalue = ''.join(temp)
+        variables[varname] = varvalue
 
 P = Parser("chat.txt")
 newtree = TreeBuilder(P.txt)
