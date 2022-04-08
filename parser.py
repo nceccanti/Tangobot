@@ -30,9 +30,10 @@ class Parser:
             elif temp[0].find('#') == -1 and len(temp[0]) > 0:
                 if len(temp) != 3:
                     print("ERROR: ", ":".join(temp))
+                    print()
                     continue
                 self.txt.append(temp)
-        print(self.txt)
+        #print(self.txt)
 
     # Creates array for definitions using really ugly regex :(
     def parse_array(self, temp):
@@ -192,19 +193,26 @@ class Dialogue:
                 name = ""
                 value = ""
                 match = 0
-                if len(expected) == len(userl):
+
+                matchArray = 0
+                iter = 0
+                userlMod = 0
+                while iter + userlMod < len(userl) and iter < len(expected):
+                    if expected[iter] == userl[iter + userlMod]:
+                        matchArray += 1
+                        iter += 1
+                    elif expected[iter] == "_":
+                        iter += 1
+                    else:
+                        userlMod += 1
+                print(matchArray, len(expected))
+                if matchArray == len(expected) - 1:
                     for word in rwords:
                         if word.find("$") != -1:
                             name = word.strip("$")
-                    for j in range(len(expected)):
-                        if expected[j].lower() == userl[j]:
-                            match += 1
-                        if expected[j] == "_":
-                            value = userl[j]
-                    if match == len(expected)-1:
-                        variables[name] = value
-                        self.currentSpeech = i
-                        self.response = inter[1]
+                    variables[name] = userl[expected.index("_")]
+                    self.currentSpeech = i
+                    self.response = inter[1]
             if inter[0].find("~") != -1:
                 if user.strip("()") in definitions[inter[0].strip("()~")]:
                     self.currentSpeech = i
@@ -232,11 +240,18 @@ class Dialogue:
                 print(c)
         elif text.find("$") != -1:
             textarr = text.split(" ")
+            foundVar = False
             for i in range(len(textarr)):
                 if textarr[i].find("$") != -1:
-                    textarr[i] = variables[textarr[i].strip("$")]
-            c = ' '.join(textarr)
-            print(c)
+                    if textarr[i].strip("$") in variables:
+                        textarr[i] = variables[textarr[i].strip("$")]
+                        foundVar = True
+            if foundVar == True:
+                c = ' '.join(textarr)
+                print(c)
+            else:
+                print("I don't know")
+                D.reset()
         elif text.startswith("[") and text.endswith("]"):
             text = text.replace('[', '')
             text = text.replace(']', '')
@@ -260,14 +275,13 @@ class Dialogue:
         arr = list(user)
         if arr.find('$') > 0:
             var = (arr.index('$'))
-            print(var)
             for i in len(arr):
                 while arr[var + i] != ' ' or '':
                     temp.append(arr[var + 1])
             varname = ''.join(temp)
         if arr.find('_') > 0:
             var1 = (arr.index('_'))
-            print(var1)
+            #print(var1)
             for i in len(arr):
                 while arr[var1 + i] != ' ' or '':
                     temp.append(arr[var1 + 1])
@@ -276,11 +290,11 @@ class Dialogue:
 
 P = Parser("chat.txt")
 newtree = TreeBuilder(P.txt)
-newtree.root.disp()
+#newtree.root.disp()
 D = Dialogue(newtree)
-D.talk(D.currentSpeech)
+#D.talk(D.currentSpeech)
 
-print(variables)
+#print(variables)
 while True:
     s = input("Input: ")
     D.speechInput(s)

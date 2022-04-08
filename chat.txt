@@ -14,4 +14,5 @@ u:(my name is _): hello $name
 			u3:(you are very smart):I know
 u:(what is my name) : your name is $name
 u: (how old am I) : you are $age
+u: (this is a test): ["hello there" "howdy partner"]
 u:(this is an error) error here
