@@ -4,6 +4,8 @@ import re
 import random
 
 # dict to store definitions
+from cffi.backend_ctypes import xrange
+
 definitions = {}
 variables = {}
 
@@ -172,6 +174,8 @@ class Dialogue:
 
     # Handles user input, called in while loop below
     def speechInput(self, user):
+        result1 = ''
+        result2 = ''
         user = user.lower()
         user = user.strip()
         prevR = self.response
@@ -179,14 +183,40 @@ class Dialogue:
         punct = ",.<>/?;:\'\"\\|]}[{-_=+!@#$%^&*()"
         for i in punct:
             user = user.replace(i, '')
-        if user.find('_') > 0:
-            self.parse_variable(user)
         if user == "exit":
             print("Goodbye!")
             sys.exit(0)
         user = "(" + user + ")"
         for i in children:
             inter = i.split('|')
+            user.strip("()")
+            #print(inter[0])
+            maxlen = len(inter[0]) if len(user) < len(inter[0]) else len(user)
+            # loop through the characters
+            for i in range(maxlen):
+                # use a slice rather than index in case one string longer than other
+                letter1 = user[i:i + 1]
+                letter2 = inter[0][i:i + 1]
+                # create string with differences
+                if letter1 != letter2:
+                    result1 += letter1
+                    result2 += letter2
+            result2 = result2.replace(")", '')
+            result1 = result1.replace(")", '')
+            #print("this is result 1 " + result1)
+            #print("this is result 2 " + result2)
+            if result2 == "_":
+                self.parse_variable(result1, inter)
+                self.currentSpeech = i
+                self.response = inter[1]
+            result1 = ''
+            result2 = ''
+            # self.currentSpeech = i
+            # self.response = inter[1]
+                #print('got to here')
+                #self.parse_variable(user, inter)
+                #self.currentSpeech = i
+                #self.response = inter[1]
             if inter[0].find("~") != -1:
                 if user.strip("()") in definitions[inter[0].strip("()~")]:
                     self.currentSpeech = i
@@ -212,6 +242,14 @@ class Dialogue:
                 for i in punct:
                     c = c.replace(i, '')
                 print(c)
+        if text.find('$') > -1:
+            z = '$'
+            y = text.split("$", 1)[1]
+            z += text.split("$", 1)[1]
+            b = variables[y]
+            a = text.replace(z, b)
+            print(a)
+
         elif text.startswith("[") and text.endswith("]"):
             text = text.replace('[', '')
             text = text.replace(']', '')
@@ -230,24 +268,15 @@ class Dialogue:
             print(text)
 
     # parses variable from user input
-    def parse_variable(self, user):
-        temp = []
-        arr = list(user)
-        if arr.find('$') > 0:
-            var = (arr.index('$'))
-            print(var)
-            for i in len(arr):
-                while arr[var + i] != ' ' or '':
-                    temp.append(arr[var + 1])
-            varname = ''.join(temp)
-        if arr.find('_') > 0:
-            var1 = (arr.index('_'))
-            print(var1)
-            for i in len(arr):
-                while arr[var1 + i] != ' ' or '':
-                    temp.append(arr[var1 + 1])
-            varvalue = ''.join(temp)
-        variables[varname] = varvalue
+    def parse_variable(self, variable, child):
+        var = ''
+        # print(child[1])
+        var = var.join(child[1])
+        varname = var.split("$", 1)[1]
+        # print(varname)
+        variables[varname] = variable
+        # print(variables['name'])
+
 
 P = Parser("chat.txt")
 newtree = TreeBuilder(P.txt)
