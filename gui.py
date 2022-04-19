@@ -25,7 +25,7 @@ class MouseMovement():
 
     #What happens when mouse is pressed down
     def mousePressed(self, event):
-        if event.x > 500 and event.x < 550 and event.y > 500 and event.y < 550:
+        if event.x > 900 and event.x < 950 and event.y > 500 and event.y < 550:
             self.execute()
         for i in range(len(self.draggables)):
             if event.x > self.draggables[i][0] and event.x < self.draggables[i][0] + self.draggables[i][2] and event.y > self.draggables[i][1] and event.y < self.draggables[i][1] + self.draggables[i][3]:
@@ -48,7 +48,7 @@ class MouseMovement():
         for i in self.background:
             self.myCan.create_rectangle(i[0], i[1], i[2], i[3], fill=i[4])
         for i in self.static:
-            print(i[0], i[1], i[2], i[3], i[4])
+            #print(i[0], i[1], i[2], i[3], i[4])
             if i[5] is None:
                 self.myCan.create_rectangle(i[0], i[1], i[2], i[3], fill=i[4])
             else:
@@ -57,7 +57,7 @@ class MouseMovement():
     #Returns all draggable objects to original position
     def printDraggables(self):
         for i in self.draggables:
-            print(i[0], i[1], i[2], i[3], i[4])
+            #print(i[0], i[1], i[2], i[3], i[4])
             self.myCan.create_rectangle(i[0], i[1], i[0] + i[2], i[1] + i[3], fill=i[4])
 
     #What happens when mouse press is released
@@ -81,7 +81,7 @@ class MouseMovement():
         self.printElse()
 
     def execute(self):
-        print("execute instructions")
+        #print("execute instructions")
         for i in self.static:
             if i[6] is not None:
                 print(i[6])
@@ -101,12 +101,15 @@ class GUI:
         self.myCan.bind('<ButtonPress-3>', m1.rightClick)
         self.myCan.bind('<space>', m1.execute())
         self.addBackground(0, 140, 8, 1024, '#222222', m1)
-        self.addBackground(500, 500, 50, 50, '#000000', m1)
-        self.addMoveable(100, 500, 40, 40, "#FFFF00", m1, 'a')
-        self.addMoveable(200, 500, 40, 40, "#FF0000", m1, 'b')
-        self.addMoveable(300, 500, 40, 40, "#008000", m1, 'c')
+        self.addBackground(900, 500, 50, 50, '#000000', m1)
+        self.addMoveable(100, 500, 40, 40, "#FFFF00", m1, [0x04, 6000])
+        self.addMoveable(200, 500, 40, 40, "#FF0000", m1, [0x05, 6000])
+        self.addMoveable(300, 500, 40, 40, "#008000", m1, [0x06, 6000])
+        self.addMoveable(400, 500, 40, 40, "#800080", m1, [0x07, 6000])
+        self.addMoveable(500, 500, 40, 40, "#0000FF", m1, [0x08, 6000])
+        self.addMoveable(600, 500, 40, 40, "#FFFFFF", m1, [0x09, 6000])
         for i in range(8):
-            x = i*128
+            x = i * 128
             self.addDestination(x+20, 100, 88, 88, "#B4E4F5", m1)
         self.myCan.pack()
 

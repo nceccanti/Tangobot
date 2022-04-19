@@ -13,113 +13,67 @@ class Move:
         self.limit = self.magnitude
         self.limitNeck = (self.magnitude * 2)
 
-    def writeCMD(self, c, target, type, limit):
-        if self.targetLinear > self.center + self.limit * 3:
-            self.targetLinear = self.center + self.limit * 3
-        if self.targetLinear < self.center - self.limit * 3:
-            self.targetLinear = self.center - self.limit * 3
-        if self.targetWaist > self.center + self.limit:
-            self.targetWaist = self.center + self.limit
-        if self.targetWaist < self.center - self.limit:
-            self.targetWaist = self.center - self.limit
-        if self.targetNeckVert > self.center + self.limitNeck:
-            self.targetNeckVert = self.center + self.limitNeck
-        if self.targetNeckVert < self.center - self.limitNeck:
-            self.targetNeckVert = self.center - self.limitNeck
-        if self.targetNeckHort > self.center + self.limitNeck:
-            self.targetNeckHort = self.center + self.limitNeck
-        if self.targetNeckHort < self.center - self.limitNeck:
-            self.targetNeckHort = self.center - self.limitNeck
+    def sendCmd(self, cmd):
+        cmdStr = chr(0xaa) + chr(0x0c) + cmd
+        self.usb.write(bytes(cmdStr, 'latin-1'))
 
-        print(c, target, type, self.center + limit, self.center - limit)
-        if target <= (limit + self.center) and target >= (self.center - limit):
-            lsb = target &0x7F
-            msb = (target >> 7) & 0x7F
-            cmd = chr(0xaa) + chr(0xC) + chr(0x04) + c + chr(lsb) + chr(msb)
-            print('writing', type)
-            self.usb.write(cmd.encode('utf-8'))
-            print('reading', type)
-        else:
-            print("can't go faster/further")
-
+    def setTarget(self, chan, target):
+        lsb = target & 0x7f  # 7 bits for least significant byte
+        msb = (target >> 7) & 0x7f  # shift 7 and take next 7 bits for msb
+        cmd = chr(0x04) + chr(chan) + chr(lsb) + chr(msb)
+        self.sendCmd(cmd)
 
     def stop(self):
-        self.writeCMD(chr(0x00), self.center, "linear halt", self.limit * 3)
-        self.writeCMD(chr(0x01), self.center, "linear halt", self.limit * 3)
-        self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit * 3)
-        self.writeCMD(chr(0x03), self.center, "linear halt", self.limit * 3)
-        self.writeCMD(chr(0x04), self.center, "linear halt", self.limit * 3)
-        self.targetLinear = self.center
-        self.targetPivot = self.center
-        self.targetWaist = self.center
-        self.targetNeckVert = self.center
-        self.targetNeckHort = self.center
+        self.setTarget(0x01, 6000)
+        self.setTarget(0x02, 6000)
 
     def resetMovement(self):
         self.writeCMD(chr(0x01), 6000, "linear halt", self.limit * 3)
-        #self.writeCMD(chr(0x02), self.center, "pivot halt", self.limit)
 
     def forwardWheel(self):
-        # if self.targetPivot != self.center:
-        #     self.resetMovement()
         if self.targetLinear == self.center or 6200 == self.targetLinear:
             self.targetLinear -= 200
         else:
             self.targetLinear -= self.magnitude
-        self.writeCMD(chr(0x01), self.targetLinear, "forward move", self.limit * 3)
+        self.setTarget(0x01, self.targetLinear)
 
     def backwardWheel(self):
-        # if self.targetPivot != self.center:
-        #     self.resetMovement()
         if self.targetLinear == self.center or 5800 == self.targetLinear:
             self.targetLinear += 200
         else:
             self.targetLinear += self.magnitude
         self.writeCMD(chr(0x01), self.targetLinear, "backward move", self.limit * 3)
+        self.setTarget(0x01, self.targetLinear)
 
-    def pivotTest(self, num):
-        while True:
-            self.stop()
-            self.targetPivot = num
-            self.writeCMD(chr(0x02), self.targetPivot, "pivot left", self.limit * 3)
-            time.sleep(2)
 
     def pivotLeft(self):
-        self.backwardWheel()
-        time.sleep(0.1)
-        self.forwardWheel()
-        time.sleep(0.1)
-        self.resetMovement()
-        self.writeCMD(chr(0x02), 6700, "pivot right", self.limit * 4)
+        self.stop()
+        self.setTarget(0x02, 6700)
 
     def pivotRight(self):
-        self.backwardWheel()
-        time.sleep(0.1)
-        self.forwardWheel()
-        time.sleep(0.1)
-        self.resetMovement()
-        self.writeCMD(chr(0x02), 5300, "pivot right", self.limit * 4)
+        self.stop()
+        self.setTarget(0x02, 5300)
 
     def waistLeft(self):
         self.targetWaist += self.magnitude
-        self.writeCMD(chr(0x00), self.targetWaist, "pivot right", self.limit)
+        self.setTarget(0x00, self.targetWaist)
 
     def waistRight(self):
         self.targetWaist -= self.magnitude
-        self.writeCMD(chr(0x00), self.targetWaist, "pivot right", self.limit)
+        self.setTarget(0x00, self.targetWaist)
 
     def neckLeft(self):
         self.targetNeckHort += self.magnitude
-        self.writeCMD(chr(0x03), self.targetNeckHort, "neck left", self.limitNeck)
+        self.setTarget(0x03, self.targetNeckHort)
 
     def neckRight(self):
         self.targetNeckHort -= self.magnitude
-        self.writeCMD(chr(0x03), self.targetNeckHort, "neck right", self.limitNeck)
+        self.setTarget(0x03, self.targetNeckHort)
 
     def neckUp(self):
         self.targetNeckVert += self.magnitude
-        self.writeCMD(chr(0x04), self.targetNeckVert, "neck up", self.limitNeck)
+        self.setTarget(0x04, self.targetNeckVert)
 
     def neckDown(self):
         self.targetNeckVert -= self.magnitude
-        self.writeCMD(chr(0x04), self.targetNeckVert, "neck down", self.limitNeck)
+        self.setTarget(0x04, self.targetNeckVert)
