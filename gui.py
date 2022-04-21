@@ -119,27 +119,27 @@ class MouseMovement():
     def execute(self):
         #print("execute instructions")
         for i in self.static:
-            if '!' == i[6][0]:
-                print("voice!")
-                v = VoiceInput()
-                v.listen(i[6][1])
-            elif '~' == i[6][0]:
-                print("speak!")
-                s = Speaker()
-                s.TTS(i[6][1])
-            elif i[6] is not None:
-                print("move!")
-                print(i[6][0], int(float(i[6][1])), float(i[6][2]))
-                robot.setTarget(0x01, 6000)
-                robot.setTarget(0x02, 6000)
-                if 0x01 == i[6][0]:
+            if i[6] is not None:
+                if '!' == i[6][0]:
+                    print("voice!")
+                    v = VoiceInput()
+                    v.listen(i[6][1])
+                elif '~' == i[6][0]:
+                    print("speak!")
+                    s = Speaker()
+                    s.TTS(i[6][1])
+                    print("move!")
+                else:
+                    print(i[6][0], int(float(i[6][1])), float(i[6][2]))
                     robot.setTarget(0x01, 6000)
-                if 0x02 == i[6][0]:
                     robot.setTarget(0x02, 6000)
-                robot.setTarget(i[6][0], int(float(i[6][1])))
-                robot.setTarget(0x01, 6000)
-                robot.setTarget(0x02, 6000)
-                time.sleep(1)
+                    if 0x01 == i[6][0]:
+                        robot.setTarget(0x01, 6000)
+                    if 0x02 == i[6][0]:
+                        robot.setTarget(0x02, 6000)
+                    robot.setTarget(i[6][0], int(float(i[6][1])))
+                    robot.setTarget(0x01, 6000)
+                    robot.setTarget(0x02, 6000)
             time.sleep(float(i[6][2]))
 
     def SubWindow(self, staticIndex):
