@@ -120,6 +120,7 @@ class MouseMovement():
         #print("execute instructions")
         for i in self.static:
             if i[6] is not None:
+                print(i[6])
                 if '!' == i[6][0]:
                     print("voice!")
                     v = VoiceInput()
