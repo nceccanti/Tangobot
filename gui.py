@@ -173,6 +173,7 @@ class GUI:
     def __init__(self, win):
         self.win = win
         self.win.geometry("1024x600")
+        self.win.attributes('-fullscreen',True)
 
     #Creates GUI window, create all objects here
     def createWindow(self):
