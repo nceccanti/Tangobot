@@ -140,7 +140,6 @@ class MouseMovement():
                     robot.setTarget(i[6][0], int(float(i[6][1])))
                     robot.setTarget(0x01, 6000)
                     robot.setTarget(0x02, 6000)
-            if i[6][2] is not None:
                 time.sleep(float(i[6][2]))
 
     def SubWindow(self, staticIndex):
