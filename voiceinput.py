@@ -3,7 +3,7 @@ import speech_recognition as sr
 class VoiceInput:
     def listen(self, input):
         isWord = False
-        while isWord == False
+        while isWord == False:
             with sr.Microphone() as source:
                 r = sr.Recognizer()
                 r.adjust_for_ambient_noise(source)
