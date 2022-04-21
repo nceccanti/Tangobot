@@ -117,7 +117,6 @@ class MouseMovement():
         self.printElse()
 
     def execute(self):
-        #print("execute instructions")
         for i in self.static:
             if i[6] is not None:
                 print(i[6])
@@ -141,7 +140,8 @@ class MouseMovement():
                     robot.setTarget(i[6][0], int(float(i[6][1])))
                     robot.setTarget(0x01, 6000)
                     robot.setTarget(0x02, 6000)
-            time.sleep(float(i[6][2]))
+            if i[6][2] is not None:
+                time.sleep(float(i[6][2]))
 
     def SubWindow(self, staticIndex):
         print("sub window")
