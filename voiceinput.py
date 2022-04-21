@@ -7,7 +7,6 @@ class VoiceInput:
             with sr.Microphone() as source:
                 r = sr.Recognizer()
                 r.adjust_for_ambient_noise(source)
-                r.dynamic_energythreshold = 3000
                 try:
                     print("listening")
                     audio = r.listen(source)
