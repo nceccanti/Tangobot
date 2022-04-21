@@ -138,6 +138,12 @@ class GUI:
         self.myCan.bind('<space>', m1.execute())
         self.addBackground(0, 140, 8, 1024, '#222222', m1)
         self.addBackground(900, 500, 50, 50, '#000000', m1)
+        self.myCan.create_text(120, 480, text="Head", fill="black", font=('Helvetica 14 bold'))
+        self.myCan.create_text(220, 480, text="Neck Turn", fill="black", font=('Helvetica 14 bold'))
+        self.myCan.create_text(320, 480, text="Neck Tilt", fill="black", font=('Helvetica 14 bold'))
+        self.myCan.create_text(420, 480, text="Move", fill="black", font=('Helvetica 14 bold'))
+        self.myCan.create_text(520, 480, text="Waist", fill="black", font=('Helvetica 14 bold'))
+        self.myCan.create_text(620, 480, text="Head", fill="black", font=('Helvetica 14 bold'))
         self.addMoveable(100, 500, 40, 40, "#FFFF00", m1, [0x04, 6000])
         self.addMoveable(200, 500, 40, 40, "#FF0000", m1, [0x05, 6000])
         self.addMoveable(300, 500, 40, 40, "#008000", m1, [0x06, 6000])
@@ -160,7 +166,7 @@ class GUI:
     def addDestination(self, x, y, height, width, color, controller):
         xf = x + width
         yf = y + height
-        self.myCan.create_rectangle(x, y, xf, yf, fill=color)
+        self.myCan.create_rectangle(x, y, xf, yf , fill=color)
         controller.addStatic(x, y, xf, yf, color)
 
     def addBackground(self, x, y, height, width, color, controller):
