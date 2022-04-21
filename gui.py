@@ -118,6 +118,8 @@ class MouseMovement():
         for i in self.static:
             if i[6] is not None:
                 print(i[6])
+                robot.setTarget(i[6][0], int(float(i[6][1])))
+                time.sleep(float(i[6][2]))
 
     def SubWindow(self, staticIndex):
         print("sub window")
@@ -176,7 +178,6 @@ class GUI:
         self.addMoveable(500, 500, 40, 40, "#0000FF", m1, [0x08, 6000])
         self.addMoveable(600, 500, 40, 40, "#FFFFFF", m1, [0x09, 6000])
         self.addMoveable(700, 500, 40, 40, "#FFA500", m1, [0x09, 6000])
-
         for i in range(8):
             x = i * 128
             self.addDestination(x+20, 100, 88, 88, "#B4E4F5", m1)
