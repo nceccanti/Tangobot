@@ -13,7 +13,8 @@ class VoiceInput:
                     audio = r.listen(source)
                     print("got audio")
                     word = r.recognize_google(audio)
-                    if word == input:
+                    print(word)
+                    if word.find(input) != -1:
                         isWord = True
                 except sr.UnknownValueError:
                     print("unknown words")
