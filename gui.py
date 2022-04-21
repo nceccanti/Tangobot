@@ -169,11 +169,11 @@ class GUI:
         self.addVariable(320, 480, "Waist", "Black", 'Helvetica 13 bold', m1)
         self.addVariable(420, 480, "Neck Vertical", "Black", 'Helvetica 13 bold', m1)
         self.addVariable(520, 480, "Neck Lateral", "Black", 'Helvetica 13 bold', m1)
-        self.addMoveable(100, 500, 40, 40, "#FFFF00", m1, [0x01, 6000])
-        self.addMoveable(200, 500, 40, 40, "#FF0000", m1, [0x02, 6000])
-        self.addMoveable(300, 500, 40, 40, "#008000", m1, [0x00, 6000])
-        self.addMoveable(400, 500, 40, 40, "#800080", m1, [0x04, 6000])
-        self.addMoveable(500, 500, 40, 40, "#0000FF", m1, [0x03, 6000])
+        self.addMoveable(100, 500, 40, 40, "#FFFF00", m1, [0x01, 6000, 1])
+        self.addMoveable(200, 500, 40, 40, "#FF0000", m1, [0x02, 6000, 1])
+        self.addMoveable(300, 500, 40, 40, "#008000", m1, [0x00, 6000, 1])
+        self.addMoveable(400, 500, 40, 40, "#800080", m1, [0x04, 6000, 1])
+        self.addMoveable(500, 500, 40, 40, "#0000FF", m1, [0x03, 6000, 1])
 
 
         for i in range(8):
