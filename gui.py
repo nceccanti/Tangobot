@@ -14,7 +14,8 @@ except:
         print("No serial ports")
         #sys.exit(0)
 
-
+robot = Move(500, usb)
+robot.stop()
 
 #Event controller
 class MouseMovement():
@@ -118,7 +119,13 @@ class MouseMovement():
     def execute(self):
         #print("execute instructions")
         for i in self.static:
-            if i[6] is not None:
+            if '!' == i[6][0]:
+                v = VoiceInput()
+                v.listen(i[6[1]])
+            elif '~' == i[6][0]:
+                s = Speaker()
+                s.TTS(i[6][1])
+            elif i[6] is not None:
                 print(i[6][0], int(float(i[6][1])), float(i[6][2]))
                 robot.setTarget(0x01, 6000)
                 robot.setTarget(0x02, 6000)
@@ -127,14 +134,10 @@ class MouseMovement():
                 if 0x02 == i[6][0]:
                     robot.setTarget(0x02, 6000)
                 robot.setTarget(i[6][0], int(float(i[6][1])))
-                time.sleep(float(i[6][2]))
-                robot.setTarget(0x01, 6000)
-                robot.setTarget(0x02, 6000)
-                time.sleep(1)
-                if '!' == i[6][0]:
-                    print("Voice Command")
-                if '~' == i[6][0]:
-                    print("Speak")
+            time.sleep(float(i[6][2]))
+            robot.setTarget(0x01, 6000)
+            robot.setTarget(0x02, 6000)
+            time.sleep(1)
 
     def SubWindow(self, staticIndex):
         print("sub window")
@@ -191,8 +194,8 @@ class GUI:
         self.addMoveable(300, 500, 40, 40, "#008000", m1, [0x00, 6000, 1])
         self.addMoveable(400, 500, 40, 40, "#800080", m1, [0x04, 6000, 1])
         self.addMoveable(500, 500, 40, 40, "#0000FF", m1, [0x03, 6000, 1])
-        self.addMoveable(600, 500, 40, 40, "#FFA500", m1, ['~', 6000, 1])
-        self.addMoveable(700, 500, 40, 40, "#FFC0CB", m1, ['!', 6000, 1])
+        self.addMoveable(600, 500, 40, 40, "#FFA500", m1, ['~', "", 1])
+        self.addMoveable(700, 500, 40, 40, "#FFC0CB", m1, ['!', "", 1])
 
 
         for i in range(8):
