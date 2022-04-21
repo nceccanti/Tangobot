@@ -118,6 +118,8 @@ class MouseMovement():
         for i in self.static:
             if i[6] is not None:
                 print(i[6][0], int(float(i[6][1])), float(i[6][2]))
+                self.setTarget(0x01, 6000)
+                self.setTarget(0x02, 6000)
                 robot.setTarget(i[6][0], int(float(i[6][1])))
                 time.sleep(float(i[6][2]))
 
