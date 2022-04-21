@@ -131,12 +131,12 @@ class MouseMovement():
                     print("move!")
                 else:
                     print(i[6][0], int(float(i[6][1])), float(i[6][2]))
-                    robot.setTarget(0x01, 6200)
-                    robot.setTarget(0x02, 6200)
+                    robot.setTarget(0x01, 6000)
+                    robot.setTarget(0x02, 6000)
                     if 0x01 == i[6][0]:
-                        robot.setTarget(0x01, 6000)
+                        robot.setTarget(0x01, 6200)
                     if 0x02 == i[6][0]:
-                        robot.setTarget(0x02, 6000)
+                        robot.setTarget(0x02, 6200)
                     robot.setTarget(i[6][0], int(float(i[6][1])))
                     robot.setTarget(0x01, 6000)
                     robot.setTarget(0x02, 6000)
