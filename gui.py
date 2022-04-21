@@ -121,7 +121,7 @@ class MouseMovement():
         for i in self.static:
             if '!' == i[6][0]:
                 v = VoiceInput()
-                v.listen(i[6[1]])
+                v.listen(i[6][1])
             elif '~' == i[6][0]:
                 s = Speaker()
                 s.TTS(i[6][1])
