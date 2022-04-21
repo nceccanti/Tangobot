@@ -119,7 +119,9 @@ class MouseMovement():
             if i[6] is not None:
                 print(i[6][0], int(float(i[6][1])), float(i[6][2]))
                 robot.setTarget(0x01, 6000)
+                time.sleep(1)
                 robot.setTarget(0x02, 6000)
+                time.sleep(1)
                 robot.setTarget(i[6][0], int(float(i[6][1])))
                 time.sleep(1)
 
