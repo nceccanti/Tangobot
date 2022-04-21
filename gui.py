@@ -32,6 +32,16 @@ class MouseMovement():
                 self.flag = True
                 self.track = i
 
+        # Clicking item on timeline will increment value sent to robot
+        for i in range(len(self.static)):
+            if event.x > self.static[i][0] and event.x < self.static[i][2] and event.y > self.static[i][1] and event.y < self.static[i][1] + self.static[i][3]:
+                print(self.static[i])
+                if self.static[i][6] is not None:
+                    if self.static[i][6][1] < 8000:
+                        self.static[i][6][1] += 50
+                    else:
+                        self.static[i][6][1] = 4000
+
     #What happens when you drag the mouse
     def mouseDragged(self, event):
         if self.flag == True:
@@ -59,7 +69,7 @@ class MouseMovement():
         for i in self.draggables:
             #print(i[0], i[1], i[2], i[3], i[4])
             self.myCan.create_rectangle(i[0], i[1], i[0] + i[2], i[1] + i[3], fill=i[4])
-
+ 
     #What happens when mouse press is released
     def mouseRelease(self, event):
         if self.flag == True:
