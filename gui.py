@@ -1,4 +1,18 @@
 import tkinter as tk
+import serial, time, sys
+from Move import *
+
+usb = ""
+try:
+    usb = serial.Serial('/dev/ttyACM0')
+except:
+    try:
+        usb = serial.Serial('/dev/ttyACM1')
+    except:
+        print("No serial ports")
+        #sys.exit(0)
+
+robot = Move(500, usb)
 
 #Event controller
 class MouseMovement():
@@ -35,12 +49,13 @@ class MouseMovement():
         # Clicking item on timeline will increment value sent to robot
         for i in range(len(self.static)):
             if event.x > self.static[i][0] and event.x < self.static[i][2] and event.y > self.static[i][1] and event.y < self.static[i][1] + self.static[i][3]:
-                print(self.static[i])
                 if self.static[i][6] is not None:
-                    if self.static[i][6][1] < 8000:
-                        self.static[i][6][1] += 50
+                    if self.static[i][6][1] < 7000:
+                        val = self.static[i][6][1]
+                        self.static[i][6][1] = val + 500
                     else:
-                        self.static[i][6][1] = 4000
+                        self.static[i][6][1] = 5000
+                print(self.static[i])
 
     #What happens when you drag the mouse
     def mouseDragged(self, event):
@@ -95,6 +110,17 @@ class MouseMovement():
         for i in self.static:
             if i[6] is not None:
                 print(i[6])
+
+                if i[6][0] == 6:
+                    if i[6][1] == 6000:
+                        print("center")
+                        #robot.center()
+                    elif i[6][1] < 6000:
+                        print("down")
+                        #obot.neckDown()
+                    elif i[6][1] > 6000:
+                        print("up")
+                        #robot.neckUp()
 
 class GUI:
     def __init__(self, win):
