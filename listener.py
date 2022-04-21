@@ -1,7 +1,7 @@
 import os.path
 import tkinter as tk
 import serial, time, sys
-import speech_recognition as sr
+#import speech_recognition as sr
 from Move import *
 # class FileControl:
 #     def readFile(self):
@@ -125,23 +125,23 @@ except:
 robot = Move(500, usb)
 robot.stop()
 
-listening = True
-while listening:
-    with sr.Microphone() as source:
-        r = sr.Recognizer()
-        r.adjust_for_ambient_noise(source)
-        r.dynamic_energythreshold = 3000
-        try:
-            print(listening)
-            audio = r.listen(source)
-            print("got audio")
-            word = r.recognize_google(audio)
-            print(word)
-            v = VoiceControl()
-            v.controller(word)
-
-        except sr.UnknownValueError:
-            print("unknown words")
+# listening = True
+# while listening:
+#     with sr.Microphone() as source:
+#         r = sr.Recognizer()
+#         r.adjust_for_ambient_noise(source)
+#         r.dynamic_energythreshold = 3000
+#         try:
+#             print(listening)
+#             audio = r.listen(source)
+#             print("got audio")
+#             word = r.recognize_google(audio)
+#             print(word)
+#             v = VoiceControl()
+#             v.controller(word)
+#
+#         except sr.UnknownValueError:
+#             print("unknown words")
 
 
 

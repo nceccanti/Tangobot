@@ -27,9 +27,6 @@ class Move:
         self.setTarget(0x01, 6000)
         self.setTarget(0x02, 6000)
 
-    def resetMovement(self):
-        self.writeCMD(chr(0x01), 6000, "linear halt", self.limit * 3)
-
     def forwardWheel(self):
         if self.targetLinear == self.center or 6200 == self.targetLinear:
             self.targetLinear -= 200
@@ -42,7 +39,6 @@ class Move:
             self.targetLinear += 200
         else:
             self.targetLinear += self.magnitude
-        self.writeCMD(chr(0x01), self.targetLinear, "backward move", self.limit * 3)
         self.setTarget(0x01, self.targetLinear)
 
 
