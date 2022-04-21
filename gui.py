@@ -128,6 +128,7 @@ class MouseMovement():
                 time.sleep(float(i[6][2]))
                 robot.setTarget(0x01, 6000)
                 robot.setTarget(0x02, 6000)
+                time.sleep(1)
 
     def SubWindow(self, staticIndex):
         print("sub window")
