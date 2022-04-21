@@ -13,6 +13,7 @@ except:
         #sys.exit(0)
 
 robot = Move(500, usb)
+robot.stop()
 
 #Event controller
 class MouseMovement():

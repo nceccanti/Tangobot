@@ -25,8 +25,11 @@ class Move:
         self.sendCmd(cmd)
 
     def stop(self):
+        self.setTarget(0x00, 6000)
         self.setTarget(0x01, 6000)
         self.setTarget(0x02, 6000)
+        self.setTarget(0x03, 6000)
+        self.setTarget(0x04, 6000)
 
     def forwardWheel(self):
         if self.targetLinear == self.center or 6200 == self.targetLinear:
