@@ -1,6 +1,8 @@
 import tkinter as tk
 import serial, time, sys
 from Move import *
+from voiceinput import *
+from speak import *
 
 usb = ""
 try:
