@@ -1,4 +1,18 @@
 import tkinter as tk
+import serial, time, sys
+from Move import *
+
+usb = ""
+try:
+    usb = serial.Serial('/dev/ttyACM0')
+except:
+    try:
+        usb = serial.Serial('/dev/ttyACM1')
+    except:
+        print("No serial ports")
+        #sys.exit(0)
+
+robot = Move(500, usb)
 
 #Event controller
 class MouseMovement():
@@ -9,12 +23,17 @@ class MouseMovement():
         self.draggables = []
         self.static = []
         self.background = []
+        self.variables = []
         self.track = None
         self.trackId = None
         self.target = None
         self.time = None
         self.staticIndexTarget = None
         self.window = None
+
+    #Adds Varibale object to be tracked
+    def addVariable(self, x, y, text, fill, font):
+        self.variables.append([x, y, text, fill, font])
 
     #Adds draggable object to be tracked
     def addDraggable(self, x, y, width, height, color, attribute):
@@ -59,6 +78,8 @@ class MouseMovement():
     def printElse(self):
         for i in self.background:
             self.myCan.create_rectangle(i[0], i[1], i[2], i[3], fill=i[4])
+        for i in self.variables:
+            self.myCan.create_text(i[0], i[1], text=i[2], fill=i[3], font=i[4])
         for i in self.static:
             #print(i[0], i[1], i[2], i[3], i[4])
             if i[5] is None:
@@ -141,22 +162,30 @@ class GUI:
         self.myCan.bind('<space>', m1.execute())
         self.addBackground(0, 140, 8, 1024, '#222222', m1)
         self.addBackground(900, 500, 50, 50, '#000000', m1)
-        self.myCan.create_text(120, 480, text="Head", fill="black", font=('Helvetica 14 bold'))
-        self.myCan.create_text(220, 480, text="Neck Turn", fill="black", font=('Helvetica 14 bold'))
-        self.myCan.create_text(320, 480, text="Neck Tilt", fill="black", font=('Helvetica 14 bold'))
-        self.myCan.create_text(420, 480, text="Move", fill="black", font=('Helvetica 14 bold'))
-        self.myCan.create_text(520, 480, text="Waist", fill="black", font=('Helvetica 14 bold'))
-        self.myCan.create_text(620, 480, text="Head", fill="black", font=('Helvetica 14 bold'))
-        self.addMoveable(100, 500, 40, 40, "#FFFF00", m1, [0x04, 6000, 0])
-        self.addMoveable(200, 500, 40, 40, "#FF0000", m1, [0x05, 6000, 0])
-        self.addMoveable(300, 500, 40, 40, "#008000", m1, [0x06, 6000, 0])
-        self.addMoveable(400, 500, 40, 40, "#800080", m1, [0x07, 6000, 0])
-        self.addMoveable(500, 500, 40, 40, "#0000FF", m1, [0x08, 6000, 0])
-        self.addMoveable(600, 500, 40, 40, "#FFFFFF", m1, [0x09, 6000, 0])
+        self.addVariable(120, 480, "Move Forward", "Black", 'Helvetica 13 bold', m1)
+        self.addVariable(220, 480, "Move Backward", "Black", 'Helvetica 13 bold', m1)
+        self.addVariable(320, 480, "Turn Left", "Black", 'Helvetica 13 bold', m1)
+        self.addVariable(420, 480, "Turn Right", "Black", 'Helvetica 13 bold', m1)
+        self.addVariable(520, 480, "Waist", "Black", 'Helvetica 13 bold', m1)
+        self.addVariable(620, 480, "Neck Vertical", "Black", 'Helvetica 13 bold', m1)
+        self.addVariable(720, 480, "Neck Lateral", "Black", 'Helvetica 13 bold', m1)
+        self.addMoveable(100, 500, 40, 40, "#FFFF00", m1, [0x04, 6000])
+        self.addMoveable(200, 500, 40, 40, "#FF0000", m1, [0x05, 6000])
+        self.addMoveable(300, 500, 40, 40, "#008000", m1, [0x06, 6000])
+        self.addMoveable(400, 500, 40, 40, "#800080", m1, [0x07, 6000])
+        self.addMoveable(500, 500, 40, 40, "#0000FF", m1, [0x08, 6000])
+        self.addMoveable(600, 500, 40, 40, "#FFFFFF", m1, [0x09, 6000])
+        self.addMoveable(700, 500, 40, 40, "#FFA500", m1, [0x09, 6000])
+
         for i in range(8):
             x = i * 128
             self.addDestination(x+20, 100, 88, 88, "#B4E4F5", m1)
         self.myCan.pack()
+
+    #Adds variable object
+    def addVariable(self, x, y, text1, fill1, font1, controller):
+        self.myCan.create_text(x, y, text=text1, fill=fill1, font=(font1))
+        controller.addVariable(x, y, text1, fill1, font1)
 
     #Adds draggable object
     def addMoveable(self, x, y, height, width, color, controller, attribute):
