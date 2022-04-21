@@ -1,22 +1,9 @@
 import tkinter as tk
-import serial, time, sys
-from Move import *
-
-usb = ""
-try:
-    usb = serial.Serial('/dev/ttyACM0')
-except:
-    try:
-        usb = serial.Serial('/dev/ttyACM1')
-    except:
-        print("No serial ports")
-        #sys.exit(0)
-
-robot = Move(500, usb)
 
 #Event controller
 class MouseMovement():
     def __init__(self, c):
+        self.selected = [False, None]
         self.flag = False
         self.myCan = c
         self.draggables = []
@@ -24,6 +11,10 @@ class MouseMovement():
         self.background = []
         self.track = None
         self.trackId = None
+        self.target = None
+        self.time = None
+        self.staticIndexTarget = None
+        self.window = None
 
     #Adds draggable object to be tracked
     def addDraggable(self, x, y, width, height, color, attribute):
@@ -45,17 +36,13 @@ class MouseMovement():
             if event.x > self.draggables[i][0] and event.x < self.draggables[i][0] + self.draggables[i][2] and event.y > self.draggables[i][1] and event.y < self.draggables[i][1] + self.draggables[i][3]:
                 self.flag = True
                 self.track = i
-
-        # Clicking item on timeline will increment value sent to robot
         for i in range(len(self.static)):
             if event.x > self.static[i][0] and event.x < self.static[i][2] and event.y > self.static[i][1] and event.y < self.static[i][1] + self.static[i][3]:
-                if self.static[i][6] is not None:
-                    if self.static[i][6][1] < 7000:
-                        val = self.static[i][6][1]
-                        self.static[i][6][1] = val + 500
-                    else:
-                        self.static[i][6][1] = 5000
-                print(self.static[i])
+                if self.selected[0] == False:
+                    self.selected = [True, i]
+                elif self.selected[0] == True:
+                    self.SubWindow(i)
+                    self.selected = [False, None]
 
     #What happens when you drag the mouse
     def mouseDragged(self, event):
@@ -111,16 +98,32 @@ class MouseMovement():
             if i[6] is not None:
                 print(i[6])
 
-                if i[6][0] == 6:
-                    if i[6][1] == 6000:
-                        print("center")
-                        #robot.center()
-                    elif i[6][1] < 6000:
-                        print("down")
-                        #obot.neckDown()
-                    elif i[6][1] > 6000:
-                        print("up")
-                        #robot.neckUp()
+    def SubWindow(self, staticIndex):
+        print("sub window")
+        newWindow = tk.Toplevel(self.myCan)
+        newWindow.title("Edit Instruction")
+        newWindow.geometry("400x400")
+        self.target = tk.Entry(newWindow, width=40)
+        self.target.focus_set()
+        self.target.pack()
+        self.time = tk.Entry(newWindow, width=40)
+        self.time.focus_set()
+        self.time.pack()
+        self.staticIndexTarget = staticIndex
+        self.window = newWindow
+        tk.Button(newWindow, text='Submit', width=20, command=self.SubmitText).pack(pady=20)
+
+
+    def SubmitText(self):
+        target = self.target.get()
+        time = self.time.get()
+        self.static[self.staticIndexTarget][6][1] = target
+        self.static[self.staticIndexTarget][6][2] = time
+        self.window.destroy()
+        self.target = None
+        self.time = None
+        self.staticIndexTarget = None
+        self.window = None
 
 class GUI:
     def __init__(self, win):
@@ -144,12 +147,12 @@ class GUI:
         self.myCan.create_text(420, 480, text="Move", fill="black", font=('Helvetica 14 bold'))
         self.myCan.create_text(520, 480, text="Waist", fill="black", font=('Helvetica 14 bold'))
         self.myCan.create_text(620, 480, text="Head", fill="black", font=('Helvetica 14 bold'))
-        self.addMoveable(100, 500, 40, 40, "#FFFF00", m1, [0x04, 6000])
-        self.addMoveable(200, 500, 40, 40, "#FF0000", m1, [0x05, 6000])
-        self.addMoveable(300, 500, 40, 40, "#008000", m1, [0x06, 6000])
-        self.addMoveable(400, 500, 40, 40, "#800080", m1, [0x07, 6000])
-        self.addMoveable(500, 500, 40, 40, "#0000FF", m1, [0x08, 6000])
-        self.addMoveable(600, 500, 40, 40, "#FFFFFF", m1, [0x09, 6000])
+        self.addMoveable(100, 500, 40, 40, "#FFFF00", m1, [0x04, 6000, 0])
+        self.addMoveable(200, 500, 40, 40, "#FF0000", m1, [0x05, 6000, 0])
+        self.addMoveable(300, 500, 40, 40, "#008000", m1, [0x06, 6000, 0])
+        self.addMoveable(400, 500, 40, 40, "#800080", m1, [0x07, 6000, 0])
+        self.addMoveable(500, 500, 40, 40, "#0000FF", m1, [0x08, 6000, 0])
+        self.addMoveable(600, 500, 40, 40, "#FFFFFF", m1, [0x09, 6000, 0])
         for i in range(8):
             x = i * 128
             self.addDestination(x+20, 100, 88, 88, "#B4E4F5", m1)
