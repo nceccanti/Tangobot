@@ -155,6 +155,8 @@ class MouseMovement():
                         robot.setTarget(0x02, 6200)
                     for j in self.point:
                         if j[0] == i:
+                            print(j)
+                            print(str(j[1]) + " hellp")
                             robot.setTarget(j[1], int(float(i[6][1])))
                             wait = j[2]
                 win2 = self.myCan
