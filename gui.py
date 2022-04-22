@@ -35,6 +35,7 @@ class MouseMovement():
         self.time = None
         self.staticIndexTarget = None
         self.window = None
+        self.point = []
 
     #Adds Varibale object to be tracked
     def addVariable(self, x, y, text, fill, font):
@@ -129,6 +130,7 @@ class MouseMovement():
         self.printElse()
 
     def execute(self):
+        print(self.point)
         self.myCan.delete("all")
         for i in self.static:
             print(i[6])
@@ -246,12 +248,12 @@ class MouseMovement():
         self.static[self.staticIndexTarget][6][1] = target + 6000
         self.static[self.staticIndexTarget][6][2] = time
         print(self.static[self.staticIndexTarget][6])
+        self.point.append([self.staticIndexTarget, target + 6000, time])
         self.window.destroy()
         self.target = None
         self.time = None
         self.staticIndexTarget = None
         self.window = None
-        print(self.static)
 
     def SubWindowText(self, staticIndex):
         print("sub window")
