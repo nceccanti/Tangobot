@@ -154,12 +154,12 @@ class MouseMovement():
                     if 0x02 == i[6][0]:
                         robot.setTarget(0x02, 6200)
                     print(self.static.index(i))
-                    tar = int(float(i[6][1]))
+                    tar = self.point[self.static.index(i)][1]
                     robot.setTarget(i[6][0], tar)
-                    wait = self.point[self.static.index(i)][1]
+                    wait = self.point[self.static.index(i)][2]
                 win2 = self.myCan
                 e = Eyes(win2)
-                for i in range(1):
+                for i in range(wait):
                     e.blink()
                 robot.setTarget(0x01, 6000)
                 robot.setTarget(0x02, 6000)
