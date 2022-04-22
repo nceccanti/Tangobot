@@ -129,12 +129,12 @@ class MouseMovement():
                 if '!' == i[6][0]:
                     print("voice!")
                     print(i[6][1])
-                    #Voice.listen(i[6][1])
+                    Voice.listen(i[6][1])
                 elif '~' == i[6][0]:
                     print("speak!")
                     print(i[6][1])
-                    #s = Speaker()
-                    #s.TTS(i[6][1])
+                    s = Speaker()
+                    s.TTS(i[6][1])
                 else:
                     print(i[6][0], int(float(i[6][1])), float(i[6][2]))
                     robot.setTarget(0x01, 6000)
