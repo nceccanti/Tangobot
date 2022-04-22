@@ -35,7 +35,7 @@ class MouseMovement():
         self.time = None
         self.staticIndexTarget = None
         self.window = None
-        self.point = []
+        self.point = [0] * 8
 
     #Adds Varibale object to be tracked
     def addVariable(self, x, y, text, fill, font):
@@ -252,7 +252,7 @@ class MouseMovement():
         self.static[self.staticIndexTarget][6][1] = target + 6000
         self.static[self.staticIndexTarget][6][2] = time
         print(self.static[self.staticIndexTarget][6])
-        self.point.append([self.staticIndexTarget, target + 6000, time])
+        self.point[self.staticIndexTarget][self.staticIndexTarget, target + 6000, time]
         self.window.destroy()
         self.target = None
         self.time = None
