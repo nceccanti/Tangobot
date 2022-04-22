@@ -163,6 +163,7 @@ class MouseMovement():
 
     def SubWindow(self, staticIndex):
         print("sub window")
+        print(staticIndex)
         newWindow = tk.Toplevel(self.myCan)
         newWindow.title("Edit Instruction")
         newWindow.geometry("800x400")
