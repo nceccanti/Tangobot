@@ -68,6 +68,7 @@ class MouseMovement():
                     #print(self.static[i][6][0])
                     if len(self.static[i][7][0]) == 0:
                         self.SubWindowText(i)
+                        print(i)
                     else:
                         self.SubWindow(i)
         if event.x > 900 and event.x < 950 and event.y > 400 and event.y < 450:
@@ -235,6 +236,7 @@ class MouseMovement():
         time = self.time.get()
         self.static[self.staticIndexTarget][6][1] = target + 6000
         self.static[self.staticIndexTarget][6][2] = time
+        print(self.static[self.staticIndexTarget][6])
         self.window.destroy()
         self.target = None
         self.time = None
