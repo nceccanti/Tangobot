@@ -122,12 +122,12 @@ class MouseMovement():
             if i[6] is not None:
                 if '!' == i[6][0]:
                     print("voice!")
-                    #v = VoiceInput()
-                    #v.listen(i[6][1])
+                    v = VoiceInput()
+                    v.listen(i[6][1])
                 elif '~' == i[6][0]:
                     print("speak!")
-                    #s = Speaker()
-                    #s.TTS(i[6][1])
+                    s = Speaker()
+                    s.TTS(i[6][1])
                 else:
                     print(i[6][0], int(float(i[6][1])), float(i[6][2]))
                     # robot.setTarget(0x01, 6000)
@@ -147,78 +147,105 @@ class MouseMovement():
                     # robot.setTarget(0x01, 6000)
                     # robot.setTarget(0x02, 6000)
 
+    def ChoiceHandler1(self, staticindex):
+        self.static[staticindex][6][1] = "Hello I am a robot"
+        print("youve made it to choice 1")
+        self.execute()
+
+    def ChoiceHandler2(self, staticindex):
+        self.static[staticindex][6][1] = "I was created at montana state university"
+        print("youve made it to choice 2")
+        self.execute()
+
+    def SSubWindow(self, staticindex):
+        print("Special Sub window")
+        newishWindow = tk.Toplevel(self.myCan)
+        newishWindow.title("User Input")
+        newishWindow.geometry("500x300")
+        btn1 = tk.Button(newishWindow, height=5, width=15, text="Option 1", command=self.ChoiceHandler1(staticindex))
+        btn1.pack(pady=10)
+        btn2 = tk.Button(newishWindow, height=5, width=15, text="Option 2", command=self.ChoiceHandler2(staticindex))
+        btn2.pack(pady=10)
+        if self.static[staticindex][6][0] == '!':
+            print("Made it to here")
+            self.execute()
+
     def SubWindow(self, staticIndex):
         print("sub window")
         newWindow = tk.Toplevel(self.myCan)
         newWindow.title("Edit Instruction")
         newWindow.geometry("600x400")
-        currentTarget = self.static[staticIndex][6][1] - 6000
-        currentTime = self.static[staticIndex][6][2]
-        newWindow.columnconfigure(0, weight=1)
-        newWindow.columnconfigure(1, weight=3)
-        targetLabelLeft = tk.Label(
-            newWindow,
-            text=self.static[staticIndex][7][0]
-        )
-        targetLabelLeft.grid(
-            column=0,
-            row=0,
-            sticky='w'
-        )
-        self.target = tk.Scale(
-            newWindow,
-            from_= -2000,
-            to=2000,
-            orient='horizontal',
-        )
-        self.target.grid(
-            column=1,
-            row=0,
-            sticky='we',
-        )
-        targetLabelRight = tk.Label(
-            newWindow,
-            text=self.static[staticIndex][7][1]
-        )
-        targetLabelRight.grid(
-            column=2,
-            row=0,
-            sticky='w'
-        )
-        self.target.focus_set()
-        self.target.set(currentTarget)
-        timeLabelLeft = tk.Label(
-            newWindow,
-            text="Time (seconds): "
-        )
-        timeLabelLeft.grid(
-            columnspan=2,
-            row=1,
-            sticky='w'
-        )
-        self.time = tk.Scale(
-            newWindow,
-            from_=0,
-            to=60,
-            length=350,
-            orient='horizontal',
-        )
-        self.time.grid(
-            column=1,
-            row=1,
-            sticky='we',
-        )
-        self.time.focus_set()
-        self.time.set(currentTime)
+        if self.static[staticIndex][6][0] == '~':
+            self.SSubWindow(staticIndex)
+        if self.static[staticIndex][6][0] == '!':
+            self.SSubWindow(staticIndex)
+            currentTarget = self.static[staticIndex][6][1] - 6000
+            currentTime = self.static[staticIndex][6][2]
+            newWindow.columnconfigure(0, weight=1)
+            newWindow.columnconfigure(1, weight=3)
+            targetLabelLeft = tk.Label(
+                newWindow,
+                text=self.static[staticIndex][7][0]
+            )
+            targetLabelLeft.grid(
+                column=0,
+                row=0,
+                sticky='w'
+            )
+            self.target = tk.Scale(
+                newWindow,
+                from_= -2000,
+                to=2000,
+                orient='horizontal',
+            )
+            self.target.grid(
+                column=1,
+                row=0,
+                sticky='we',
+            )
+            targetLabelRight = tk.Label(
+                newWindow,
+                text=self.static[staticIndex][7][1]
+            )
+            targetLabelRight.grid(
+                column=2,
+                row=0,
+                sticky='w'
+            )
+            self.target.focus_set()
+            self.target.set(currentTarget)
+            timeLabelLeft = tk.Label(
+                newWindow,
+                text="Time (seconds): "
+            )
+            timeLabelLeft.grid(
+                columnspan=2,
+                row=1,
+                sticky='w'
+            )
+            self.time = tk.Scale(
+                newWindow,
+                from_=0,
+                to=60,
+                length=350,
+                orient='horizontal',
+            )
+            self.time.grid(
+                column=1,
+                row=1,
+                sticky='we',
+            )
+            self.time.focus_set()
+            self.time.set(currentTime)
 
-        self.staticIndexTarget = staticIndex
-        self.window = newWindow
-        sub = tk.Button(newWindow, text='Submit', width=20, command=self.SubmitText)
-        sub.grid(
-            column=1,
-            row=3,
-            sticky='we',
-        )
+            self.staticIndexTarget = staticIndex
+            self.window = newWindow
+            sub = tk.Button(newWindow, text='Submit', width=20, command=self.SubmitText)
+            sub.grid(
+                column=1,
+                row=3,
+                sticky='we',
+            )
 
 
     def SubmitText(self):
