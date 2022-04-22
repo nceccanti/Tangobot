@@ -125,6 +125,7 @@ class MouseMovement():
 
     #Deletes attribute from static object
     def reset(self):
+        self.point = [0] * 8
         for i in range(len(self.static)):
             self.static[i] = [self.static[i][0], self.static[i][1], self.static[i][2], self.static[i][3], self.static[i][4], None, None]
         self.printElse()
