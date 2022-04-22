@@ -16,6 +16,7 @@ import tkinter as tk
 #
 # robot = Move(500, usb)
 # robot.stop()
+#Voice = VoiceInput()
 
 #Event controller
 class MouseMovement():
@@ -127,8 +128,7 @@ class MouseMovement():
                 if '!' == i[6][0]:
                     print("voice!")
                     print(i[6][1])
-                    #v = VoiceInput()
-                    #v.listen(i[6][1])
+                    #Voice.listen(i[6][1])
                 elif '~' == i[6][0]:
                     print("speak!")
                     print(i[6][1])
@@ -343,7 +343,6 @@ class GUI:
         self.addMoveable(480, 500, 40, 40, "#0000FF", m1, [0x03, 6000, 1], ['Left', 'Right'])
         self.addMoveable(590, 500, 40, 40, "#FFA500", m1, ['~', "", 1], ['', ''])
         self.addMoveable(700, 500, 40, 40, "#FFC0CB", m1, ['!', "", 1], ['', ''])
-
 
         for i in range(8):
             x = i * 128
