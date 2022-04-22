@@ -241,6 +241,7 @@ class MouseMovement():
     def SubmitText(self):
         target = self.target.get()
         time = self.time.get()
+        print(self.staticIndexTarget)
         self.static[self.staticIndexTarget][6][1] = target + 6000
         self.static[self.staticIndexTarget][6][2] = time
         print(self.static[self.staticIndexTarget][6])
