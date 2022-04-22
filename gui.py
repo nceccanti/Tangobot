@@ -167,6 +167,7 @@ class MouseMovement():
         newWindow = tk.Toplevel(self.myCan)
         newWindow.title("Edit Instruction")
         newWindow.geometry("800x400")
+        print(self.static[staticIndex][6])
         currentTarget = self.static[staticIndex][6][1] - 6000
         currentTime = self.static[staticIndex][6][2]
         newWindow.columnconfigure(0, weight=1)
