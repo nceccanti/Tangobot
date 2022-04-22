@@ -21,6 +21,7 @@ Voice = VoiceInput()
 #Event controller
 class MouseMovement():
     def __init__(self, c):
+        self.id = 0
         self.selected = [False, None]
         self.flag = False
         self.myCan = c
@@ -45,7 +46,7 @@ class MouseMovement():
 
     #Adds static interactable object to be tracked
     def addStatic(self, x, y, width, height, color):
-        self.static.append([x, y, width, height, color, None, None, None])
+        self.static.append([x, y, width, height, color, 0, 0, 0])
 
     #Adds static background object, these objects are intended to have no interaction with the user
     def addBackgroundObject(self, x, y, width, height, color):
@@ -236,7 +237,6 @@ class MouseMovement():
             row=3,
             sticky='we',
         )
-
 
     def SubmitText(self):
         target = self.target.get()
