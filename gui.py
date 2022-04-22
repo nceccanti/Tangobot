@@ -1,5 +1,5 @@
 import tkinter as tk
-import serial, time, sys
+# import serial, time, sys
 #from Move import *
 #from voiceinput import *
 #from speak import *
@@ -63,8 +63,12 @@ class MouseMovement():
                 if self.selected[0] == False:
                     self.selected = [True, i]
                 elif self.selected[0] == True:
-                    self.SubWindow(i)
                     self.selected = [False, None]
+                    #print(self.static[i][6][0])
+                    if len(self.static[i][7][0]) == 0:
+                        self.SubWindowText(i)
+                    else:
+                        self.SubWindow(i)
         if event.x > 900 and event.x < 950 and event.y > 400 and event.y < 450:
             self.reset()
 
@@ -122,12 +126,14 @@ class MouseMovement():
             if i[6] is not None:
                 if '!' == i[6][0]:
                     print("voice!")
-                    v = VoiceInput()
-                    v.listen(i[6][1])
+                    print(i[6][1])
+                    #v = VoiceInput()
+                    #v.listen(i[6][1])
                 elif '~' == i[6][0]:
                     print("speak!")
-                    s = Speaker()
-                    s.TTS(i[6][1])
+                    print(i[6][1])
+                    #s = Speaker()
+                    #s.TTS(i[6][1])
                 else:
                     print(i[6][0], int(float(i[6][1])), float(i[6][2]))
                     # robot.setTarget(0x01, 6000)
@@ -137,121 +143,166 @@ class MouseMovement():
                     # if 0x02 == i[6][0]:
                     #     robot.setTarget(0x02, 6200)
                     # robot.setTarget(i[6][0], int(float(i[6][1])))
-                    win = tk.Tk()
-                    e = Eyes(win)
-                    for i in range(int(i[6][2])):
-                        e.blink()
-                    win.after(5000, win.destroy)
-                    win.mainloop()
                     # time.sleep(float(i[6][2]))
                     # robot.setTarget(0x01, 6000)
                     # robot.setTarget(0x02, 6000)
-
-    def ChoiceHandler1(self, staticindex):
-        self.static[staticindex][6][1] = "Hello I am a robot"
-        print("youve made it to choice 1")
-        self.execute()
-
-    def ChoiceHandler2(self, staticindex):
-        self.static[staticindex][6][1] = "I was created at montana state university"
-        print("youve made it to choice 2")
-        self.execute()
-
-    def SSubWindow(self, staticindex):
-        print("Special Sub window")
-        newishWindow = tk.Toplevel(self.myCan)
-        newishWindow.title("User Input")
-        newishWindow.geometry("500x300")
-        btn1 = tk.Button(newishWindow, height=5, width=15, text="Option 1", command=self.ChoiceHandler1(staticindex))
-        btn1.pack(pady=10)
-        btn2 = tk.Button(newishWindow, height=5, width=15, text="Option 2", command=self.ChoiceHandler2(staticindex))
-        btn2.pack(pady=10)
-        if self.static[staticindex][6][0] == '!':
-            print("Made it to here")
-            self.execute()
 
     def SubWindow(self, staticIndex):
         print("sub window")
         newWindow = tk.Toplevel(self.myCan)
         newWindow.title("Edit Instruction")
-        newWindow.geometry("600x400")
-        if self.static[staticIndex][6][0] == '~':
-            self.SSubWindow(staticIndex)
-        if self.static[staticIndex][6][0] == '!':
-            self.SSubWindow(staticIndex)
-            currentTarget = self.static[staticIndex][6][1] - 6000
-            currentTime = self.static[staticIndex][6][2]
-            newWindow.columnconfigure(0, weight=1)
-            newWindow.columnconfigure(1, weight=3)
-            targetLabelLeft = tk.Label(
-                newWindow,
-                text=self.static[staticIndex][7][0]
-            )
-            targetLabelLeft.grid(
-                column=0,
-                row=0,
-                sticky='w'
-            )
-            self.target = tk.Scale(
-                newWindow,
-                from_= -2000,
-                to=2000,
-                orient='horizontal',
-            )
-            self.target.grid(
-                column=1,
-                row=0,
-                sticky='we',
-            )
-            targetLabelRight = tk.Label(
-                newWindow,
-                text=self.static[staticIndex][7][1]
-            )
-            targetLabelRight.grid(
-                column=2,
-                row=0,
-                sticky='w'
-            )
-            self.target.focus_set()
-            self.target.set(currentTarget)
-            timeLabelLeft = tk.Label(
-                newWindow,
-                text="Time (seconds): "
-            )
-            timeLabelLeft.grid(
-                columnspan=2,
-                row=1,
-                sticky='w'
-            )
-            self.time = tk.Scale(
-                newWindow,
-                from_=0,
-                to=60,
-                length=350,
-                orient='horizontal',
-            )
-            self.time.grid(
-                column=1,
-                row=1,
-                sticky='we',
-            )
-            self.time.focus_set()
-            self.time.set(currentTime)
+        newWindow.geometry("800x400")
+        currentTarget = self.static[staticIndex][6][1] - 6000
+        currentTime = self.static[staticIndex][6][2]
+        newWindow.columnconfigure(0, weight=1)
+        newWindow.columnconfigure(1, weight=3)
+        targetLabelLeft = tk.Label(
+            newWindow,
+            text=self.static[staticIndex][7][0]
+        )
+        targetLabelLeft.grid(
+            column=0,
+            row=0,
+            sticky='w'
+        )
+        self.target = tk.Scale(
+            newWindow,
+            from_= -2000,
+            to=2000,
+            orient='horizontal',
+        )
+        self.target.grid(
+            column=1,
+            row=0,
+            sticky='we',
+        )
+        targetLabelRight = tk.Label(
+            newWindow,
+            text=self.static[staticIndex][7][1]
+        )
+        targetLabelRight.grid(
+            column=2,
+            row=0,
+            sticky='w'
+        )
+        self.target.focus_set()
+        self.target.set(currentTarget)
+        timeLabelLeft = tk.Label(
+            newWindow,
+            text="Time (seconds): "
+        )
+        timeLabelLeft.grid(
+            columnspan=2,
+            row=1,
+            sticky='w'
+        )
+        self.time = tk.Scale(
+            newWindow,
+            from_=0,
+            to=60,
+            length=350,
+            orient='horizontal',
+        )
+        self.time.grid(
+            column=1,
+            row=1,
+            sticky='we',
+        )
+        self.time.focus_set()
+        self.time.set(currentTime)
 
-            self.staticIndexTarget = staticIndex
-            self.window = newWindow
-            sub = tk.Button(newWindow, text='Submit', width=20, command=self.SubmitText)
-            sub.grid(
-                column=1,
-                row=3,
-                sticky='we',
-            )
+        self.staticIndexTarget = staticIndex
+        self.window = newWindow
+        sub = tk.Button(newWindow, text='Submit', width=20, command=self.SubmitText)
+        sub.grid(
+            column=1,
+            row=3,
+            sticky='we',
+        )
 
 
     def SubmitText(self):
         target = self.target.get()
         time = self.time.get()
         self.static[self.staticIndexTarget][6][1] = target + 6000
+        self.static[self.staticIndexTarget][6][2] = time
+        self.window.destroy()
+        self.target = None
+        self.time = None
+        self.staticIndexTarget = None
+        self.window = None
+
+    def SubWindowText(self, staticIndex):
+        print("sub window")
+        newWindow = tk.Toplevel(self.myCan)
+        newWindow.title("Edit Instruction")
+        newWindow.geometry("800x400")
+        currentTime = self.static[staticIndex][6][2]
+        newWindow.columnconfigure(0, weight=1)
+        newWindow.columnconfigure(1, weight=3)
+        sub1 = tk.Button(newWindow, text='Hello', width=20, command=self.setHello)
+        sub1.grid(
+            column=1,
+            row=1,
+            sticky='we',
+        )
+        sub2 = tk.Button(newWindow, text='Howdy', width=20, command=self.setHowdy)
+        sub2.grid(
+            column=1,
+            row=2,
+            sticky='we',
+        )
+        sub3 = tk.Button(newWindow, text='Robot', width=20, command=self.setRobot)
+        sub3.grid(
+            column=1,
+            row=3,
+            sticky='we',
+        )
+        timeLabelLeft = tk.Label(
+            newWindow,
+            text="Time (seconds): "
+        )
+        timeLabelLeft.grid(
+            columnspan=2,
+            row=4,
+            sticky='w'
+        )
+        self.time = tk.Scale(
+            newWindow,
+            from_=0,
+            to=60,
+            length=350,
+            orient='horizontal',
+        )
+        self.time.grid(
+            column=1,
+            row=4,
+            sticky='we',
+        )
+        self.time.focus_set()
+        self.time.set(currentTime)
+        self.staticIndexTarget = staticIndex
+        self.window = newWindow
+        sub = tk.Button(newWindow, text='Submit', width=20, command=self.SubmitTextStr)
+        sub.grid(
+            column=1,
+            row=5,
+            sticky='we',
+        )
+
+    def setHello(self):
+        self.target = "hello"
+
+    def setHowdy(self):
+        self.target = "howdy"
+
+    def setRobot(self):
+        self.target = "robot"
+
+    def SubmitTextStr(self):
+        target = self.target
+        time = self.time.get()
+        self.static[self.staticIndexTarget][6][1] = target
         self.static[self.staticIndexTarget][6][2] = time
         self.window.destroy()
         self.target = None
@@ -323,35 +374,6 @@ class GUI:
         yf = y + height
         self.myCan.create_rectangle(x, y, xf, yf, fill=color)
         controller.addBackgroundObject(x, y, xf, yf, color)
-
-class Eyes():
-    def __init__(self, win):
-        self.win = win
-        self.win.geometry("800x480")
-        self.myCan = tk.Canvas(self.win, bg="#333333", width="500", height="500")
-
-    def eyeballs(self):
-        print("eyes")
-        self.myCan.create_oval(75, 75, 200, 300, fil="white")
-        self.myCan.create_oval(225, 75, 350, 300, fil="white")
-        self.myCan.create_oval(105, 180, 165, 270, fil="black")
-        self.myCan.create_oval(255, 180, 310, 270, fil="black")
-        self.myCan.create_oval(110, 230, 130, 250, fil="white")
-        self.myCan.create_oval(260, 230, 280, 250, fil="white")
-        self.myCan.pack()
-
-    def eyelids(self):
-        print("blink")
-        self.myCan.create_oval(75, 75, 200, 300, fil="yellow")
-        self.myCan.create_oval(225, 75, 350, 300, fil="yellow")
-        self.myCan.pack()
-
-    def blink(self):
-        self.eyeballs()
-        self.win.update()
-        self.win.after(2000, self.eyelids())
-        self.win.update()
-        self.win.after(250, self.eyeballs())
 
 if __name__ == '__main__':
     win = tk.Tk()
