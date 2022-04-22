@@ -126,7 +126,7 @@ class MouseMovement():
     def execute(self):
         self.myCan.delete("all")
         for i in self.static:
-            print(self.static[i])
+            print(i[6])
             if i[6] is not None:
                 if '!' == i[6][0]:
                     print("voice!")
