@@ -46,7 +46,7 @@ class MouseMovement():
 
     #Adds static interactable object to be tracked
     def addStatic(self, x, y, width, height, color):
-        self.static.append([x, y, width, height, color, 0, 0, 0])
+        self.static.append([x, y, width, height, color, color, 0, 0])
 
     #Adds static background object, these objects are intended to have no interaction with the user
     def addBackgroundObject(self, x, y, width, height, color):
