@@ -130,6 +130,7 @@ class MouseMovement():
         self.printElse()
 
     def execute(self):
+        wait = 0
         print(self.point)
         self.myCan.delete("all")
         for i in self.static:
@@ -152,10 +153,13 @@ class MouseMovement():
                         robot.setTarget(0x01, 6200)
                     if 0x02 == i[6][0]:
                         robot.setTarget(0x02, 6200)
-                    robot.setTarget(i[6][0], int(float(i[6][1])))
+                    for j in self.point:
+                        if j[0] == i:
+                            robot.setTarget(j[1], int(float(i[6][1])))
+                            wait = j[2]
                 win2 = self.myCan
                 e = Eyes(win2)
-                for i in range(int(float(i[6][2]))):
+                for i in range(int(float(wait))):
                     e.blink()
                 robot.setTarget(0x01, 6000)
                 robot.setTarget(0x02, 6000)
