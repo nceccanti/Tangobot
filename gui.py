@@ -250,6 +250,7 @@ class MouseMovement():
         self.time = None
         self.staticIndexTarget = None
         self.window = None
+        print(self.static)
 
     def SubWindowText(self, staticIndex):
         print("sub window")
