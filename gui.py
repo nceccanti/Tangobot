@@ -202,7 +202,7 @@ class MouseMovement():
             sticky='w'
         )
         self.target.focus_set()
-        print(currentTarget + "curr")
+        print(str(currentTarget) + "curr")
         self.target.set(currentTarget)
         timeLabelLeft = tk.Label(
             newWindow,
