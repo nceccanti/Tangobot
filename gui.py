@@ -1,22 +1,22 @@
 import tkinter as tk
-# import serial, time, sys
-#from Move import *
-#from voiceinput import *
-#from speak import *
+import serial, time, sys
+from Move import *
+from voiceinput import *
+from speak import *
 
-# usb = ""
-# try:
-#     usb = serial.Serial('/dev/ttyACM0')
-# except:
-#     try:
-#         usb = serial.Serial('/dev/ttyACM1')
-#     except:
-#         print("No serial ports")
-#         #sys.exit(0)
-#
-# robot = Move(500, usb)
-# robot.stop()
-#Voice = VoiceInput()
+usb = ""
+try:
+    usb = serial.Serial('/dev/ttyACM0')
+except:
+    try:
+        usb = serial.Serial('/dev/ttyACM1')
+    except:
+        print("No serial ports")
+        #sys.exit(0)
+
+robot = Move(500, usb)
+robot.stop()
+Voice = VoiceInput()
 
 #Event controller
 class MouseMovement():
@@ -137,16 +137,16 @@ class MouseMovement():
                     #s.TTS(i[6][1])
                 else:
                     print(i[6][0], int(float(i[6][1])), float(i[6][2]))
-                    # robot.setTarget(0x01, 6000)
-                    # robot.setTarget(0x02, 6000)
-                    # if 0x01 == i[6][0]:
-                    #     robot.setTarget(0x01, 6200)
-                    # if 0x02 == i[6][0]:
-                    #     robot.setTarget(0x02, 6200)
-                    # robot.setTarget(i[6][0], int(float(i[6][1])))
-                    # time.sleep(float(i[6][2]))
-                    # robot.setTarget(0x01, 6000)
-                    # robot.setTarget(0x02, 6000)
+                    robot.setTarget(0x01, 6000)
+                    robot.setTarget(0x02, 6000)
+                    if 0x01 == i[6][0]:
+                        robot.setTarget(0x01, 6200)
+                    if 0x02 == i[6][0]:
+                        robot.setTarget(0x02, 6200)
+                    robot.setTarget(i[6][0], int(float(i[6][1])))
+                    time.sleep(float(i[6][2]))
+                    robot.setTarget(0x01, 6000)
+                    robot.setTarget(0x02, 6000)
                 win2 = self.myCan
                 e = Eyes(win2)
                 for i in range(int(float(i[6][2])/2)):
@@ -323,7 +323,7 @@ class GUI:
     def __init__(self, win):
         self.win = win
         self.win.geometry("1024x600")
-        #self.win.attributes('-fullscreen',True)
+        self.win.attributes('-fullscreen',True)
 
     #Creates GUI window, create all objects here
     def createWindow(self):
