@@ -122,6 +122,7 @@ class MouseMovement():
         self.printElse()
 
     def execute(self):
+        self.myCan.delete("all")
         for i in self.static:
             if i[6] is not None:
                 if '!' == i[6][0]:
@@ -146,6 +147,14 @@ class MouseMovement():
                     # time.sleep(float(i[6][2]))
                     # robot.setTarget(0x01, 6000)
                     # robot.setTarget(0x02, 6000)
+                win2 = self.myCan
+                e = Eyes(win2)
+                for i in range(int(float(i[6][2])/2)):
+                    e.blink()
+                
+        self.myCan.delete("all")
+        self.printElse()
+        self.printDraggables()
 
     def SubWindow(self, staticIndex):
         print("sub window")
@@ -374,6 +383,33 @@ class GUI:
         yf = y + height
         self.myCan.create_rectangle(x, y, xf, yf, fill=color)
         controller.addBackgroundObject(x, y, xf, yf, color)
+
+class Eyes():
+    def __init__(self, win):
+        self.myCan = win
+
+    def eyeballs(self):
+        print("eyes")
+        self.myCan.create_oval(75, 75, 200, 300, fil="white")
+        self.myCan.create_oval(225, 75, 350, 300, fil="white")
+        self.myCan.create_oval(105, 180, 165, 270, fil="black")
+        self.myCan.create_oval(255, 180, 310, 270, fil="black")
+        self.myCan.create_oval(110, 230, 130, 250, fil="white")
+        self.myCan.create_oval(260, 230, 280, 250, fil="white")
+        self.myCan.pack()
+
+    def eyelids(self):
+        print("blink")
+        self.myCan.create_oval(75, 75, 200, 300, fil="yellow")
+        self.myCan.create_oval(225, 75, 350, 300, fil="yellow")
+        self.myCan.pack()
+
+    def blink(self):
+        self.eyeballs()
+        self.myCan.update()
+        self.myCan.after(2000, self.eyelids())
+        self.myCan.update()
+        self.myCan.after(250, self.eyeballs())
 
 if __name__ == '__main__':
     win = tk.Tk()
