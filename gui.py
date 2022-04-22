@@ -146,10 +146,11 @@ class MouseMovement():
                     robot.setTarget(i[6][0], int(float(i[6][1])))
                 win2 = self.myCan
                 e = Eyes(win2)
-                for i in range(int(float(i[6][2])/2)):
+                for i in range(int(float(i[6][2]))):
                     e.blink()
                 robot.setTarget(0x01, 6000)
                 robot.setTarget(0x02, 6000)
+                time.sleep(1)
                 
         self.myCan.delete("all")
         self.printElse()
@@ -345,10 +346,10 @@ class GUI:
         self.addVariable(925, 380, "Reset", "Black", 'Helvetica 13 bold', m1)
         self.addVariable(925, 480, "Execute", "Black", 'Helvetica 13 bold', m1)
         self.addMoveable(40, 500, 40, 40, "#FFFF00", m1, [0x01, 6000, 1], ['Forward', 'Backward'])
-        self.addMoveable(150, 500, 40, 40, "#FF0000", m1, [0x02, 6000, 1], ['Left', 'Right'])
-        self.addMoveable(260, 500, 40, 40, "#008000", m1, [0x00, 6000, 1], ['Left', 'Right'])
-        self.addMoveable(370, 500, 40, 40, "#800080", m1, [0x04, 6000, 1], ['Up', 'Down'])
-        self.addMoveable(480, 500, 40, 40, "#0000FF", m1, [0x03, 6000, 1], ['Left', 'Right'])
+        self.addMoveable(150, 500, 40, 40, "#FF0000", m1, [0x02, 6000, 1], ['Right', 'Left'])
+        self.addMoveable(260, 500, 40, 40, "#008000", m1, [0x00, 6000, 1], ['Right', 'Left'])
+        self.addMoveable(370, 500, 40, 40, "#800080", m1, [0x04, 6000, 1], ['Down', 'Up'])
+        self.addMoveable(480, 500, 40, 40, "#0000FF", m1, [0x03, 6000, 1], ['Right', 'Left'])
         self.addMoveable(590, 500, 40, 40, "#FFA500", m1, ['~', "", 1], ['', ''])
         self.addMoveable(700, 500, 40, 40, "#FFC0CB", m1, ['!', "", 1], ['', ''])
 
@@ -405,7 +406,7 @@ class Eyes():
     def blink(self):
         self.eyeballs()
         self.myCan.update()
-        self.myCan.after(2000, self.eyelids())
+        self.myCan.after(750, self.eyelids())
         self.myCan.update()
         self.myCan.after(250, self.eyeballs())
 
