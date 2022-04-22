@@ -154,9 +154,8 @@ class MouseMovement():
                     if 0x02 == i[6][0]:
                         robot.setTarget(0x02, 6200)
                     print(self.static.index(i))
-                    bit = self.point[self.static.index(i)][1]
                     tar = int(float(i[6][1]))
-                    robot.setTarget(bit, 6700)
+                    robot.setTarget(i[6][0], tar)
                     wait = self.point[self.static.index(i)][1]
                 win2 = self.myCan
                 e = Eyes(win2)
