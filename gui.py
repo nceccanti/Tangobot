@@ -112,8 +112,11 @@ class MouseMovement():
             for i in range(len(self.static)):
                 if event.x > self.static[i][0] and event.x < self.static[i][2] and event.y > self.static[i][1] and event.y < self.static[i][3]:
                     self.static[i] = [self.static[i][0], self.static[i][1], self.static[i][2], self.static[i][3], self.static[i][4], self.draggables[self.track][4], self.draggables[self.track][5], self.draggables[self.track][6]]
+                    print(self.static[i])
+                    print(i)
             self.printElse()
             self.printDraggables()
+            print(self.track)
             self.track=None
             self.trackId=None
 
