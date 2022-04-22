@@ -1,5 +1,5 @@
 import tkinter as tk
-# import serial, time, sys
+import serial, time, sys
 #from Move import *
 #from voiceinput import *
 #from speak import *
@@ -137,6 +137,12 @@ class MouseMovement():
                     # if 0x02 == i[6][0]:
                     #     robot.setTarget(0x02, 6200)
                     # robot.setTarget(i[6][0], int(float(i[6][1])))
+                    win = tk.Tk()
+                    e = Eyes(win)
+                    for i in range(int(i[6][2])):
+                        e.blink()
+                    win.after(5000, win.destroy)
+                    win.mainloop()
                     # time.sleep(float(i[6][2]))
                     # robot.setTarget(0x01, 6000)
                     # robot.setTarget(0x02, 6000)
@@ -290,6 +296,35 @@ class GUI:
         yf = y + height
         self.myCan.create_rectangle(x, y, xf, yf, fill=color)
         controller.addBackgroundObject(x, y, xf, yf, color)
+
+class Eyes():
+    def __init__(self, win):
+        self.win = win
+        self.win.geometry("800x480")
+        self.myCan = tk.Canvas(self.win, bg="#333333", width="500", height="500")
+
+    def eyeballs(self):
+        print("eyes")
+        self.myCan.create_oval(75, 75, 200, 300, fil="white")
+        self.myCan.create_oval(225, 75, 350, 300, fil="white")
+        self.myCan.create_oval(105, 180, 165, 270, fil="black")
+        self.myCan.create_oval(255, 180, 310, 270, fil="black")
+        self.myCan.create_oval(110, 230, 130, 250, fil="white")
+        self.myCan.create_oval(260, 230, 280, 250, fil="white")
+        self.myCan.pack()
+
+    def eyelids(self):
+        print("blink")
+        self.myCan.create_oval(75, 75, 200, 300, fil="yellow")
+        self.myCan.create_oval(225, 75, 350, 300, fil="yellow")
+        self.myCan.pack()
+
+    def blink(self):
+        self.eyeballs()
+        self.win.update()
+        self.win.after(2000, self.eyelids())
+        self.win.update()
+        self.win.after(250, self.eyeballs())
 
 if __name__ == '__main__':
     win = tk.Tk()
