@@ -1,21 +1,21 @@
 import tkinter as tk
-import serial, time, sys
-from Move import *
-from voiceinput import *
-from speak import *
+# import serial, time, sys
+#from Move import *
+#from voiceinput import *
+#from speak import *
 
-usb = ""
-try:
-    usb = serial.Serial('/dev/ttyACM0')
-except:
-    try:
-        usb = serial.Serial('/dev/ttyACM1')
-    except:
-        print("No serial ports")
-        #sys.exit(0)
-
-robot = Move(500, usb)
-robot.stop()
+# usb = ""
+# try:
+#     usb = serial.Serial('/dev/ttyACM0')
+# except:
+#     try:
+#         usb = serial.Serial('/dev/ttyACM1')
+#     except:
+#         print("No serial ports")
+#         #sys.exit(0)
+#
+# robot = Move(500, usb)
+# robot.stop()
 
 #Event controller
 class MouseMovement():
@@ -39,12 +39,12 @@ class MouseMovement():
         self.variables.append([x, y, text, fill, font])
 
     #Adds draggable object to be tracked
-    def addDraggable(self, x, y, width, height, color, attribute):
-        self.draggables.append([x, y, width, height, color, attribute])
+    def addDraggable(self, x, y, width, height, color, attribute, labels):
+        self.draggables.append([x, y, width, height, color, attribute, labels])
 
     #Adds static interactable object to be tracked
     def addStatic(self, x, y, width, height, color):
-        self.static.append([x, y, width, height, color, None, None])
+        self.static.append([x, y, width, height, color, None, None, None])
 
     #Adds static background object, these objects are intended to have no interaction with the user
     def addBackgroundObject(self, x, y, width, height, color):
@@ -59,12 +59,14 @@ class MouseMovement():
                 self.flag = True
                 self.track = i
         for i in range(len(self.static)):
-            if event.x > self.static[i][0] and event.x < self.static[i][2] and event.y > self.static[i][1] and event.y < self.static[i][1] + self.static[i][3]:
+            if event.x > self.static[i][0] and event.x < self.static[i][2] and event.y > self.static[i][1] and event.y < self.static[i][1] + self.static[i][3] and self.static[i][6] is not None:
                 if self.selected[0] == False:
                     self.selected = [True, i]
                 elif self.selected[0] == True:
                     self.SubWindow(i)
                     self.selected = [False, None]
+        if event.x > 900 and event.x < 950 and event.y > 400 and event.y < 450:
+            self.reset()
 
     #What happens when you drag the mouse
     def mouseDragged(self, event):
@@ -103,65 +105,120 @@ class MouseMovement():
             self.myCan.delete('all')
             for i in range(len(self.static)):
                 if event.x > self.static[i][0] and event.x < self.static[i][2] and event.y > self.static[i][1] and event.y < self.static[i][3]:
-                    self.static[i] = [self.static[i][0], self.static[i][1], self.static[i][2], self.static[i][3], self.static[i][4], self.draggables[self.track][4], self.draggables[self.track][5]]
+                    self.static[i] = [self.static[i][0], self.static[i][1], self.static[i][2], self.static[i][3], self.static[i][4], self.draggables[self.track][4], self.draggables[self.track][5], self.draggables[self.track][6]]
             self.printElse()
             self.printDraggables()
             self.track=None
             self.trackId=None
 
     #Deletes attribute from static object
-    def rightClick(self, event):
+    def reset(self):
         for i in range(len(self.static)):
-            if event.x > self.static[i][0] and event.x < self.static[i][2] and event.y > self.static[i][1] and event.y < self.static[i][3]:
-                self.static[i] = [self.static[i][0], self.static[i][1], self.static[i][2], self.static[i][3], self.static[i][4], None, None]
+            self.static[i] = [self.static[i][0], self.static[i][1], self.static[i][2], self.static[i][3], self.static[i][4], None, None]
         self.printElse()
 
     def execute(self):
         for i in self.static:
             if i[6] is not None:
-                print(i[6])
                 if '!' == i[6][0]:
                     print("voice!")
-                    v = VoiceInput()
-                    v.listen(i[6][1])
+                    #v = VoiceInput()
+                    #v.listen(i[6][1])
                 elif '~' == i[6][0]:
                     print("speak!")
-                    s = Speaker()
-                    s.TTS(i[6][1])
-                    print("move!")
+                    #s = Speaker()
+                    #s.TTS(i[6][1])
                 else:
                     print(i[6][0], int(float(i[6][1])), float(i[6][2]))
-                    robot.setTarget(0x01, 6000)
-                    robot.setTarget(0x02, 6000)
-                    if 0x01 == i[6][0]:
-                        robot.setTarget(0x01, 6200)
-                    if 0x02 == i[6][0]:
-                        robot.setTarget(0x02, 6200)
-                    robot.setTarget(i[6][0], int(float(i[6][1])))
-                    time.sleep(float(i[6][2]))
-                    robot.setTarget(0x01, 6000)
-                    robot.setTarget(0x02, 6000)
+                    # robot.setTarget(0x01, 6000)
+                    # robot.setTarget(0x02, 6000)
+                    # if 0x01 == i[6][0]:
+                    #     robot.setTarget(0x01, 6200)
+                    # if 0x02 == i[6][0]:
+                    #     robot.setTarget(0x02, 6200)
+                    # robot.setTarget(i[6][0], int(float(i[6][1])))
+                    # time.sleep(float(i[6][2]))
+                    # robot.setTarget(0x01, 6000)
+                    # robot.setTarget(0x02, 6000)
 
     def SubWindow(self, staticIndex):
         print("sub window")
         newWindow = tk.Toplevel(self.myCan)
         newWindow.title("Edit Instruction")
-        newWindow.geometry("400x400")
-        self.target = tk.Entry(newWindow, width=40)
+        newWindow.geometry("600x400")
+        currentTarget = self.static[staticIndex][6][1] - 6000
+        currentTime = self.static[staticIndex][6][2]
+        newWindow.columnconfigure(0, weight=1)
+        newWindow.columnconfigure(1, weight=3)
+        targetLabelLeft = tk.Label(
+            newWindow,
+            text=self.static[staticIndex][7][0]
+        )
+        targetLabelLeft.grid(
+            column=0,
+            row=0,
+            sticky='w'
+        )
+        self.target = tk.Scale(
+            newWindow,
+            from_= -2000,
+            to=2000,
+            orient='horizontal',
+        )
+        self.target.grid(
+            column=1,
+            row=0,
+            sticky='we',
+        )
+        targetLabelRight = tk.Label(
+            newWindow,
+            text=self.static[staticIndex][7][1]
+        )
+        targetLabelRight.grid(
+            column=2,
+            row=0,
+            sticky='w'
+        )
         self.target.focus_set()
-        self.target.pack()
-        self.time = tk.Entry(newWindow, width=40)
+        self.target.set(currentTarget)
+        timeLabelLeft = tk.Label(
+            newWindow,
+            text="Time (seconds): "
+        )
+        timeLabelLeft.grid(
+            columnspan=2,
+            row=1,
+            sticky='w'
+        )
+        self.time = tk.Scale(
+            newWindow,
+            from_=0,
+            to=60,
+            length=350,
+            orient='horizontal',
+        )
+        self.time.grid(
+            column=1,
+            row=1,
+            sticky='we',
+        )
         self.time.focus_set()
-        self.time.pack()
+        self.time.set(currentTime)
+
         self.staticIndexTarget = staticIndex
         self.window = newWindow
-        tk.Button(newWindow, text='Submit', width=20, command=self.SubmitText).pack(pady=20)
+        sub = tk.Button(newWindow, text='Submit', width=20, command=self.SubmitText)
+        sub.grid(
+            column=1,
+            row=3,
+            sticky='we',
+        )
 
 
     def SubmitText(self):
         target = self.target.get()
         time = self.time.get()
-        self.static[self.staticIndexTarget][6][1] = target
+        self.static[self.staticIndexTarget][6][1] = target + 6000
         self.static[self.staticIndexTarget][6][2] = time
         self.window.destroy()
         self.target = None
@@ -173,7 +230,7 @@ class GUI:
     def __init__(self, win):
         self.win = win
         self.win.geometry("1024x600")
-        self.win.attributes('-fullscreen',True)
+        #self.win.attributes('-fullscreen',True)
 
     #Creates GUI window, create all objects here
     def createWindow(self):
@@ -182,10 +239,10 @@ class GUI:
         self.myCan.bind('<B1-Motion>', m1.mouseDragged)
         self.myCan.bind('<ButtonPress-1>', m1.mousePressed)
         self.myCan.bind('<ButtonRelease-1>', m1.mouseRelease)
-        self.myCan.bind('<ButtonPress-3>', m1.rightClick)
         self.myCan.bind('<space>', m1.execute())
         self.addBackground(0, 140, 8, 1024, '#222222', m1)
         self.addBackground(900, 500, 50, 50, '#000000', m1)
+        self.addBackground(900, 400, 50, 50, '#FFFFFF', m1)
         self.addVariable(120, 480, "Move", "Black", 'Helvetica 13 bold', m1)
         self.addVariable(220, 480, "Turn", "Black", 'Helvetica 13 bold', m1)
         self.addVariable(320, 480, "Waist", "Black", 'Helvetica 13 bold', m1)
@@ -193,13 +250,15 @@ class GUI:
         self.addVariable(520, 480, "Neck Lateral", "Black", 'Helvetica 13 bold', m1)
         self.addVariable(620, 480, "Speak", "Black", 'Helvetica 13 bold', m1)
         self.addVariable(720, 480, "Voice Command", "Black", 'Helvetica 13 bold', m1)
-        self.addMoveable(100, 500, 40, 40, "#FFFF00", m1, [0x01, 6000, 1])
-        self.addMoveable(200, 500, 40, 40, "#FF0000", m1, [0x02, 6000, 1])
-        self.addMoveable(300, 500, 40, 40, "#008000", m1, [0x00, 6000, 1])
-        self.addMoveable(400, 500, 40, 40, "#800080", m1, [0x04, 6000, 1])
-        self.addMoveable(500, 500, 40, 40, "#0000FF", m1, [0x03, 6000, 1])
-        self.addMoveable(600, 500, 40, 40, "#FFA500", m1, ['~', "", 1])
-        self.addMoveable(700, 500, 40, 40, "#FFC0CB", m1, ['!', "", 1])
+        self.addVariable(920, 380, "Reset", "Black", 'Helvetica 13 bold', m1)
+        self.addVariable(920, 480, "Execute", "Black", 'Helvetica 13 bold', m1)
+        self.addMoveable(100, 500, 40, 40, "#FFFF00", m1, [0x01, 6000, 1], ['Forward', 'Backward'])
+        self.addMoveable(200, 500, 40, 40, "#FF0000", m1, [0x02, 6000, 1], ['Left', 'Right'])
+        self.addMoveable(300, 500, 40, 40, "#008000", m1, [0x00, 6000, 1], ['Left', 'Right'])
+        self.addMoveable(400, 500, 40, 40, "#800080", m1, [0x04, 6000, 1], ['Up', 'Down'])
+        self.addMoveable(500, 500, 40, 40, "#0000FF", m1, [0x03, 6000, 1], ['Left', 'Right'])
+        self.addMoveable(600, 500, 40, 40, "#FFA500", m1, ['~', "", 1], ['', ''])
+        self.addMoveable(700, 500, 40, 40, "#FFC0CB", m1, ['!', "", 1], ['', ''])
 
 
         for i in range(8):
@@ -213,11 +272,11 @@ class GUI:
         controller.addVariable(x, y, text1, fill1, font1)
 
     #Adds draggable object
-    def addMoveable(self, x, y, height, width, color, controller, attribute):
+    def addMoveable(self, x, y, height, width, color, controller, attribute, labels):
         xf = x + width
         yf = y + height
         self.myCan.create_rectangle(x, y, xf, yf, fill=color)
-        controller.addDraggable(x, y, width, height, color, attribute)
+        controller.addDraggable(x, y, width, height, color, attribute, labels)
 
     #Adds box for draggable object to be "dropped" into
     def addDestination(self, x, y, height, width, color, controller):
