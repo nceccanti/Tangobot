@@ -252,7 +252,7 @@ class MouseMovement():
         self.static[self.staticIndexTarget][6][1] = target + 6000
         self.static[self.staticIndexTarget][6][2] = time
         print(self.static[self.staticIndexTarget][6])
-        self.point[self.staticIndexTarget][self.staticIndexTarget, target + 6000, time]
+        self.point[self.staticIndexTarget] = [self.staticIndexTarget, target + 6000, time]
         self.window.destroy()
         self.target = None
         self.time = None
