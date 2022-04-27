@@ -148,6 +148,7 @@ class Nav:
                 i += 1
 
 
+
 n = Nav()
 n.readFile('map.txt')
 n.postProcess()
