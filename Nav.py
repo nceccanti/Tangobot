@@ -42,24 +42,27 @@ class Nav:
                             if i + 1 < self.yLimit:
                                 if lines[i+1][j] == '.':
                                     inter += 'S'
-                                    paths += 1
                             if j + 1 < self.xLimit:
                                 if lines[i][j + 1] == '.':
                                     inter += 'E'
-                                    paths += 1
                             if j > 0:
                                 if lines[i][j-1] == '.':
                                     inter += 'W'
-                                    paths += 1
                             if i > 0:
                                 if lines[i-1][j] == '.':
                                     inter += 'N'
-                                    paths += 1
-                            if i == 0 or j == 0 or (self.xLimit - 1) == i or (self.yLimit - 1) == j:
-                                paths = 3
+                            isNode = False
+                            if len(inter) == 2:
+                                if (inter.find("N") > -1 or inter.find("S") > -1) and (inter.find("W") > -1 or inter.find("E") > -1):
+                                    isNode = True
+                                    #print(inter)
+                            elif len(inter) > 0:
+                                isNode = True
+                                #print(self.id, "bottom")
+                            if isNode and i == 0 or j==0 or self.xLimit - 1 == j or self.yLimit - 1 == i:
                                 self.edgeNodes.append(self.id)
-                        if paths >= 3 or paths == 1:
-                            self.addNode(j, i, inter)
+                            if isNode:
+                                self.addNode(j, i, inter)
 
     #Connects nodes
     def postProcess(self):
@@ -87,11 +90,11 @@ class Nav:
                         break;
                     for k in self.nodeList.keys():
                         if self.nodeList[k][0] == x and self.nodeList[k][1] == y and k != i:
-                            print(k, i)
                             intersect = True
                             dist = abs(self.nodeList[i][0] - x) + abs(self.nodeList[i][1] - y)
                             self.addEdge(i, k, dist, j)
 
+    #Adds attributes to nodes like coffee shops, etc
     def addSpecialNodes(self):
         CHARGING = 3
         COFFEE = 2
@@ -101,57 +104,65 @@ class Nav:
         FUN = 2
         TRICKY = 1
 
+        nodes = []
+        for i in range(self.id):
+            nodes.append(i)
+
         self.start = random.choice(self.edgeNodes)
         self.edgeNodes.remove(self.start)
         self.end = random.choice(self.edgeNodes)
+        self.current = self.start
+        nodes.remove(self.start)
+        nodes.remove(self.end)
+
         i = 0
         while i < CHARGING:
-            w = random.randrange(0, self.id)
-            if len(self.nodeList[w][3]) == 0:
+            w = random.choice(nodes)
+            nodes.remove(w)
+            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end:
                 self.nodeList[w][3] = 'CH'
                 i += 1
         i = 0
         while i < COFFEE:
-            w = random.randrange(0, self.id)
-            if len(self.nodeList[w][3]) == 0:
+            w = random.choice(nodes)
+            nodes.remove(w)
+            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end:
                 self.nodeList[w][3] = 'CO'
                 i += 1
         i = 0
         while i < EASY:
-            w = random.randrange(0, self.id)
-            if len(self.nodeList[w][3]) == 0:
+            w = random.choice(nodes)
+            nodes.remove(w)
+            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end:
                 self.nodeList[w][3] = 'E'
                 i += 1
         i = 0
         while i < MEDIUM:
-            w = random.randrange(0, self.id)
-            if len(self.nodeList[w][3]) == 0:
+            w = random.choice(nodes)
+            nodes.remove(w)
+            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end:
                 self.nodeList[w][3] = 'M'
                 i += 1
         i = 0
         while i < HARD:
-            w = random.randrange(0, self.id)
-            if len(self.nodeList[w][3]) == 0:
+            w = random.choice(nodes)
+            nodes.remove(w)
+            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end:
                 self.nodeList[w][3] = 'H'
                 i += 1
         i = 0
+        print(self.nodeList)
         while i < FUN:
-            w = random.randrange(0, self.id)
-            if len(self.nodeList[w][3]) == 0:
+            w = random.choice(nodes)
+            nodes.remove(w)
+            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end:
                 self.nodeList[w][3] = 'F'
                 i += 1
         i = 0
         while i < TRICKY:
-            w = random.randrange(0, self.id)
-            if len(self.nodeList[w][3]) == 0:
+            w = random.choice(nodes)
+            nodes.remove(w)
+            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end:
                 self.nodeList[w][3] = 'T'
                 i += 1
-
-
-
-n = Nav()
-n.readFile('map.txt')
-n.postProcess()
-n.addSpecialNodes()
-print(n.nodeList)
-print(n.adjList)
+        print('Nav complete')
