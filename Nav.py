@@ -165,4 +165,4 @@ class Nav:
             if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end:
                 self.nodeList[w][3] = 'T'
                 i += 1
-        print('Nav complete')
+        #print('Nav complete')
