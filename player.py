@@ -174,12 +174,11 @@ class Player:
 if __name__ == '__main__':
     n = Nav()
     n.readFile('map2.txt')
-    n.addNode(0,4,'NS')
-    n.addNode(4, 4, 'WE')
-    n.addNode(8, 4, 'NS')
     n.postProcess()
-    n.addSpecialNodes()
-    print(n.adjList)
+    #n.addSpecialNodes()
+    #print(n.nodeList)
+    #print(n.adjList)
+    print(n.id)
     p = Player(100, n)
     p.TrickyNode()
     # while p.isEnd():
