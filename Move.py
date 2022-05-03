@@ -77,3 +77,4 @@ class Move:
     def neckDown(self):
         self.targetNeckVert -= self.magnitude
         self.setTarget(0x04, self.targetNeckVert)
+
