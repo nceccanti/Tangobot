@@ -1,22 +1,22 @@
 import tkinter as tk
-import serial, time, sys
-from Move import *
-from voiceinput import *
-from speak import *
+# import serial, time, sys
+# from Move import *
+# from voiceinput import *
+# from speak import *
 
-usb = ""
-try:
-    usb = serial.Serial('/dev/ttyACM0')
-except:
-    try:
-        usb = serial.Serial('/dev/ttyACM1')
-    except:
-        print("No serial ports")
-        #sys.exit(0)
-
-robot = Move(500, usb)
-robot.stop()
-Voice = VoiceInput()
+# usb = ""
+# try:
+#     usb = serial.Serial('/dev/ttyACM0')
+# except:
+#     try:
+#         usb = serial.Serial('/dev/ttyACM1')
+#     except:
+#         print("No serial ports")
+#         #sys.exit(0)
+#
+# robot = Move(500, usb)
+# robot.stop()
+# Voice = VoiceInput()
 
 #Event controller
 class MouseMovement():
@@ -125,6 +125,7 @@ class MouseMovement():
 
     #Deletes attribute from static object
     def reset(self):
+        self.point = [0] * 8
         for i in range(len(self.static)):
             self.static[i] = [self.static[i][0], self.static[i][1], self.static[i][2], self.static[i][3], self.static[i][4], None, None]
         self.printElse()
@@ -139,31 +140,31 @@ class MouseMovement():
                 if '!' == i[6][0]:
                     print("voice!")
                     print(i[6][1])
-                    Voice.listen(i[6][1])
+                    # Voice.listen(i[6][1])
                 elif '~' == i[6][0]:
                     print("speak!")
                     print(i[6][1])
-                    s = Speaker()
-                    s.TTS(i[6][1])
+                    # s = Speaker()
+                    # s.TTS(i[6][1])
                 else:
                     print(i[6][0], int(float(i[6][1])), float(i[6][2]))
-                    robot.setTarget(0x01, 6000)
-                    robot.setTarget(0x02, 6000)
-                    if 0x01 == i[6][0]:
-                        robot.setTarget(0x01, 6200)
-                    if 0x02 == i[6][0]:
-                        robot.setTarget(0x02, 6200)
+                    # robot.setTarget(0x01, 6000)
+                    # robot.setTarget(0x02, 6000)
+                    # if 0x01 == i[6][0]:
+                    #     robot.setTarget(0x01, 6200)
+                    # if 0x02 == i[6][0]:
+                    #     robot.setTarget(0x02, 6200)
                     print(self.static.index(i))
                     tar = self.point[self.static.index(i)][1]
-                    robot.setTarget(i[6][0], tar)
+                    # robot.setTarget(i[6][0], tar)
                     wait = self.point[self.static.index(i)][2]
                 win2 = self.myCan
                 e = Eyes(win2)
                 for i in range(wait):
                     e.blink()
-                robot.setTarget(0x01, 6000)
-                robot.setTarget(0x02, 6000)
-                time.sleep(1)
+                # robot.setTarget(0x01, 6000)
+                # robot.setTarget(0x02, 6000)
+                # time.sleep(1)
                 
         self.myCan.delete("all")
         self.printElse()
@@ -341,7 +342,7 @@ class GUI:
     def __init__(self, win):
         self.win = win
         self.win.geometry("1024x600")
-        self.win.attributes('-fullscreen',True)
+        #self.win.attributes('-fullscreen',True)
 
     #Creates GUI window, create all objects here
     def createWindow(self):
