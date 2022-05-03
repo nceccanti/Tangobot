@@ -124,7 +124,7 @@ except:
 
 robot = Move(500, usb)
 robot.stop()
-robot.setTarget(0x05, 7000)
+robot.setTarget(0x06, 6500)
 print("arm")
 
 # listening = True
