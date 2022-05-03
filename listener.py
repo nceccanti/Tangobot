@@ -124,7 +124,7 @@ except:
 
 robot = Move(500, usb)
 robot.stop()
-robot.forward()
+robot.rightTurn()
 
 
 # listening = True
