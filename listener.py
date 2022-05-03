@@ -127,6 +127,7 @@ robot.stop()
 robot.setTarget(0x05, 6000)
 print("arm")
 
+
 # listening = True
 # while listening:
 #     with sr.Microphone() as source:
