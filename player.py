@@ -1,4 +1,5 @@
 import sys
+from random import *
 
 from Nav import *
 
@@ -29,7 +30,6 @@ class Player:
             print("Reach end point!")
             return False
         if self.hp <= 0:
-            print(self.hp)
             print('You ran out of health')
             return False
         if self.hp > self.MAXHP:
@@ -90,6 +90,7 @@ class Player:
 
     def minDistance(self, dist, sptSet):
         min = float('inf')
+        min_index = 0
         for i in self.map.adjList.keys():
             for j in self.map.adjList[i].keys():
                 if dist[j] < min and sptSet[j] == False:
@@ -118,7 +119,9 @@ class Player:
                         else:
                             break
         temp = path[self.map.end]
+        print(temp)
         temp.reverse()
+        print(self.map.adjList[self.current][temp])
         hint = self.map.adjList[self.current][temp[1]][1]
         if hint == 'N':
             print("(Hint): Go North!")
@@ -141,17 +144,17 @@ class Player:
 
     #Easy battle functionality
     def EasyBattle(self):
-        self.hp -= random.rand(10,30)
+        self.hp -= random.randint(10,30)
         print('Easy Battle')
 
     #Medium battle functionality
     def MediumBattle(self):
-        self.hp -= random.rand(20, 40)
+        self.hp -= random.randint(20, 40)
         print('Medium Battle')
 
     #Hard battle functionality
     def HardBattle(self):
-        self.hp -= random.rand(30, 50)
+        self.hp -= random.randint(30, 50)
         print('Hard Battle')
 
     #Fun functionality
