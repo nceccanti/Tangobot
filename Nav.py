@@ -95,11 +95,9 @@ class Nav:
                     for k in self.nodeList.keys():
                         if self.nodeList[k][0] == x and self.nodeList[k][1] == y and k != i:
                             intersect = True
-                            # x -= 1
-                            # y -= 1
                             dist = abs(self.nodeList[i][0] - x) + abs(self.nodeList[i][1] - y)
                             self.addEdge(i, k, dist, j)
-        print(self.adjList)
+        # print(self.adjList)
         remove =[]
         nodes = []
         for i in self.adjList.keys():
@@ -116,7 +114,7 @@ class Nav:
                     iter = int((dist / 2) - 1)
                     xDiff = (self.nodeList[i][0] - self.nodeList[j][0]) / (dist / 2)
                     yDiff = (self.nodeList[i][1] - self.nodeList[j][1]) / (dist / 2)
-                    print(i, j, xDiff, yDiff)
+                    # print(i, j, xDiff, yDiff)
                     for k in range(iter):
                         isDup = False
                         for l in nodes:
@@ -127,25 +125,35 @@ class Nav:
                             temp.append([i, self.nodeList[j][0] + (k + 1) * xDiff, self.nodeList[j][1] + (k + 1) * yDiff, self.adjList[i][j][1] + self.getOpposite(self.adjList[i][j][1]), j])
                     if len(temp) > 0:
                         nodes.append(temp)
-        print(remove)
-        print(self.adjList)
+        # print(remove)
+        # print(self.adjList)
+        # check = []
         for i in remove:
             self.removeEdge(i[0],i[1])
         for i in nodes:
             prev = -1
             for j in i:
                 currentID = self.id
-                self.addNode(j[1],j[2],j[3])
+                #check.append(self.id)
+                #print(j[0], j[4])
+                self.addNode(int(j[1]),int(j[2]),j[3])
                 if prev == -1:
                     n1 = i[0][0]
                     n2 = currentID
                 else:
                     n1 = prev
                     n2 = currentID
-                print(n1, n2, 2, j[3][0], j[3][1])
+                prev = currentID
                 self.addEdge(n1, n2, 2, j[3][0])
                 self.addEdge(n2, n1, 2, j[3][1])
-        print(self.adjList)
+            self.addEdge(prev, j[4], 2, j[3][0])
+            self.addEdge(j[4], prev, 2, j[3][1])
+        # for i in check:
+        #     print(i, self.nodeList[i])
+        #     for j in self.adjList[i].keys():
+        #         print(j, self.nodeList[j])
+        #     print()
+        # print(self.adjList)
 
 
     def getOpposite(self, str):

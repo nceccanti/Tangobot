@@ -68,7 +68,6 @@ class Player:
             if next == self.map.adjList[self.current][i][1]:
                 self.current = i
                 break;
-        print(self.current)
         self.NodeController(self.map.nodeList[self.current][3])
 
     #Selects function based on node attribute
@@ -90,7 +89,6 @@ class Player:
 
     def minDistance(self, dist, sptSet):
         min = float('inf')
-        min_index = 0
         for i in self.map.adjList.keys():
             for j in self.map.adjList[i].keys():
                 if dist[j] < min and sptSet[j] == False:
@@ -99,6 +97,8 @@ class Player:
         return min_index
 
     def shortestPath(self):
+        #print(self.map.end, self.current)
+        #print(self.map.adjList[self.current])
         dist = []
         sptSet = []
         path = []
@@ -120,16 +120,16 @@ class Player:
                             break
         temp = path[self.map.end]
         temp.reverse()
-        print(self.map.adjList[self.current][temp])
-        hint = self.map.adjList[self.current][temp[1]][1]
-        if hint == 'N':
-            print("(Hint): Go North!")
-        elif hint == 'S':
-            print("(Hint): Go South!")
-        elif hint == 'W':
-            print("(Hint): Go West!")
-        elif hint == 'E':
-            print("(Hint): Go East!")
+        if len(temp) > 1:
+            hint = self.map.adjList[self.current][temp[1]][1]
+            if hint == 'N':
+                print("(Hint): Go North!")
+            elif hint == 'S':
+                print("(Hint): Go South!")
+            elif hint == 'W':
+                print("(Hint): Go West!")
+            elif hint == 'E':
+                print("(Hint): Go East!")
 
     #Charging station functionality
     def ChargingStation(self):
@@ -143,17 +143,17 @@ class Player:
 
     #Easy battle functionality
     def EasyBattle(self):
-        self.hp -= random.randint(10,30)
+        #self.hp -= random.randint(10,30)
         print('Easy Battle')
 
     #Medium battle functionality
     def MediumBattle(self):
-        self.hp -= random.randint(20, 40)
+        #self.hp -= random.randint(20, 40)
         print('Medium Battle')
 
     #Hard battle functionality
     def HardBattle(self):
-        self.hp -= random.randint(30, 50)
+        #self.hp -= random.randint(30, 50)
         print('Hard Battle')
 
     #Fun functionality
@@ -187,7 +187,7 @@ if __name__ == '__main__':
     #print(n.id)
     p = Player(100, n)
     #p.TrickyNode()
-    p.FunNode()
     while p.isEnd():
-        print(p.current)
+        #print(p.current)
         p.playerTurn()
+        p.CoffeeShop()
