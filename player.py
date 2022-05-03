@@ -119,7 +119,6 @@ class Player:
                         else:
                             break
         temp = path[self.map.end]
-        print(temp)
         temp.reverse()
         print(self.map.adjList[self.current][temp])
         hint = self.map.adjList[self.current][temp[1]][1]
