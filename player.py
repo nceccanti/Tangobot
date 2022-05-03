@@ -28,7 +28,8 @@ class Player:
         if self.current == self.map.end:
             print("Reach end point!")
             return False
-        if self.hp > 0:
+        if self.hp <= 0:
+            print(self.hp)
             print('You ran out of health')
             return False
         if self.hp > self.MAXHP:
@@ -155,6 +156,8 @@ class Player:
 
     #Fun functionality
     def FunNode(self):
+        print("You are about to teleport!! Hold on tight!")
+
         print('Fun Node')
 
     #Tricky functionality
@@ -175,11 +178,11 @@ if __name__ == '__main__':
     n = Nav()
     n.readFile('map2.txt')
     n.postProcess()
-    #n.addSpecialNodes()
-    #print(n.nodeList)
-    #print(n.adjList)
+    n.addSpecialNodes()
+    print(n.nodeList)
+    print(n.adjList)
     print(n.id)
     p = Player(100, n)
     p.TrickyNode()
-    # while p.isEnd():
-    #     p.playerTurn()
+    while p.isEnd():
+         p.playerTurn()
