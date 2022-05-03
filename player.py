@@ -156,10 +156,9 @@ class Player:
 
     #Fun functionality
     def FunNode(self):
-        print("You are about to teleport!! Hold on tight!")
+        #print("You are about to teleport!! Hold on tight!")
         self.current = random.randint(0, self.map.id-1)
         self.NodeController(self.map.nodeList[self.current][3])
-
         print('Fun Node')
 
     #Tricky functionality
@@ -183,7 +182,7 @@ if __name__ == '__main__':
     n.addSpecialNodes()
     #print(n.nodeList)
     #print(n.adjList)
-    print(n.id)
+    #print(n.id)
     p = Player(100, n)
     #p.TrickyNode()
     p.FunNode()
