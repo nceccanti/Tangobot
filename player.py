@@ -9,6 +9,7 @@ class Player:
         self.MAXHP = hp
         self.map = map
         self.current = self.map.start
+        self.prevPos = self.map.start
         self.riddles = [
             [
                 "What's white, black and red all over?",
@@ -66,6 +67,7 @@ class Player:
                 isValid = True
         for i in self.map.adjList[self.current].keys():
             if next == self.map.adjList[self.current][i][1]:
+                self.prevPos = self.current
                 self.current = i
                 break;
         self.NodeController(self.map.nodeList[self.current][3])
@@ -143,18 +145,29 @@ class Player:
 
     #Easy battle functionality
     def EasyBattle(self):
-        #self.hp -= random.randint(10,30)
         print('Easy Battle')
+        if self.Battle():
+            print("Fight!")
 
     #Medium battle functionality
     def MediumBattle(self):
-        #self.hp -= random.randint(20, 40)
         print('Medium Battle')
+        if self.Battle():
+            print("Fight!")
 
     #Hard battle functionality
     def HardBattle(self):
-        #self.hp -= random.randint(30, 50)
         print('Hard Battle')
+        if self.Battle():
+            print("Fight!")
+
+    def Battle(self):
+        user = input("Run or fight?: ")
+        user = user.lower()
+        if user.find("run") != -1:
+            self.current = self.prevPos
+            return False
+        return True
 
     #Fun functionality
     def FunNode(self):
@@ -190,4 +203,3 @@ if __name__ == '__main__':
     while p.isEnd():
         #print(p.current)
         p.playerTurn()
-        p.CoffeeShop()
