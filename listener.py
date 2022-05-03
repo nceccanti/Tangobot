@@ -1,5 +1,5 @@
-import os.path
-import tkinter as tk
+#import os.path
+#import tkinter as tk
 import serial, time, sys
 #import speech_recognition as sr
 from Move import *
@@ -10,107 +10,107 @@ from Move import *
 #                 f = file.read()
 #
 
-class VoiceControl:
-    def controller(self, s):
-        ind = []
-        if s.find("girl") != -1 or s.find("stop") != -1:
-            print("command stop")
-            robot.stop()
-        elif s.find("giddy") != -1:
-            n = s.count("giddy")
-            for i in range(n):
-                print("command forward")
-                robot.forwardWheel()
-                time.sleep(0.3)
-        elif s.find("reverse") != -1:
-            n = s.count("reverse")
-            for i in range(n):
-                print("command backward")
-                robot.backwardWheel()
-                time.sleep(0.3)
-        elif s.find("turn left") != -1:
-            n = s.count("left")
-            for i in range(n):
-                print("command left")
-                robot.pivotLeft()
-                time.sleep(0.3)
-        elif s.find("turn right") != -1:
-            n = s.count("right")
-            for i in range(n):
-                print("command right")
-                robot.pivotRight()
-                time.sleep(0.3)
-        elif s.find("neck left") != -1:
-            n = s.count("left")
-            for i in range(n):
-                print("command neck left")
-                robot.neckLeft()
-                time.sleep(0.3)
-        elif s.find("neck right") != -1 or s.find("Nick Wright") != -1:
-            n = s.count("right")
-            for i in range(n):
-                print("command neck right")
-                robot.neckRight()
-                time.sleep(0.3)
-        elif s.find("neck up") != -1:
-            n = s.count("up")
-            for i in range(n):
-                print("command neckup")
-                robot.neckUp()
-                time.sleep(0.3)
-        elif s.find("neck down") != -1:
-            n = s.count("down")
-            for i in range(n):
-                print("command neckdown")
-                robot.neckDown()
-                time.sleep(0.3)
-        elif s.find("waist left") != -1  or s.find("waste left") != -1:
-            n = s.count("left")
-            for i in range(n):
-                print("command waist left")
-                robot.waistLeft()
-                time.sleep(0.3)
-        elif s.find("waist right") != -1 or s.find("waste right") != -1:
-            n = s.count("right")
-            for i in range(n):
-                print("command stop")
-                robot.waistRight()
-                time.sleep(0.3)
+# class VoiceControl:
+#     def controller(self, s):
+#         ind = []
+#         if s.find("girl") != -1 or s.find("stop") != -1:
+#             print("command stop")
+#             robot.stop()
+#         elif s.find("giddy") != -1:
+#             n = s.count("giddy")
+#             for i in range(n):
+#                 print("command forward")
+#                 robot.forwardWheel()
+#                 time.sleep(0.3)
+#         elif s.find("reverse") != -1:
+#             n = s.count("reverse")
+#             for i in range(n):
+#                 print("command backward")
+#                 robot.backwardWheel()
+#                 time.sleep(0.3)
+#         elif s.find("turn left") != -1:
+#             n = s.count("left")
+#             for i in range(n):
+#                 print("command left")
+#                 robot.pivotLeft()
+#                 time.sleep(0.3)
+#         elif s.find("turn right") != -1:
+#             n = s.count("right")
+#             for i in range(n):
+#                 print("command right")
+#                 robot.pivotRight()
+#                 time.sleep(0.3)
+#         elif s.find("neck left") != -1:
+#             n = s.count("left")
+#             for i in range(n):
+#                 print("command neck left")
+#                 robot.neckLeft()
+#                 time.sleep(0.3)
+#         elif s.find("neck right") != -1 or s.find("Nick Wright") != -1:
+#             n = s.count("right")
+#             for i in range(n):
+#                 print("command neck right")
+#                 robot.neckRight()
+#                 time.sleep(0.3)
+#         elif s.find("neck up") != -1:
+#             n = s.count("up")
+#             for i in range(n):
+#                 print("command neckup")
+#                 robot.neckUp()
+#                 time.sleep(0.3)
+#         elif s.find("neck down") != -1:
+#             n = s.count("down")
+#             for i in range(n):
+#                 print("command neckdown")
+#                 robot.neckDown()
+#                 time.sleep(0.3)
+#         elif s.find("waist left") != -1  or s.find("waste left") != -1:
+#             n = s.count("left")
+#             for i in range(n):
+#                 print("command waist left")
+#                 robot.waistLeft()
+#                 time.sleep(0.3)
+#         elif s.find("waist right") != -1 or s.find("waste right") != -1:
+#             n = s.count("right")
+#             for i in range(n):
+#                 print("command stop")
+#                 robot.waistRight()
+#                 time.sleep(0.3)
 
 
 
-class KeyControl:
-    def lateral(self, key):
-        if key.keycode == 111:
-            robot.forwardWheel()
-        elif key.keycode == 116:
-            robot.backwardWheel()
-
-    def turn(self, key):
-        if key.keycode == 114:
-            robot.pivotRight()
-        elif key.keycode == 113:
-            robot.pivotLeft()
-
-
-    def waist(self, key):
-        if key.keycode == 38:
-            robot.waistLeft()
-        elif key.keycode == 40:
-            robot.waistRight()
-
-    def head(self, key):
-        if key.keycode == 31:
-            robot.neckUp()
-        elif key.keycode == 45:
-            robot.neckDown()
-        elif key.keycode == 44:
-            robot.neckLeft()
-        elif key.keycode == 46:
-            robot.neckRight()
-    def reset(self, key):
-        print(key.keycode)
-        robot.stop()
+# class KeyControl:
+#     def lateral(self, key):
+#         if key.keycode == 111:
+#             robot.forwardWheel()
+#         elif key.keycode == 116:
+#             robot.backwardWheel()
+#
+#     def turn(self, key):
+#         if key.keycode == 114:
+#             robot.pivotRight()
+#         elif key.keycode == 113:
+#             robot.pivotLeft()
+#
+#
+#     def waist(self, key):
+#         if key.keycode == 38:
+#             robot.waistLeft()
+#         elif key.keycode == 40:
+#             robot.waistRight()
+#
+#     def head(self, key):
+#         if key.keycode == 31:
+#             robot.neckUp()
+#         elif key.keycode == 45:
+#             robot.neckDown()
+#         elif key.keycode == 44:
+#             robot.neckLeft()
+#         elif key.keycode == 46:
+#             robot.neckRight()
+#     def reset(self, key):
+#         print(key.keycode)
+#         robot.stop()
     
 usb = ""
 try:
