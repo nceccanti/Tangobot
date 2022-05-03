@@ -32,7 +32,7 @@ class Move:
         self.setTarget(0x04, 6000)
 
     def forward(self):
-        self.setTarget(0x01, 7000)
+        self.setTarget(0x01, 5000)
         time.sleep(1)
         self.setTarget(0x01, 6000)
 
@@ -47,7 +47,7 @@ class Move:
         self.setTarget(0x02, 6000)
 
     def backward(self):
-        self.setTarget(0x01, 5000)
+        self.setTarget(0x01, 7000)
         time.sleep(1)
         self.setTarget(0x01, 6000)
 
