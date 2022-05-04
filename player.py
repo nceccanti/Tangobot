@@ -141,22 +141,24 @@ class Player:
 
     #Easy battle functionality
     def EasyBattle(self):
-        self.hp -= random.rand(10,30)
+        self.hp -= random.randint(10,30)
         print('Easy Battle')
 
     #Medium battle functionality
     def MediumBattle(self):
-        self.hp -= random.rand(20, 40)
+        self.hp -= random.randint(20, 40)
         print('Medium Battle')
 
     #Hard battle functionality
     def HardBattle(self):
-        self.hp -= random.rand(30, 50)
+        self.hp -= random.randint(30, 50)
         print('Hard Battle')
 
     #Fun functionality
     def FunNode(self):
         print("You are about to teleport!! Hold on tight!")
+        self.current = random.randint(0, self.map.id-1)
+        self.NodeController(self.map.nodeList[self.current][3])
 
         print('Fun Node')
 
@@ -179,10 +181,12 @@ if __name__ == '__main__':
     n.readFile('map2.txt')
     n.postProcess()
     n.addSpecialNodes()
-    print(n.nodeList)
-    print(n.adjList)
+    #print(n.nodeList)
+    #print(n.adjList)
     print(n.id)
     p = Player(100, n)
-    p.TrickyNode()
+    #p.TrickyNode()
+    p.FunNode()
     while p.isEnd():
-         p.playerTurn()
+        print(p.current)
+        p.playerTurn()
