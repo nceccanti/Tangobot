@@ -8,6 +8,7 @@ class Player:
         self.hp = hp
         self.MAXHP = hp
         self.map = map
+        self.enemies = {}
         self.current = self.map.start
         self.prevPos = self.map.start
         self.riddles = [
@@ -146,27 +147,85 @@ class Player:
     #Easy battle functionality
     def EasyBattle(self):
         print('Easy Battle')
-        if self.Battle():
-            print("Fight!")
+        enemy_hp = 0
+        if self.current in self.enemies.keys():
+            enemy_hp = self.enemies[self.current]*6
+        else:
+            count = random.randint(2,6)
+            enemy_hp = count*6
+            self.enemies[self.current] = count
 
+        while enemy_hp > 0 and self.hp > 0:
+            if self.Battle():
+                player_dmg = random.randint(5, 26)
+                self.hp -= random.randint(1,12)
+                if player_dmg >= 23:
+                    print("Critical Hit!")
+                    enemy_hp -= player_dmg
+                enemy_hp -= player_dmg
+                self.enemies[self.current] = int(enemy_hp/6)
+                print("\nplayer hp is", self.hp, "\nenemy hp is", enemy_hp)
+            else:
+                break
     #Medium battle functionality
     def MediumBattle(self):
         print('Medium Battle')
-        if self.Battle():
-            print("Fight!")
+        enemy_hp = 0
+        if self.current in self.enemies.keys():
+            enemy_hp = self.enemies[self.current]*15
+        else:
+            count = random.randint(2,3)
+            enemy_hp = count*15
+            self.enemies[self.current] = count
+
+        while enemy_hp > 0 and self.hp > 0:
+            if self.Battle():
+                player_dmg = random.randint(5, 26)
+                self.hp -= random.randint(3,19)
+                if player_dmg >= 23:
+                    print("Critical Hit!")
+                    enemy_hp -= player_dmg
+                enemy_hp -= player_dmg
+                self.enemies[self.current] = int(enemy_hp/15)
+                print("\nplayer hp is", self.hp, "\nenemy hp is", enemy_hp)
+            else:
+                break
 
     #Hard battle functionality
     def HardBattle(self):
         print('Hard Battle')
-        if self.Battle():
-            print("Fight!")
+        enemy_hp = 0
+        if self.current in self.enemies.keys():
+            enemy_hp = self.enemies[self.current]*47
+        else:
+            count = random.randint(1,2)
+            enemy_hp = count*47
+            self.enemies[self.current] = count
+
+        while enemy_hp > 0 and self.hp > 0:
+            if self.Battle():
+                player_dmg = random.randint(5, 26)
+                self.hp -= random.randint(10,22)
+                if player_dmg >= 23:
+                    print("Critical Hit!")
+                    enemy_hp -= player_dmg
+                enemy_hp -= player_dmg
+                if enemy_hp > 0 and enemy_hp <=47:
+                    self.enemies[self.current] = 1
+                print("\nplayer hp is", self.hp, "\nenemy hp is", enemy_hp)
+            else:
+                break
 
     def Battle(self):
         user = input("Run or fight?: ")
         user = user.lower()
         if user.find("run") != -1:
-            self.current = self.prevPos
-            return False
+            if random.randint(1,4) != 1:
+                print("you ran away!")
+                self.current = random.randint(0, self.map.id-1)
+                return False
+            else:
+                print("you cant run! :(")
         return True
 
     #Fun functionality
