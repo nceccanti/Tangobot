@@ -377,6 +377,6 @@ if __name__ == '__main__':
         p.playerTurn()
         p.CoffeeShop()
     a = AnimationController(m)
-    a.control(5, "CH")
+    a.control(5, "T")
     # while p.isEnd():
     #     p.playerTurn()
