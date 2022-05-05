@@ -1,6 +1,5 @@
 import sys, serial
 from random import *
-
 from voiceinput import *
 from speak import *
 from Move import *
@@ -71,12 +70,18 @@ class Player:
         elif dir == 'L':
             self.move.setTarget(0x02, 7000)
             time.sleep(1)
+            self.move.setTarget(0x02, 6000)
+            self.move.setTarget(0x01, 5000)
+            time.sleep(1)
+            self.move.setTarget(0x01, 6000)
         elif dir == 'R':
             self.move.setTarget(0x02, 5000)
             time.sleep(1)
+            self.move.setTarget(0x02, 6000)
+            self.move.setTarget(0x01, 5000)
+            time.sleep(1)
+            self.move.setTarget(0x01, 6000)
         self.move.setTarget(0x02, 6000)
-        self.move.setTarget(0x01, 5000)
-        time.sleep(1)
         self.move.setTarget(0x01, 6000)
 
     def tmt(self):
