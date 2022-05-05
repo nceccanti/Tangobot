@@ -1,10 +1,11 @@
-import sys
+import sys, serial
 from random import *
-
+from Move import *
 from Nav import *
 
 class Player:
-    def __init__(self, hp, map):
+    def __init__(self, hp, map, move):
+        self.move = move
         self.hp = hp
         self.MAXHP = hp
         self.map = map
@@ -54,14 +55,19 @@ class Player:
 
     #Tells robot to move.  Remember if turning you still have to move forward afterward
     def Move(self, dir):
-        if dir == 'F':
-            print("Moved forward")
-        elif dir == 'B':
-            print("Turned around and forward")
+        if dir == 'B':
+            self.move.setTarget(0x02, 7000)
+            time.sleep(2)
         elif dir == 'L':
-            print('Turned left and forward')
+            self.move.setTarget(0x02, 7000)
+            time.sleep(1)
         elif dir == 'R':
-            print('Turned right and forward')
+            self.move.setTarget(0x02, 5000)
+            time.sleep(1)
+        self.move.setTarget(0x02, 6000)
+        self.move.setTarget(0x01, 7000)
+        time.sleep(1)
+
 
     #Checks to see if user has reached end point or if user has ran out of health
     def isEnd(self):
@@ -303,6 +309,16 @@ class Player:
         print('Tricky Node')
 
 if __name__ == '__main__':
+    usb = ""
+    try:
+        usb = serial.Serial('/dev/ttyACM0')
+    except:
+        try:
+            usb = serial.Serial('/dev/ttyACM1')
+        except:
+            print("No serial ports")
+            sys.exit(0)
+    m = Move(500, usb)
     n = Nav()
     n.readFile('map2.txt')
     n.postProcess()
@@ -310,7 +326,7 @@ if __name__ == '__main__':
     print(n.nodeList)
     print(n.adjList)
     #print(n.id)
-    p = Player(100, n)
+    p = Player(100, n, m)
     print(p.direction)
     #p.TrickyNode()
     while p.isEnd():
