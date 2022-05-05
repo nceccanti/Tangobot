@@ -81,6 +81,7 @@ class Player:
     def tmt(self):
         if self.NofT > 35:
             self.s.TTS("You have taken too many turns, Game over! Loser")
+            return False
 
     #Checks to see if user has reached end point or if user has ran out of health
     def isEnd(self):
