@@ -1,11 +1,16 @@
 import sys, serial
 from random import *
+
+from voiceinput import *
+from speak import *
 from Move import *
 from Nav import *
 
 class Player:
     def __init__(self, hp, map, move):
         self.move = move
+        self.voice = VoiceInput()
+        self.s = Speaker()
         self.hp = hp
         self.MAXHP = hp
         self.map = map
@@ -72,9 +77,13 @@ class Player:
     #Checks to see if user has reached end point or if user has ran out of health
     def isEnd(self):
         if self.current == self.map.end:
+            s = Speaker()
+            s.TTS("Winner Winner Chicken Dinner")
             print("Reach end point!")
             return False
         if self.hp <= 0:
+            s = Speaker()
+            s.TTS("You ran out of health")
             print('You ran out of health')
             return False
         if self.hp > self.MAXHP:
@@ -83,6 +92,7 @@ class Player:
 
     #Plays each "turn"
     def playerTurn(self):
+        validinput = ["forward", "backward", "left", "right"]
         isValid = False
         cardinal = ''
         next = ''
@@ -114,7 +124,10 @@ class Player:
                     choices.append('right')
                     str += 'Right, '
             print(str)
-            user = input('What do you choose: ')
+            self.s.TTS(str)
+            self.s.TTS("What do you choose?")
+            #user = input('What do you choose: ')
+            user = self.voice.listen(validinput)
             user = user.lower().strip()
             for i in range(len(choices)):
                 if user.find(choices[i]) > -1:
@@ -187,26 +200,33 @@ class Player:
             card = self.map.adjList[self.current][temp[1]][1]
             hint = self.relativeDirection(card)[0][0]
             if hint == 'F':
+                self.s.TTS("Your hint is to go forward")
                 print("(Hint): Go Forward!")
             elif hint == 'B':
+                self.s.TTS("Your hint is to go backward")
                 print("(Hint): Go Backward!")
             elif hint == 'L':
+                self.s.TTS("Your hint is to go left")
                 print("(Hint): Go Left!")
             elif hint == 'R':
+                self.s.TTS("Your hint is to go right")
                 print("(Hint): Go Right!")
 
     #Charging station functionality
     def ChargingStation(self):
         self.hp = self.MAXHP
+        self.s.TTS("You have reached a charging station, Gaining max health")
         print("Charging Stations")
 
     #Coffee shop functionality
     def CoffeeShop(self):
         self.shortestPath()
+        self.s.TTS("You have made it to Coffee Shop")
         print('Coffee Shop')
 
     #Easy battle functionality
     def EasyBattle(self):
+        self.s.TTS("you have ran into a low level adversary")
         print('Easy Battle')
         enemy_hp = 0
         if self.current in self.enemies.keys():
@@ -221,6 +241,7 @@ class Player:
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(1,12)
                 if player_dmg >= 23:
+                    self.s.TTS("Critical Hit!")
                     print("Critical Hit!")
                     enemy_hp -= player_dmg
                 enemy_hp -= player_dmg
@@ -230,6 +251,7 @@ class Player:
                 break
     #Medium battle functionality
     def MediumBattle(self):
+        self.s.TTS("you have stumbled on a medium level adversary")
         print('Medium Battle')
         enemy_hp = 0
         if self.current in self.enemies.keys():
@@ -244,6 +266,7 @@ class Player:
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(3,19)
                 if player_dmg >= 23:
+                    self.s.TTS("Critical Hit")
                     print("Critical Hit!")
                     enemy_hp -= player_dmg
                 enemy_hp -= player_dmg
@@ -254,6 +277,7 @@ class Player:
 
     #Hard battle functionality
     def HardBattle(self):
+        self.s.TTS("You have ran into a heavily armored enemy")
         print('Hard Battle')
         enemy_hp = 0
         if self.current in self.enemies.keys():
@@ -268,6 +292,7 @@ class Player:
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(10,22)
                 if player_dmg >= 23:
+                    self.s.TTS("Critical Hit")
                     print("Critical Hit!")
                     enemy_hp -= player_dmg
                 enemy_hp -= player_dmg
@@ -278,19 +303,25 @@ class Player:
                 break
 
     def Battle(self):
-        user = input("Run or fight?: ")
+        battlechoice = ['run', 'fight']
+        self.s.TTS("would you like to run or fight?")
+        user = self.voice.listen(battlechoice)
+        #user = input("Run or fight?: ")
         user = user.lower()
         if user.find("run") != -1:
             if random.randint(1,4) != 1:
+                self.s.TTS("you ran away")
                 print("you ran away!")
                 self.current = random.randint(0, self.map.id-1)
                 return False
             else:
+                self.s.TTS("You cannot run anymore buddy")
                 print("you cant run! :(")
         return True
 
     #Fun functionality
     def FunNode(self):
+        self.s.TTS("You have reached the fun node, you are about to teleport")
         #print("You are about to teleport!! Hold on tight!")
         self.current = random.randint(0, self.map.id-1)
         self.NodeController(self.map.nodeList[self.current][3])
@@ -298,14 +329,18 @@ class Player:
 
     #Tricky functionality
     def TrickyNode(self):
+        self.s.TTS("you have reached the troll under the bridge")
         riddle = random.choice(self.riddles)
         for i in riddle:
+            self.s.TTS(i)
             print(i)
         user = input('Answer: ')
         if int(float(user)) == 1:
+            self.s.TTS("You guessed right, 10+ hp!")
             print("You guessed right, 10+ hp!")
             self.hp += 10
         else:
+            self.s.TTS("You guessed wrong, 10- hp!")
             print("You guessed wrong, 10- hp!")
             self.hp -= 10
         print('Tricky Node')
