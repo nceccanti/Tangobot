@@ -372,7 +372,7 @@ if __name__ == '__main__':
     p = Player(100, n, m)
     print(p.direction)
     #p.TrickyNode()
-    while p.isEnd() & p.tmt():
+    while p.isEnd() and p.tmt():
         #print(p.current)
         p.playerTurn()
         p.CoffeeShop()
