@@ -64,7 +64,10 @@ class Player:
     def Move(self, dir):
         self.move.setTarget(0x01, 6000)
         self.move.setTarget(0x02, 6000)
-        if dir == 'B':
+        if dir == 'F':
+            self.move.setTarget(0x01, 5000)
+            time.sleep(1)
+        elif dir == 'B':
             self.move.setTarget(0x02, 7000)
             time.sleep(2)
         elif dir == 'L':
