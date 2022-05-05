@@ -9,16 +9,17 @@ class Animation:
         self.move = move
 
     def arm(self, wait, type):
-        if type == 'B':
-            self.BatteArm(wait)
-        elif type == 'CO':
-            self.CoffeeArm(wait)
-        elif type == 'CH':
-            self.RechargeArm(wait)
-        elif type == 'T':
-            self.TrickyArm(wait)
-        elif type == 'F':
-            self.FunArm(wait)
+        self.move.setTarget(0x05, 8000)
+        # if type == 'B':
+        #     self.BatteArm(wait)
+        # elif type == 'CO':
+        #     self.CoffeeArm(wait)
+        # elif type == 'CH':
+        #     self.RechargeArm(wait)
+        # elif type == 'T':
+        #     self.TrickyArm(wait)
+        # elif type == 'F':
+        #     self.FunArm(wait)
 
     def screen(self, wait, type):
         print('screen')
