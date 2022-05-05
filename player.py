@@ -72,7 +72,7 @@ class Player:
             self.move.setTarget(0x02, 5000)
             time.sleep(1)
         self.move.setTarget(0x02, 6000)
-        self.move.setTarget(0x01, 7000)
+        self.move.setTarget(0x01, 5000)
         time.sleep(1)
         self.move.setTarget(0x01, 6000)
 
