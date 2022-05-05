@@ -19,6 +19,7 @@ class Player:
         self.current = self.map.start
         self.prevPos = self.map.start
         self.direction = random.choice(self.map.nodeList[self.map.start][2])
+        self.animation = AnimationController(m)
         self.riddles = [
             [
                 "What's white, black and red all over?",
