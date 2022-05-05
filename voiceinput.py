@@ -2,6 +2,7 @@ import speech_recognition as sr
 
 class VoiceInput:
     def listen(self, input):
+        valid = ''
         isWord = False
         while isWord == False:
             with sr.Microphone() as source:
@@ -13,8 +14,10 @@ class VoiceInput:
                     print("got audio")
                     word = r.recognize_google(audio)
                     print(word)
-                    if word.find(input) != -1:
-                        isWord = True
+                    for i in range(len(input)):
+                        if word.find(input[i]) != -1:
+                            isWord = True
+                            valid = word
                 except sr.UnknownValueError:
                     print("unknown words")
-        return isWord
+        return valid
