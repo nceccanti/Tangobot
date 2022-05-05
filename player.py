@@ -89,7 +89,6 @@ class Player:
 
     #Plays each "turn"
     def playerTurn(self):
-        validinput = ["forward", "backward", "left", "right"]
         isValid = False
         cardinal = ''
         next = ''
@@ -124,7 +123,7 @@ class Player:
             self.s.TTS(str)
             self.s.TTS("What do you choose?")
             #user = input('What do you choose: ')
-            user = self.voice.listen(validinput)
+            user = self.voice.listen(choices)
             user = user.lower().strip()
             for i in range(len(choices)):
                 if user.find(choices[i]) > -1:
