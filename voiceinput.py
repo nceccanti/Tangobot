@@ -14,7 +14,7 @@ class VoiceInput:
                     print("got audio")
                     word = r.recognize_google(audio)
                     print(word)
-                    for i in len(input):
+                    for i in range(len(input)):
                         if word.find(input[i]) != -1:
                             isWord = True
                             valid = word
