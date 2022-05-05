@@ -9,6 +9,7 @@ from Animation import *
 
 class Player:
     def __init__(self, hp, map, move):
+        self.NofT = 0
         self.move = move
         self.voice = VoiceInput()
         self.s = Speaker()
@@ -77,6 +78,10 @@ class Player:
         time.sleep(1)
         self.move.setTarget(0x01, 6000)
 
+    def tmt(self):
+        if self.NofT > 35:
+            self.s.TTS("You have taken too many turns, Game over! Loser")
+
     #Checks to see if user has reached end point or if user has ran out of health
     def isEnd(self):
         if self.current == self.map.end:
@@ -126,6 +131,7 @@ class Player:
             print(str)
             self.s.TTS(str)
             self.s.TTS("What do you choose?")
+            self.NofT += 1
             #user = input('What do you choose: ')
             user = self.voice.listen(choices)
             user = user.lower().strip()
@@ -365,6 +371,11 @@ if __name__ == '__main__':
     #print(n.id)
     p = Player(100, n, m)
     print(p.direction)
+    #p.TrickyNode()
+    while p.isEnd() & p.tmt():
+        #print(p.current)
+        p.playerTurn()
+        p.CoffeeShop()
     a = AnimationController(m)
     a.control(5, "B")
     # while p.isEnd():
