@@ -76,8 +76,8 @@ class Player:
             time.sleep(1)
             self.move.setTarget(0x01, 6000)
         elif dir == 'L':
-            self.move.setTarget(0x02, 7500)
-            time.sleep(1)
+            self.move.setTarget(0x02, 7000)
+            time.sleep(1.4)
             self.move.setTarget(0x02, 6000)
             self.move.setTarget(0x01, 5000)
             time.sleep(1)
