@@ -119,6 +119,7 @@ class Player:
             for i in range(len(choices)):
                 if user.find(choices[i]) > -1:
                     self.move.stop()
+                    time.sleep(1)
                     next = paths[i][1]
                     self.Move(paths[i][0])
             if len(next) > 0:
