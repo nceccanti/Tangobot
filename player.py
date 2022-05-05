@@ -5,6 +5,7 @@ from voiceinput import *
 from speak import *
 from Move import *
 from Nav import *
+from Animation import *
 
 class Player:
     def __init__(self, hp, map, move):
@@ -364,8 +365,7 @@ if __name__ == '__main__':
     #print(n.id)
     p = Player(100, n, m)
     print(p.direction)
-    #p.TrickyNode()
-    while p.isEnd():
-        #print(p.current)
-        p.playerTurn()
-        p.CoffeeShop()
+    a = AnimationController(m)
+    a.control(5, "B")
+    # while p.isEnd():
+    #     p.playerTurn()

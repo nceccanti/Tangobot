@@ -9,7 +9,17 @@ class Animation:
         self.move = move
 
     def arm(self, wait, type):
-        self.move.setTarget()
+        if type == 'B':
+            self.BatteArm(wait)
+        elif type == 'CO':
+            self.CoffeeArm(wait)
+        elif type == 'CH':
+            self.RechargeArm(wait)
+        elif type == 'T':
+            self.TrickyArm(wait)
+        elif type == 'F'
+            self.FunArm(wait)
+
     def screen(self, wait, type):
         print('screen')
         time.sleep(1)
@@ -70,9 +80,11 @@ class Animation:
         self.move.setTarget(0x05, 4000)
 
 class AnimationController:
-    def control(self, time, type, move):
+    def __init__(self, m):
+        self.move = m
+    def control(self, time, type):
         start = timeit.default_timer()
-        inst = Animation(move)
+        inst = Animation(self.move)
         t1 = threading.Thread(target=inst.arm, args=(time,type))
         t2 = threading.Thread(target=inst.screen, args=(time,type))
         t1.start()
@@ -82,10 +94,6 @@ class AnimationController:
         end = timeit.default_timer()
         print(end-start)
         print("Done")
-
-if __name__ == '__main__':
-    a = AnimationController
-    a.control(1,10,100)
 
 
 
