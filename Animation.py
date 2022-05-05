@@ -17,7 +17,7 @@ class Animation:
             self.RechargeArm(wait)
         elif type == 'T':
             self.TrickyArm(wait)
-        elif type == 'F'
+        elif type == 'F':
             self.FunArm(wait)
 
     def screen(self, wait, type):
