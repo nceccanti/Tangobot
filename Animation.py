@@ -43,13 +43,13 @@ class Animation:
         self.move.setTarget(0x00, 6000)
 
     def CoffeeArm(self, wait):
-        self.move.setTarget(0x05, 4000)
+        self.move.setTarget(0x05, 8000)
         time.sleep(0.1)
         self.move.setTarget(0x0b, 4000)
         time.sleep(0.1)
         self.move.setTarget(0x08, 4000)
         time.sleep(wait)
-        self.move.setTarget(0x05, 8000)
+        self.move.setTarget(0x05, 4000)
         time.sleep(0.1)
         self.move.setTarget(0x0b, 6000)
         time.sleep(0.1)
