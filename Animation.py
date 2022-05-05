@@ -80,13 +80,13 @@ class Animation:
         self.move.setTarget(0x05, 4000)
 
     def FunArm(self, wait):
-        self.move.setTarget(0x05, 13000)
+        self.move.setTarget(0x05, 11000)
         time.sleep(0.1)
         iter = int(wait / 2)
         for i in range(iter):
-            self.move.setTarget(0x0b, 3000)
+            self.move.setTarget(0x0a, 3000)
             time.sleep(1)
-            self.move.setTarget(0x0b, 6000)
+            self.move.setTarget(0x0a, 6000)
             time.sleep(1)
         self.move.setTarget(0x05, 4000)
 
