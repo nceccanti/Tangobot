@@ -237,7 +237,6 @@ class Player:
 
     #Easy battle functionality
     def EasyBattle(self):
-        self.animation.control(5, 'B')
         self.s.TTS("you have ran into a low level adversary")
         print('Easy Battle')
         enemy_hp = 0
@@ -250,6 +249,7 @@ class Player:
 
         while enemy_hp > 0 and self.hp > 0:
             if self.Battle():
+                self.animation.control(5, 'B')
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(1,12)
                 if player_dmg >= 23:
@@ -263,7 +263,6 @@ class Player:
                 break
     #Medium battle functionality
     def MediumBattle(self):
-        self.animation.control(5, 'B')
         self.s.TTS("you have stumbled on a medium level adversary")
         print('Medium Battle')
         enemy_hp = 0
@@ -276,6 +275,7 @@ class Player:
 
         while enemy_hp > 0 and self.hp > 0:
             if self.Battle():
+                self.animation.control(5, 'B')
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(3,19)
                 if player_dmg >= 23:
@@ -290,7 +290,6 @@ class Player:
 
     #Hard battle functionality
     def HardBattle(self):
-        self.animation.control(5, 'B')
         self.s.TTS("You have ran into a heavily armored enemy")
         print('Hard Battle')
         enemy_hp = 0
@@ -302,6 +301,7 @@ class Player:
             self.enemies[self.current] = count
 
         while enemy_hp > 0 and self.hp > 0:
+            self.animation.control(5, 'B')
             if self.Battle():
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(10,22)
