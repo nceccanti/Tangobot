@@ -20,6 +20,7 @@ class Player:
         self.current = self.map.start
         self.prevPos = self.map.start
         self.direction = random.choice(self.map.nodeList[self.map.start][2])
+        self.animation = AnimationController(m)
         self.riddles = [
             [
                 "What's white, black and red all over?",
@@ -221,18 +222,21 @@ class Player:
 
     #Charging station functionality
     def ChargingStation(self):
+        self.animation.control(5, 'CH')
         self.hp = self.MAXHP
         self.s.TTS("You have reached a charging station, Gaining max health")
         print("Charging Stations")
 
     #Coffee shop functionality
     def CoffeeShop(self):
+        self.animation.control(5, 'CO')
         self.shortestPath()
         self.s.TTS("You have made it to Coffee Shop")
         print('Coffee Shop')
 
     #Easy battle functionality
     def EasyBattle(self):
+        self.animation.control(5, 'B')
         self.s.TTS("you have ran into a low level adversary")
         print('Easy Battle')
         enemy_hp = 0
@@ -258,6 +262,7 @@ class Player:
                 break
     #Medium battle functionality
     def MediumBattle(self):
+        self.animation.control(5, 'B')
         self.s.TTS("you have stumbled on a medium level adversary")
         print('Medium Battle')
         enemy_hp = 0
@@ -284,6 +289,7 @@ class Player:
 
     #Hard battle functionality
     def HardBattle(self):
+        self.animation.control(5, 'B')
         self.s.TTS("You have ran into a heavily armored enemy")
         print('Hard Battle')
         enemy_hp = 0
@@ -328,6 +334,7 @@ class Player:
 
     #Fun functionality
     def FunNode(self):
+        self.animation.control(5, 'F')
         self.s.TTS("You have reached the fun node, you are about to teleport")
         #print("You are about to teleport!! Hold on tight!")
         self.current = random.randint(0, self.map.id-1)
@@ -336,6 +343,7 @@ class Player:
 
     #Tricky functionality
     def TrickyNode(self):
+        self.animation.control(5, 'T')
         self.s.TTS("you have reached the troll under the bridge")
         riddle = random.choice(self.riddles)
         for i in riddle:
@@ -367,17 +375,7 @@ if __name__ == '__main__':
     n.readFile('map2.txt')
     n.postProcess()
     n.addSpecialNodes()
-    print(n.nodeList)
-    print(n.adjList)
-    #print(n.id)
     p = Player(100, n, m)
-    print(p.direction)
-    #p.TrickyNode()
     while p.isEnd() and p.tmt():
-        #print(p.current)
         p.playerTurn()
         p.CoffeeShop()
-    a = AnimationController(m)
-    a.control(5, "B")
-    # while p.isEnd():
-    #     p.playerTurn()

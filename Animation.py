@@ -9,17 +9,23 @@ class Animation:
         self.move = move
 
     def arm(self, wait, type):
-        self.move.setTarget(0x05, 8000)
-        # if type == 'B':
-        #     self.BatteArm(wait)
-        # elif type == 'CO':
-        #     self.CoffeeArm(wait)
-        # elif type == 'CH':
-        #     self.RechargeArm(wait)
-        # elif type == 'T':
-        #     self.TrickyArm(wait)
-        # elif type == 'F':
-        #     self.FunArm(wait)
+        self.move.setTarget(0x05, 4000)
+        self.move.setTarget(0x06, 6000)
+        self.move.setTarget(0x08, 6000)
+        self.move.setTarget(0x09, 4000)
+        self.move.setTarget(0x0a, 6000)
+        self.move.setTarget(0x0b, 6000)
+        time.sleep(1)
+        if type == 'B':
+            self.BatteArm(wait)
+        elif type == 'CO':
+            self.CoffeeArm(wait)
+        elif type == 'CH':
+            self.RechargeArm(wait)
+        elif type == 'T':
+            self.TrickyArm(wait)
+        elif type == 'F':
+            self.FunArm(wait)
 
     def screen(self, wait, type):
         print('screen')
@@ -30,31 +36,31 @@ class Animation:
         time.sleep(0.2)
         iter = int(wait / 2)
         for i in range(iter):
-            self.move.setTarget(0x0b, 8000)
+            self.move.setTarget(0x0b, 3000)
             time.sleep(1)
             self.move.setTarget(0x0b, 6000)
             time.sleep(1)
         self.move.setTarget(0x05, 4000)
+        self.move.setTarget(0x00, 6000)
 
     def CoffeeArm(self, wait):
-        self.move.setTarget(0x05, 4000)
+        self.move.setTarget(0x05, 8000)
         time.sleep(0.1)
-        self.move.setTarget(0x09, 8000)
+        self.move.setTarget(0x0b, 4000)
         time.sleep(0.1)
         self.move.setTarget(0x08, 4000)
         time.sleep(wait)
-        self.move.setTarget(0x05, 8000)
-        time.sleep(0.1)
-        self.move.setTarget(0x09, 4000)
-        time.sleep(0.1)
-        self.move.setTarget(0x08, 6000)
-
-    def RechargeArm(self, wait):
         self.move.setTarget(0x05, 4000)
         time.sleep(0.1)
         self.move.setTarget(0x0b, 6000)
         time.sleep(0.1)
         self.move.setTarget(0x08, 6000)
+        self.move.setTarget(0x00, 6000)
+
+    def RechargeArm(self, wait):
+        self.move.setTarget(0x05, 6000)
+        time.sleep(0.1)
+        self.move.setTarget(0x0b, 6000)
         time.sleep(0.1)
         iter = int(wait / 2)
         for i in range(iter):
@@ -62,21 +68,25 @@ class Animation:
             time.sleep(1)
             self.move.setTarget(0x06, 8000)
             time.sleep(1)
-        self.move.setTarget(0x05, 6000)
+        self.move.setTarget(0x05, 4000)
+        time.sleep(0.1)
+        self.move.setTarget(0x06, 6000)
+        time.sleep(0.1)
+        self.move.setTarget(0x00, 6000)
 
     def TrickyArm(self, wait):
-        self.move.setTarget(0x09, 3000)
+        self.move.setTarget(0x05, 9000)
         time.sleep(wait)
-        self.move.setTarget(0x09, 5000)
+        self.move.setTarget(0x05, 4000)
 
     def FunArm(self, wait):
-        self.move.setTarget(0x05, 2000)
+        self.move.setTarget(0x05, 11000)
         time.sleep(0.1)
         iter = int(wait / 2)
         for i in range(iter):
-            self.move.setTarget(0x0b, 3000)
+            self.move.setTarget(0x0a, 1000)
             time.sleep(1)
-            self.move.setTarget(0x0b, 6000)
+            self.move.setTarget(0x0a, 7000)
             time.sleep(1)
         self.move.setTarget(0x05, 4000)
 
