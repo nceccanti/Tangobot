@@ -15,7 +15,7 @@ class Animation:
         self.move.setTarget(0x09, 4000)
         self.move.setTarget(0x0a, 6000)
         self.move.setTarget(0x0b, 6000)
-        time.sleep(0.2)
+        time.sleep(1)
         if type == 'B':
             self.BatteArm(wait)
         elif type == 'CO':
