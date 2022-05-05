@@ -388,4 +388,3 @@ if __name__ == '__main__':
     p = Player(100, n, m)
     while p.isEnd() and p.tmt():
         p.playerTurn()
-        p.CoffeeShop()
