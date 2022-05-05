@@ -54,6 +54,7 @@ class Animation:
         self.move.setTarget(0x0b, 6000)
         time.sleep(0.1)
         self.move.setTarget(0x08, 6000)
+        self.move.setTarget(0x00, 6000)
 
     def RechargeArm(self, wait):
         self.move.setTarget(0x05, 4000)
