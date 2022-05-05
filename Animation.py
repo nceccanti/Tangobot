@@ -9,6 +9,13 @@ class Animation:
         self.move = move
 
     def arm(self, wait, type):
+        self.move.setTarget(0x05, 4000)
+        self.move.setTarget(0x06, 6000)
+        self.move.setTarget(0x08, 6000)
+        self.move.setTarget(0x09, 4000)
+        self.move.setTarget(0x0a, 6000)
+        self.move.setTarget(0x0b, 6000)
+        time.sleep(0.2)
         if type == 'B':
             self.BatteArm(wait)
         elif type == 'CO':
@@ -19,13 +26,6 @@ class Animation:
             self.TrickyArm(wait)
         elif type == 'F':
             self.FunArm(wait)
-        time.sleep(1)
-        self.move.setTarget(0x05, 4000)
-        self.move.setTarget(0x06, 6000)
-        self.move.setTarget(0x08, 6000)
-        self.move.setTarget(0x09, 4000)
-        self.move.setTarget(0x0a, 6000)
-        self.move.setTarget(0x0b, 6000)
 
     def screen(self, wait, type):
         print('screen')
