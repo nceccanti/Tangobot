@@ -69,7 +69,7 @@ class Player:
             time.sleep(1)
         elif dir == 'B':
             self.move.setTarget(0x02, 7000)
-            time.sleep(3)
+            time.sleep(2.5)
             self.move.setTarget(0x02, 6000)
             self.move.setTarget(0x01, 6000)
             self.move.setTarget(0x01, 5000)
@@ -314,8 +314,8 @@ class Player:
             self.enemies[self.current] = count
 
         while enemy_hp > 0 and self.hp > 0:
-            self.animation.control(5, 'B')
             if self.Battle():
+                self.animation.control(5, 'B')
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(10,22)
                 if player_dmg >= 23:
