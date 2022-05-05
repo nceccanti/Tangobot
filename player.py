@@ -73,7 +73,6 @@ class Player:
         self.move.setTarget(0x01, 7000)
         time.sleep(1)
 
-
     #Checks to see if user has reached end point or if user has ran out of health
     def isEnd(self):
         if self.current == self.map.end:
