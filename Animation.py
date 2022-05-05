@@ -84,9 +84,9 @@ class Animation:
         time.sleep(0.1)
         iter = int(wait / 2)
         for i in range(iter):
-            self.move.setTarget(0x0a, 3000)
+            self.move.setTarget(0x0a, 1000)
             time.sleep(1)
-            self.move.setTarget(0x0a, 6000)
+            self.move.setTarget(0x0a, 7000)
             time.sleep(1)
         self.move.setTarget(0x05, 4000)
 
