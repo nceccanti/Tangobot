@@ -68,7 +68,10 @@ class Animation:
             time.sleep(1)
             self.move.setTarget(0x06, 8000)
             time.sleep(1)
-        self.move.setTarget(0x05, 6000)
+        self.move.setTarget(0x05, 4000)
+        time.sleep(0.1)
+        self.move.setTarget(0x06, 6000)
+        time.sleep(0.1)
         self.move.setTarget(0x00, 6000)
 
     def TrickyArm(self, wait):
