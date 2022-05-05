@@ -56,7 +56,7 @@ class Player:
     #Tells robot to move.  Remember if turning you still have to move forward afterward
     def Move(self, dir):
         if dir == 'B':
-            self.move.setTarget(0x02, 7000)
+            self.move.setTarget(0x01, 7000)
             time.sleep(2)
         elif dir == 'L':
             self.move.setTarget(0x02, 7000)
@@ -67,6 +67,7 @@ class Player:
         self.move.setTarget(0x02, 6000)
         self.move.setTarget(0x01, 7000)
         time.sleep(1)
+        self.move.stop()
 
 
     #Checks to see if user has reached end point or if user has ran out of health
