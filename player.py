@@ -20,7 +20,6 @@ class Player:
         self.current = self.map.start
         self.prevPos = self.map.start
         self.direction = random.choice(self.map.nodeList[self.map.start][2])
-        self.animation = AnimationController(m)
         self.riddles = [
             [
                 "What's white, black and red all over?",
@@ -344,13 +343,14 @@ class Player:
 
     #Tricky functionality
     def TrickyNode(self):
+        answer = ['1']
         self.animation.control(5, 'T')
         self.s.TTS("you have reached the troll under the bridge")
         riddle = random.choice(self.riddles)
         for i in riddle:
             self.s.TTS(i)
             print(i)
-        user = input('Answer: ')
+        user = self.voice.listen(answer)
         if int(float(user)) == 1:
             self.s.TTS("You guessed right, 10+ hp!")
             print("You guessed right, 10+ hp!")
