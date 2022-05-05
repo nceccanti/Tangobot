@@ -10,6 +10,7 @@ class Player:
         self.map = map
         self.current = self.map.start
         self.prevPos = self.map.start
+        self.direction = random.choice(self.map.nodeList[self.map.start][2])
         self.riddles = [
             [
                 "What's white, black and red all over?",
@@ -24,6 +25,42 @@ class Player:
                 "(3): A leg"
             ]
         ]
+
+    #Feed cardinal directions at node, returns array of ordered pairs of relative direction and corresponding cardinal directions
+    def relativeDirection(self, string):
+        relativeDir = []
+        dir = "WNES"
+        for i in string:
+            iter = dir.find(i)
+            target = dir.find(self.direction)
+            moves = 0
+            while dir[iter] != dir[target]:
+                moves += 1
+                iter += 1
+                if iter >= len(dir):
+                    iter = 0
+            if moves == 0:
+                relativeDir.append(["F", i])
+            elif moves == 1:
+                relativeDir.append(["R", i])
+            elif moves == 2:
+                relativeDir.append(["B", i])
+            elif moves == 3:
+                relativeDir.append(["L", i])
+            else:
+                print('Relative direction error')
+        return relativeDir
+
+    #Tells robot to move.  Remember if turning you still have to move forward afterward
+    def Move(self, dir):
+        if dir == 'F':
+            print("Moved forward")
+        elif dir == 'B':
+            print("Turned around and forward")
+        elif dir == 'L':
+            print('Turned left and forward')
+        elif dir == 'R':
+            print('Turned right and forward')
 
     #Checks to see if user has reached end point or if user has ran out of health
     def isEnd(self):
@@ -40,35 +77,49 @@ class Player:
     #Plays each "turn"
     def playerTurn(self):
         isValid = False
-        choices = []
+        cardinal = ''
         next = ''
         while isValid == False:
             str = 'Your choices are you go: '
             #print(self.map.nodeList[self.current][2])
             if self.map.nodeList[self.current][2].find('N') > -1:
-                str += 'North, '
-                choices.append(['north', 'N'])
+                cardinal += 'N'
             if self.map.nodeList[self.current][2].find('W') > -1:
-                str += 'West, '
-                choices.append(['west', 'W'])
+                cardinal += 'W'
             if self.map.nodeList[self.current][2].find('S') > -1:
-                str += 'South, '
-                choices.append(['south', 'S'])
+                cardinal += 'S'
             if self.map.nodeList[self.current][2].find('E') > -1:
-                str += 'East'
-                choices.append(['east', 'E'])
+                cardinal += 'E'
+            paths = self.relativeDirection(cardinal)
+            choices = []
+            print(paths)
+            for i in paths:
+                if i[0] == 'F':
+                    str += 'Forward, '
+                    choices.append('forward')
+                elif i[0] == "B":
+                    str += 'Backward, '
+                    choices.append('backward')
+                elif i[0] == 'L':
+                    str += "Left, "
+                    choices.append('left')
+                elif i[0] == 'R':
+                    choices.append('right')
+                    str += 'Right, '
             print(str)
             user = input('What do you choose: ')
             user = user.lower().strip()
-            for i in choices:
-                if user.find(i[0]) > -1:
-                    next = i[1]
+            for i in range(len(choices)):
+                if user.find(choices[i]) > -1:
+                    next = paths[i][1]
+                    self.Move(paths[i][0])
             if len(next) > 0:
                 isValid = True
         for i in self.map.adjList[self.current].keys():
             if next == self.map.adjList[self.current][i][1]:
                 self.prevPos = self.current
                 self.current = i
+                self.direction = next
                 break;
         self.NodeController(self.map.nodeList[self.current][3])
 
@@ -98,6 +149,7 @@ class Player:
                     min_index = j
         return min_index
 
+    #Finds shortest path to end node for coffee shop hints
     def shortestPath(self):
         #print(self.map.end, self.current)
         #print(self.map.adjList[self.current])
@@ -123,15 +175,16 @@ class Player:
         temp = path[self.map.end]
         temp.reverse()
         if len(temp) > 1:
-            hint = self.map.adjList[self.current][temp[1]][1]
-            if hint == 'N':
-                print("(Hint): Go North!")
-            elif hint == 'S':
-                print("(Hint): Go South!")
-            elif hint == 'W':
-                print("(Hint): Go West!")
-            elif hint == 'E':
-                print("(Hint): Go East!")
+            card = self.map.adjList[self.current][temp[1]][1]
+            hint = self.relativeDirection(card)[0][0]
+            if hint == 'F':
+                print("(Hint): Go Forward!")
+            elif hint == 'B':
+                print("(Hint): Go Backward!")
+            elif hint == 'L':
+                print("(Hint): Go Left!")
+            elif hint == 'R':
+                print("(Hint): Go Right!")
 
     #Charging station functionality
     def ChargingStation(self):
@@ -195,11 +248,13 @@ if __name__ == '__main__':
     n.readFile('map2.txt')
     n.postProcess()
     n.addSpecialNodes()
-    #print(n.nodeList)
-    #print(n.adjList)
+    print(n.nodeList)
+    print(n.adjList)
     #print(n.id)
     p = Player(100, n)
+    print(p.direction)
     #p.TrickyNode()
     while p.isEnd():
         #print(p.current)
         p.playerTurn()
+        p.CoffeeShop()

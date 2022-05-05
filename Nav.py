@@ -31,6 +31,7 @@ class Nav:
 
     #File input
     def readFile(self, fileName):
+        edgeNodes = []
         if os.path.isfile(fileName):
             with open(fileName, 'r') as file:
                 f = file.read()
@@ -64,9 +65,12 @@ class Nav:
                                 isNode = True
                                 #print(self.id, "bottom")
                             if isNode and i == 0 or j==0 or self.xLimit - 1 == j or self.yLimit - 1 == i:
-                                self.edgeNodes.append(self.id)
+                                edgeNodes.append(self.id)
                             if isNode:
                                 self.addNode(j, i, inter)
+        for i in edgeNodes:
+            if i not in self.edgeNodes:
+                self.edgeNodes.append(i)
 
     #Connects nodes
     def postProcess(self):
@@ -180,13 +184,13 @@ class Nav:
         nodes = []
         for i in range(self.id):
             nodes.append(i)
-
         self.start = random.choice(self.edgeNodes)
         self.edgeNodes.remove(self.start)
-        self.end = random.choice(self.edgeNodes)
+        end = random.choice(self.edgeNodes)
+        self.end = end
         self.current = self.start
         nodes.remove(self.start)
-        nodes.remove(self.end)
+        nodes.remove(end)
 
         i = 0
         while i < CHARGING:
