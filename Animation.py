@@ -9,7 +9,7 @@ class Animation:
         self.move = move
 
     def arm(self, wait, type):
-        self.move.setTarget(0x05, 6000)
+        self.move.setTarget(0x05, 8000)
         self.move.setTarget(0x06, 6000)
         self.move.setTarget(0x08, 6000)
         self.move.setTarget(0x09, 6000)
