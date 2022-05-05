@@ -118,6 +118,8 @@ class Player:
             user = user.lower().strip()
             for i in range(len(choices)):
                 if user.find(choices[i]) > -1:
+                    self.move.setTarget(0x02, 6000)
+                    self.move.setTarget(0x01, 6000)
                     next = paths[i][1]
                     self.Move(paths[i][0])
             if len(next) > 0:
