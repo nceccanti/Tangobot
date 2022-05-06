@@ -172,7 +172,8 @@ class Player:
                 break;
         self.NodeController(self.map.nodeList[self.current][3])
         self.animation.initial()
-        self.s.TTS("You have " + str(self.hp) + " health")
+        we = "You have " + self.hp + " health"
+        self.s.TTS(we)
 
 
     #Selects function based on node attribute
