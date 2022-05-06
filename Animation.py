@@ -1,9 +1,9 @@
 import timeit
 import tkinter as tk
 import _thread, threading
-import time
 #from Move import *
 from fireworks import *
+import time
 
 
 class Screen:
@@ -88,6 +88,39 @@ class Screen:
             self.myCan.update()
             r -= 20
 
+    def Battle(self, enemies):
+        for i in range(enemies):
+            if i < 3:
+                y = 0 * 200
+            else:
+                y = 1 * 300
+            print(i, y)
+            x = (i % 3) * 350
+            self.myCan.create_oval((25+x), (25+y), (225+x), (225+y), fill="green", outline='')
+            self.myCan.create_oval((50+x), (95+y), (200+x), (155+y), fill="white", outline='')
+            self.myCan.create_oval((100+x), (100+y), (150+x), (150+y), fill="black", outline='')
+        self.myCan.pack()
+
+    def BattleBlink(self, enemies):
+        for i in range(enemies):
+            if i < 3:
+                y = 0 * 200
+            else:
+                y = 1 * 300
+            print(i, y)
+            x = (i % 3) * 350
+            self.myCan.create_oval((25+x), (25+y), (225+x), (225+y), fill="green", outline='')
+            self.myCan.create_oval((50+x), (95+y), (200+x), (155+y), fill="purple")
+        self.myCan.pack()
+
+    def BattleScreen(self, enemies):
+        self.Battle(enemies)
+        self.myCan.update()
+        self.myCan.after(250, self.BattleBlink(enemies))
+        self.myCan.update()
+        self.myCan.after(750, self.Battle(enemies))
+        self.myCan.update()
+
 class Animation:
     def __init__(self, win):
         self.win = win
@@ -105,27 +138,7 @@ class Animation:
         self.myCan.pack()
         self.myCan.update()
 
-    def arm(self, wait, type):
-        print("arm")
-        # self.move.setTarget(0x05, 4000)
-        # self.move.setTarget(0x06, 6000)
-        # self.move.setTarget(0x08, 6000)
-        # self.move.setTarget(0x09, 4000)
-        # self.move.setTarget(0x0a, 6000)
-        # self.move.setTarget(0x0b, 6000)
-        # time.sleep(1)
-        # if type == 'B':
-        #     self.BatteArm(wait)
-        # elif type == 'CO':
-        #     self.CoffeeArm(wait)
-        # elif type == 'CH':
-        #     self.RechargeArm(wait)
-        # elif type == 'T':
-        #     self.TrickyArm(wait)
-        # elif type == 'F':
-        #     self.FunArm(wait)
-
-    def screenControl(self, wait, type):
+    def screenControl(self, wait, type, enemies):
         # self.move.setTarget(0x05, 4000)
         # self.move.setTarget(0x06, 6000)
         # self.move.setTarget(0x08, 6000)
@@ -135,7 +148,16 @@ class Animation:
         self.myCan.delete('all')
         s = Screen(self.myCan)
         if type == 'B':
-            self.fireworks.main()
+            iter = int(wait / 2)
+            for i in range(iter):
+                #     self.move.setTarget(0x05, 8000)
+                #     time.sleep(0.2)
+                # self.move.setTarget(0x0b, 3000)
+                s.BattleScreen(enemies)
+                #self.move.setTarget(0x0b, 6000)
+                s.BattleScreen(enemies)
+                #     self.move.setTarget(0x05, 4000)
+                #     self.move.setTarget(0x00, 6000)
         if type == 'CO':
             #self.move.setTarget(0x05, 8000)
             # time.sleep(0.1)

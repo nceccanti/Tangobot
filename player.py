@@ -1,6 +1,5 @@
 #import serial
 import random
-import time
 from random import *
 #from voiceinput import *
 #from speak import *
@@ -9,9 +8,10 @@ from Nav import *
 #from Animation import *
 import tkinter as tk
 from Animation import *
+import time
 
 class Player:
-    def __init__(self, hp, map):
+    def __init__(self, hp, map, a):
         self.NofT = 0
         #self.move = move
         #self.voice = VoiceInput()
@@ -23,7 +23,7 @@ class Player:
         self.current = self.map.start
         self.prevPos = self.map.start
         self.direction = random.choice(self.map.nodeList[self.map.start][2])
-        #self.animation = AnimationController(m)
+        self.animation = a
         self.riddles = [
 
             [
@@ -152,6 +152,7 @@ class Player:
             # self.s.TTS(str)
             # self.s.TTS("What do you choose?")
             self.NofT += 1
+            print(self.enemies)
             user = input('What do you choose: ')
             #user = self.voice.listen(choices)
             user = user.lower().strip()
@@ -255,85 +256,114 @@ class Player:
 
     #Easy battle functionality
     def EasyBattle(self):
-        #self.s.TTS("you have ran into a low level adversary")
-        print('Easy Battle')
+        badguys = random.randint(1, 2)
+        #self.s.TTS("you have ran into a low level adversaries")
+        print("you have ran into", str(badguys), "low level adversaries")
+        self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0
+        enem = []
         if self.current in self.enemies.keys():
-            enemy_hp = self.enemies[self.current]*6
+            enem = self.enemies[self.current]
+            for i in range(len(self.enemies[self.current])):
+                enem[i] = enem[i] * 2
         else:
-            count = random.randint(2,6)
-            enemy_hp = count*6
-            self.enemies[self.current] = count
-
-        while enemy_hp > 0 and self.hp > 0:
+            for i in range(badguys):
+                enem.append(random.randint(2, 6) * 3)
+            self.enemies[self.current] = enem
+        print(enem)
+        while len(enem) > 0 and self.hp > 0:
             if self.Battle():
-                #self.animation.control(5, 'B')
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(1,12)
                 if player_dmg >= 23:
                     #self.s.TTS("Critical Hit!")
                     print("Critical Hit!")
-                    enemy_hp -= player_dmg
-                enemy_hp -= player_dmg
-                self.enemies[self.current] = int(enemy_hp/6)
-                print("\nplayer hp is", self.hp, "\nenemy hp is", enemy_hp)
+                enem[0] -= player_dmg
+                self.enemies[self.current] = enem
+                if enem[0] < 1:
+                    enem.pop(0)
+                    if len(enem) == 0:
+                        print("You killed all the enemy\'s")
+                    else:
+                        print("You killed an enemy!", len(enem), "enemies remain!")
+                else:
+                    print("\nplayer hp is", self.hp, "\nenemy hp is", enem[0])
             else:
                 break
         self.map.nodeList[self.current][3] = ''
 
     #Medium battle functionality
     def MediumBattle(self):
-        #self.s.TTS("you have stumbled on a medium level adversary")
-        print('Medium Battle')
+        badguys = random.randint(3, 4)
+        # self.s.TTS("you have ran into a low level adversaries")
+        print("you have ran into", str(badguys), "medium level adversaries")
+        self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0
+        enem = []
         if self.current in self.enemies.keys():
-            enemy_hp = self.enemies[self.current]*15
+            enem = self.enemies[self.current]
+            for i in range(len(self.enemies[self.current])):
+                enem[i] = enem[i] * 2
         else:
-            count = random.randint(2,3)
-            enemy_hp = count*15
-            self.enemies[self.current] = count
-
-        while enemy_hp > 0 and self.hp > 0:
+            for i in range(badguys):
+                enem.append(random.randint(2, 6) * 3)
+            self.enemies[self.current] = enem
+        print(enem)
+        while len(enem) > 0 and self.hp > 0:
             if self.Battle():
-                #self.animation.control(5, 'B')
                 player_dmg = random.randint(5, 26)
-                self.hp -= random.randint(3,19)
+                self.hp -= random.randint(1, 12)
                 if player_dmg >= 23:
-                    #self.s.TTS("Critical Hit")
+                    # self.s.TTS("Critical Hit!")
                     print("Critical Hit!")
-                    enemy_hp -= player_dmg
-                enemy_hp -= player_dmg
-                self.enemies[self.current] = int(enemy_hp/15)
-                print("\nplayer hp is", self.hp, "\nenemy hp is", enemy_hp)
+                enem[0] -= player_dmg
+                self.enemies[self.current] = enem
+                if enem[0] < 1:
+                    enem.pop(0)
+                    if len(enem) == 0:
+                        print("You killed all the enemy\'s")
+                    else:
+                        print("You killed an enemy!", len(enem), "enemies remain!")
+                else:
+                    print("\nplayer hp is", self.hp, "\nenemy hp is", enem[0])
             else:
                 break
         self.map.nodeList[self.current][3] = ''
 
     #Hard battle functionality
     def HardBattle(self):
-        #self.s.TTS("You have ran into a heavily armored enemy")
-        print('Hard Battle')
+        badguys = random.randint(5, 6)
+        # self.s.TTS("you have ran into a low level adversaries")
+        print("you have ran into", str(badguys), "hard level adversaries")
+        self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0
+        enem = []
         if self.current in self.enemies.keys():
-            enemy_hp = self.enemies[self.current]*47
+            enem = self.enemies[self.current]
+            for i in range(len(self.enemies[self.current])):
+                enem[i] = enem[i] * 2
         else:
-            count = random.randint(1,2)
-            enemy_hp = count*47
-            self.enemies[self.current] = count
-
-        while enemy_hp > 0 and self.hp > 0:
+            for i in range(badguys):
+                enem.append(random.randint(2, 6) * 3)
+            self.enemies[self.current] = enem
+        print(enem)
+        while len(enem) > 0 and self.hp > 0:
             if self.Battle():
-                #self.animation.control(5, 'B')
                 player_dmg = random.randint(5, 26)
-                self.hp -= random.randint(10,22)
+                self.hp -= random.randint(1, 12)
                 if player_dmg >= 23:
-                    #self.s.TTS("Critical Hit")
+                    # self.s.TTS("Critical Hit!")
                     print("Critical Hit!")
-                    enemy_hp -= player_dmg
-                enemy_hp -= player_dmg
-                if enemy_hp > 0 and enemy_hp <=47:
-                    self.enemies[self.current] = 1
-                print("\nplayer hp is", self.hp, "\nenemy hp is", enemy_hp)
+                enem[0] -= player_dmg
+                self.enemies[self.current] = enem
+                if enem[0] < 1:
+                    enem.pop(0)
+                    if len(enem) == 0:
+                        print("You killed all the enemy\'s")
+                    else:
+                        print("You killed an enemy!", len(enem), "enemies remain!")
+                else:
+                    print("\nplayer hp is", self.hp, "\nenemy hp is", enem[0])
             else:
                 break
         self.map.nodeList[self.current][3] = ''
@@ -362,6 +392,7 @@ class Player:
     #Fun functionality
     def FunNode(self):
         #self.animation.control(5, 'F')
+        self.animation.screenControl(5, 'F', 0)
         #self.s.TTS("You have reached the fun node, you are about to teleport")
         print("You have reached the fun node, you are about to teleport")
         #print("You are about to teleport!! Hold on tight!")
@@ -375,6 +406,7 @@ class Player:
     def TrickyNode(self):
         answer = ['1']
         #self.animation.control(5, 'T')
+        self.animation.screenControl(5, 'T', 0)
         #self.s.TTS("you have reached the troll under the bridge")
         print("you have reached the troll under the bridge")
         riddle = random.choice(self.riddles)
@@ -411,14 +443,10 @@ if __name__ == '__main__':
     # print(n.nodeList)
     # print(n.adjList)
     # print(n.edgeNodes)
-    # p = Player(100, n)
     win = tk.Tk()
     a = Animation(win)
     a.initial()
-    time.sleep(5)
-    a.screenControl(5, 'CH')
-    time.sleep(1)
-    a.screenControl(5, "CO")
-    win.mainloop()
+    # p = Player(100, n, a)
     # while p.isEnd() and p.tmt():
     #     p.playerTurn()
+    win.mainloop()
