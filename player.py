@@ -249,7 +249,7 @@ class Player:
 
     #Charging station functionality
     def ChargingStation(self):
-        self.animation.screenControl(5, 'CO', 0)
+        self.animation.screenControl(5, 'CH', 0)
         self.hp = self.MAXHP
         self.s.TTS("You have reached a charging station, Gaining max health")
         print("Charging Stations")
