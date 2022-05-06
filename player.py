@@ -332,7 +332,7 @@ class Player:
     #Hard battle functionality
     def HardBattle(self):
         badguys = random.randint(5, 6)
-        self.s.TTS("you have ran into " + str(badguys), " hard level adversaries")
+        self.s.TTS("you have ran into " + str(badguys) + " hard level adversaries")
         print("you have ran into", str(badguys), "hard level adversaries")
         self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0
