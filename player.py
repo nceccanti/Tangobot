@@ -275,7 +275,7 @@ class Player:
         print(enem)
         while len(enem) > 0 and self.hp > 0:
             if self.Battle():
-                self.animation.screenControl(5, 'B', badguys)
+                self.animation.screenControl(5, 'B', len(enem))
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(1,12)
                 if player_dmg >= 23:
