@@ -31,7 +31,25 @@ class Screen:
         self.myCan.update()
         self.myCan.after(500, self.CoffeeSteam())
         self.myCan.update()
-        self.myCan.after(1000, self.CoffeeSteam())
+        self.myCan.after(1000, self.CoffeeCup())
+        self.myCan.delete('all')
+
+    def Lightning(self):
+        self.myCan.create_polygon(512, 50, 225, 330, 475, 330, 400, 550, 675, 270, 425, 270, fill='yellow')
+        self.myCan.pack()
+
+    def WhiteLightning(self):
+        self.myCan.create_polygon(512, 50, 225, 330, 475, 330, 400, 550, 675, 270, 425, 270, fill='white')
+        self.myCan.pack()
+
+    def RechargeScreen(self):
+        #512, 50, 400, 325, 450, 325, 400, 500, 475, 275, 425, 275
+        self.Lightning()
+        self.myCan.update()
+        self.myCan.after(250, self.WhiteLightning())
+        self.myCan.update()
+        self.myCan.after(750, self.Lightning())
+        self.myCan.update()
         self.myCan.delete('all')
 
 class Animation:
@@ -71,8 +89,9 @@ class Animation:
             iter = int(wait / 1.5)
             for i in range(iter):
                 s.CoffeeScreen()
-        # elif type == 'CH':
-        #     self.RechargeArm(wait)
+        elif type == 'CH':
+            for i in range(wait):
+                s.RechargeScreen()
         # elif type == 'T':
         #     self.TrickyArm(wait)
         # elif type == 'F':

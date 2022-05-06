@@ -414,6 +414,6 @@ if __name__ == '__main__':
     win = tk.Tk()
     win.geometry("1024x600")
     myCan = tk.Canvas(win, bg="#000000", width="1024", height="600")
-    a = AnimationController().control(5, 'CO')
+    a = AnimationController().control(5, 'CH')
     # while p.isEnd() and p.tmt():
     #     p.playerTurn()
