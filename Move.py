@@ -1,4 +1,5 @@
-import serial, time, sys
+import time, sys
+# import serial
 
 class Move:
     def __init__(self, magnitude, usb):

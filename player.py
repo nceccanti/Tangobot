@@ -7,6 +7,8 @@ from random import *
 #from Move import *
 from Nav import *
 #from Animation import *
+import tkinter as tk
+from Animation import *
 
 class Player:
     def __init__(self, hp, map):
@@ -401,13 +403,17 @@ if __name__ == '__main__':
     #         print("No serial ports")
     #         sys.exit(0)
     # m = Move(500, usb)
-    n = Nav()
-    n.readFile('map2.txt')
-    n.postProcess()
-    n.addSpecialNodes()
-    print(n.nodeList)
-    print(n.adjList)
-    print(n.edgeNodes)
-    p = Player(100, n)
-    while p.isEnd() and p.tmt():
-        p.playerTurn()
+    # n = Nav()
+    # n.readFile('map2.txt')
+    # n.postProcess()
+    # n.addSpecialNodes()
+    # print(n.nodeList)
+    # print(n.adjList)
+    # print(n.edgeNodes)
+    # p = Player(100, n)
+    win = tk.Tk()
+    win.geometry("1024x600")
+    myCan = tk.Canvas(win, bg="#000000", width="1024", height="600")
+    a = AnimationController().control(5, 'CO')
+    # while p.isEnd() and p.tmt():
+    #     p.playerTurn()
