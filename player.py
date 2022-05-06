@@ -256,7 +256,7 @@ class Player:
     #Easy battle functionality
     def EasyBattle(self):
         badguys = random.randint(1, 2)
-        self.s.TTS("you have ran into", str(badguys), "low level adversaries")
+        self.s.TTS("you have ran into " + str(badguys) + " low level adversaries")
         print("you have ran into", str(badguys), "low level adversaries")
         self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0
@@ -295,7 +295,7 @@ class Player:
     def MediumBattle(self):
         badguys = random.randint(3, 4)
         self.s.TTS("you have ran into", str(badguys), "medium level adversaries")
-        print("you have ran into", str(badguys), "medium level adversaries")
+        print("you have ran into " + str(badguys) + " medium level adversaries")
         self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0
         enem = []
@@ -332,7 +332,7 @@ class Player:
     #Hard battle functionality
     def HardBattle(self):
         badguys = random.randint(5, 6)
-        self.s.TTS("you have ran into", str(badguys), "hard level adversaries")
+        self.s.TTS("you have ran into " + str(badguys), " hard level adversaries")
         print("you have ran into", str(badguys), "hard level adversaries")
         self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0

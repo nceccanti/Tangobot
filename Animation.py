@@ -125,7 +125,7 @@ class Animation:
     def __init__(self, win):
         self.win = win
         self.win.geometry("1024x600")
-        # self.win.attributes('-fullscreen',True)
+        self.win.attributes('-fullscreen',True)
         self.myCan = tk.Canvas(self.win, bg="#222222", width="1024", height="600")
 
     def initial(self):
