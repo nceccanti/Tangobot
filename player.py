@@ -412,10 +412,8 @@ if __name__ == '__main__':
     # print(n.edgeNodes)
     # p = Player(100, n)
     win = tk.Tk()
-    win.geometry("1024x600")
-    myCan = tk.Canvas(win, bg="#000000", width="1024", height="600")
-    a = Animation()
+    a = Animation(win)
     a.screenControl(5, 'CO')
-    time.sleep(1)
+    win.mainloop()
     # while p.isEnd() and p.tmt():
     #     p.playerTurn()

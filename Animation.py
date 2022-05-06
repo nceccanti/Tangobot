@@ -53,8 +53,8 @@ class Screen:
         self.myCan.delete('all')
 
 class Animation:
-    def __init__(self):
-        print("ani")
+    def __init__(self, win):
+        self.win = win
 
     def arm(self, wait, type):
         print("arm")
@@ -75,11 +75,10 @@ class Animation:
         #     self.TrickyArm(wait)
         # elif type == 'F':
         #     self.FunArm(wait)
-        self.win.mainloop()
 
     def screenControl(self, wait, type):
         print("ya")
-        s = Screen()
+        s = Screen(self.win)
         # if type == 'B':
         #     #self.BatteArm(wait)
         if type == 'CO':
