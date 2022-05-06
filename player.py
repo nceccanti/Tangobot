@@ -1,21 +1,20 @@
-#import serial
+import serial
 import random
 from random import *
-#from voiceinput import *
-#from speak import *
-#from Move import *
+from voiceinput import *
+from speak import *
+from Move import *
 from Nav import *
-#from Animation import *
 import tkinter as tk
 from Animation import *
 import time
 
 class Player:
-    def __init__(self, hp, map, a):
+    def __init__(self, hp, map, a, m):
         self.NofT = 0
-        #self.move = move
-        #self.voice = VoiceInput()
-        #self.s = Speaker()
+        self.move = m
+        self.voice = VoiceInput()
+        self.s = Speaker()
         self.hp = hp
         self.MAXHP = hp
         self.map = map
@@ -102,7 +101,7 @@ class Player:
 
     def tmt(self):
         if self.NofT > 35:
-            #self.s.TTS("You have taken too many turns, Game over! Loser")
+            self.s.TTS("You have taken too many turns, Game over! Loser")
             print("You have taken too many turns, Game over! Loser")
             return False
         return True
@@ -113,8 +112,8 @@ class Player:
             print("Reach end point!")
             return False
         if self.hp <= 0:
-            #s = Speaker()
-            #s.TTS("You ran out of health")
+            s = Speaker()
+            s.TTS("You ran out of health")
             print('You ran out of health')
             return False
         if self.hp > self.MAXHP:
@@ -149,19 +148,19 @@ class Player:
                     choices.append('right')
                     str += 'Right, '
             print(str)
-            # self.s.TTS(str)
-            # self.s.TTS("What do you choose?")
+            self.s.TTS(str)
+            self.s.TTS("What do you choose?")
             self.NofT += 1
             print(self.enemies)
-            user = input('What do you choose: ')
-            #user = self.voice.listen(choices)
+            #user = input('What do you choose: ')
+            user = self.voice.listen(choices)
             user = user.lower().strip()
             for i in range(len(choices)):
                 if user.find(choices[i]) > -1:
-                    #self.move.stop()
+                    self.move.stop()
                     time.sleep(1)
                     next = paths[i][1]
-                    #self.Move(paths[i][0])
+                    self.Move(paths[i][0])
             if len(next) > 0:
                 isValid = True
         for i in self.map.adjList[self.current].keys():
@@ -228,36 +227,36 @@ class Player:
             card = self.map.adjList[self.current][temp[1]][1]
             hint = self.relativeDirection(card)[0][0]
             if hint == 'F':
-                #self.s.TTS("Your hint is to go forward")
+                self.s.TTS("Your hint is to go forward")
                 print("(Hint): Go Forward!")
             elif hint == 'B':
-                #self.s.TTS("Your hint is to go backward")
+                self.s.TTS("Your hint is to go backward")
                 print("(Hint): Go Backward!")
             elif hint == 'L':
-                #self.s.TTS("Your hint is to go left")
+                self.s.TTS("Your hint is to go left")
                 print("(Hint): Go Left!")
             elif hint == 'R':
-                #self.s.TTS("Your hint is to go right")
+                self.s.TTS("Your hint is to go right")
                 print("(Hint): Go Right!")
 
     #Charging station functionality
     def ChargingStation(self):
-        #self.animation.control(5, 'CH')
+        self.animation.screenControl(5, 'CO', 0)
         self.hp = self.MAXHP
-        #self.s.TTS("You have reached a charging station, Gaining max health")
+        self.s.TTS("You have reached a charging station, Gaining max health")
         print("Charging Stations")
 
     #Coffee shop functionality
     def CoffeeShop(self):
-        #self.animation.control(5, 'CO')
+        self.animation.screenControl(5, 'CO', 0)
         self.shortestPath()
-        #self.s.TTS("You have made it to Coffee Shop")
+        self.s.TTS("You have made it to Coffee Shop")
         print('Coffee Shop')
 
     #Easy battle functionality
     def EasyBattle(self):
         badguys = random.randint(1, 2)
-        #self.s.TTS("you have ran into a low level adversaries")
+        self.s.TTS("you have ran into", str(badguys), "low level adversaries")
         print("you have ran into", str(badguys), "low level adversaries")
         self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0
@@ -276,7 +275,7 @@ class Player:
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(1,12)
                 if player_dmg >= 23:
-                    #self.s.TTS("Critical Hit!")
+                    self.s.TTS("Critical Hit!")
                     print("Critical Hit!")
                 enem[0] -= player_dmg
                 self.enemies[self.current] = enem
@@ -295,7 +294,7 @@ class Player:
     #Medium battle functionality
     def MediumBattle(self):
         badguys = random.randint(3, 4)
-        # self.s.TTS("you have ran into a low level adversaries")
+        self.s.TTS("you have ran into", str(badguys), "medium level adversaries")
         print("you have ran into", str(badguys), "medium level adversaries")
         self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0
@@ -314,7 +313,7 @@ class Player:
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(1, 12)
                 if player_dmg >= 23:
-                    # self.s.TTS("Critical Hit!")
+                    self.s.TTS("Critical Hit!")
                     print("Critical Hit!")
                 enem[0] -= player_dmg
                 self.enemies[self.current] = enem
@@ -333,7 +332,7 @@ class Player:
     #Hard battle functionality
     def HardBattle(self):
         badguys = random.randint(5, 6)
-        # self.s.TTS("you have ran into a low level adversaries")
+        self.s.TTS("you have ran into", str(badguys), "hard level adversaries")
         print("you have ran into", str(badguys), "hard level adversaries")
         self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0
@@ -352,7 +351,7 @@ class Player:
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(1, 12)
                 if player_dmg >= 23:
-                    # self.s.TTS("Critical Hit!")
+                    self.s.TTS("Critical Hit!")
                     print("Critical Hit!")
                 enem[0] -= player_dmg
                 self.enemies[self.current] = enem
@@ -371,13 +370,13 @@ class Player:
     def Battle(self):
         battlechoice = ['run', 'fight']
         print("would you like to run or fight?")
-        #self.s.TTS("would you like to run or fight?")
-        #user = self.voice.listen(battlechoice)
-        user = input("Run or fight?: ")
+        self.s.TTS("would you like to run or fight?")
+        user = self.voice.listen(battlechoice)
+        #user = input("Run or fight?: ")
         user = user.lower()
         if user.find("run") != -1:
             if random.randint(1,4) != 1:
-                #self.s.TTS("you ran away")
+                self.s.TTS("you ran away")
                 print("you ran away!")
                 self.current = random.randint(0, self.map.id-1)
                 self.direction = random.choice(self.map.nodeList[self.current][2])
@@ -385,15 +384,15 @@ class Player:
                 #print(self.map.nodeList[self.current][2])
                 return False
             else:
-                #self.s.TTS("You cannot run anymore buddy")
+                self.s.TTS("You cannot run anymore")
                 print("you cant run! :(")
         return True
 
     #Fun functionality
     def FunNode(self):
         #self.animation.control(5, 'F')
+        self.s.TTS("You have reached the fun node, you are about to teleport")
         self.animation.screenControl(5, 'F', 0)
-        #self.s.TTS("You have reached the fun node, you are about to teleport")
         print("You have reached the fun node, you are about to teleport")
         #print("You are about to teleport!! Hold on tight!")
         self.current = random.randint(0, self.map.id-1)
@@ -405,48 +404,47 @@ class Player:
     #Tricky functionality
     def TrickyNode(self):
         answer = ['1']
-        #self.animation.control(5, 'T')
         self.animation.screenControl(5, 'T', 0)
-        #self.s.TTS("you have reached the troll under the bridge")
+        self.s.TTS("you have reached the troll under the bridge")
         print("you have reached the troll under the bridge")
         riddle = random.choice(self.riddles)
         for i in riddle:
-            #self.s.TTS(i)
+            self.s.TTS(i)
             print(i)
-        user = input("Answer: ")
-        #user = self.voice.listen(answer)
+        #user = input("Answer: ")
+        user = self.voice.listen(answer)
         if int(float(user)) == 1:
-            #self.s.TTS("You guessed right, 10+ hp!")
+            self.s.TTS("You guessed right, 10+ hp!")
             print("You guessed right, 10+ hp!")
             self.hp += 10
         else:
-            #self.s.TTS("You guessed wrong, 10- hp!")
+            self.s.TTS("You guessed wrong, 10- hp!")
             print("You guessed wrong, 10- hp!")
             self.hp -= 10
         print('Tricky Node')
 
 if __name__ == '__main__':
-    # usb = ""
-    # try:
-    #     usb = serial.Serial('/dev/ttyACM0')
-    # except:
-    #     try:
-    #         usb = serial.Serial('/dev/ttyACM1')
-    #     except:
-    #         print("No serial ports")
-    #         sys.exit(0)
-    # m = Move(500, usb)
-    # n = Nav()
-    # n.readFile('map2.txt')
-    # n.postProcess()
-    # n.addSpecialNodes()
+    usb = ""
+    try:
+        usb = serial.Serial('/dev/ttyACM0')
+    except:
+        try:
+            usb = serial.Serial('/dev/ttyACM1')
+        except:
+            print("No serial ports")
+            sys.exit(0)
+    m = Move(500, usb)
+    n = Nav()
+    n.readFile('map2.txt')
+    n.postProcess()
+    n.addSpecialNodes()
     # print(n.nodeList)
     # print(n.adjList)
     # print(n.edgeNodes)
     win = tk.Tk()
     a = Animation(win)
     a.initial()
-    # p = Player(100, n, a)
-    # while p.isEnd() and p.tmt():
-    #     p.playerTurn()
+    p = Player(100, n, a, m)
+    while p.isEnd() and p.tmt():
+        p.playerTurn()
     win.mainloop()
