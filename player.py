@@ -23,6 +23,7 @@ class Player:
         self.prevPos = self.map.start
         self.direction = random.choice(self.map.nodeList[self.map.start][2])
         self.animation = a
+        self.hasKey = False
         self.riddles = [
 
             [
@@ -110,10 +111,14 @@ class Player:
     #Checks to see if user has reached end point or if user has ran out of health
     def isEnd(self):
         if self.current == self.map.end:
-            print("Reach end point!")
-            self.s.TTS("Reach end point!")
-            sys.exit(0)
-            return False
+            if self.hasKey == True:
+                print("Reach end point!")
+                self.s.TTS("Reach end point!")
+                sys.exit(0)
+                return False
+            else:
+                self.s.TSS("You have to find the key to finish the maze")
+                return True
         if self.hp <= 0:
             s = Speaker()
             s.TTS("You ran out of health")
@@ -429,11 +434,18 @@ class Player:
             self.s.TTS("You guessed right, 10+ hp!")
             print("You guessed right, 10+ hp!")
             self.hp += 10
+            self.KeyNode()
         else:
             self.s.TTS("You guessed wrong, 10- hp!")
             print("You guessed wrong, 10- hp!")
             self.hp -= 10
         print('Tricky Node')
+
+    def KeyNode(self):
+        self.hasKey = True
+        self.s.TTS("You found the key!")
+
+
 
 if __name__ == '__main__':
     usb = ""

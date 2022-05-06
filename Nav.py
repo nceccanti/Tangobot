@@ -180,6 +180,7 @@ class Nav:
         HARD = 3
         FUN = 2
         TRICKY = 1
+        KEY = 1
 
         nodes = []
         for i in range(self.id):
