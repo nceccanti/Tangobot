@@ -6,10 +6,7 @@ import time
 
 class Screen:
     def __init__(self, win):
-        self.win = win
-        self.win.geometry("1024x600")
-        # self.win.attributes('-fullscreen',True)
-        self.myCan = tk.Canvas(self.win, bg="#222222", width="1024", height="600")
+        self.myCan = win
 
     def CoffeeSteam(self):
         self.myCan.create_oval(372, 100, 664, 500, fill="#333333", outline='')
@@ -27,12 +24,12 @@ class Screen:
         self.myCan.pack()
 
     def CoffeeScreen(self):
+        print("test")
         self.CoffeeCup()
         self.myCan.update()
         self.myCan.after(500, self.CoffeeSteam())
         self.myCan.update()
         self.myCan.after(1000, self.CoffeeCup())
-        self.myCan.delete('all')
 
     def Lightning(self):
         self.myCan.create_polygon(512, 50, 225, 330, 475, 330, 400, 550, 675, 270, 425, 270, fill='yellow')
@@ -50,11 +47,36 @@ class Screen:
         self.myCan.update()
         self.myCan.after(750, self.Lightning())
         self.myCan.update()
-        self.myCan.delete('all')
+
+    def WhiteRiddle(self):
+        self.myCan.create_oval(312, 50, 712, 450, fill="green", outline='')
+        self.myCan.create_polygon(319, 300, 705, 300, 812, 400, 212, 400, fill='purple')
+        self.myCan.create_oval(112, 350, 912, 450, fill="green", outline='')
+        self.myCan.create_oval(256, 335, 768, 385, fill="purple", outline='')
+        self.myCan.pack()
+
+    def Riddle(self):
+        self.myCan.create_oval(312, 50, 712, 450, fill="white", outline='')
+        self.myCan.create_polygon(319, 300, 705, 300, 812, 400, 212, 400, fill='#FFD700')
+        self.myCan.create_oval(112, 350, 912, 450, fill="white", outline='')
+        self.myCan.create_oval(256, 335, 768, 385, fill="#FFD700", outline='')
+        #self.myCan.create_polygon(312, 300, 712, 300, 812, 400, 212, 400, fill='purple')
+        self.myCan.pack()
+
+    def TrickyScreen(self):
+        self.Riddle()
+        self.myCan.update()
+        self.myCan.after(500, self.WhiteRiddle())
+        self.myCan.update()
+        self.myCan.after(1500, self.Riddle())
+        self.myCan.update()
 
 class Animation:
     def __init__(self, win):
         self.win = win
+        self.win.geometry("1024x600")
+        # self.win.attributes('-fullscreen',True)
+        self.myCan = tk.Canvas(self.win, bg="#222222", width="1024", height="600")
 
     def arm(self, wait, type):
         print("arm")
@@ -78,8 +100,7 @@ class Animation:
 
 
     def screenControl(self, wait, type):
-        print("ya")
-        s = Screen(self.win)
+        s = Screen(self.myCan)
         # if type == 'B':
         #     #self.BatteArm(wait)
         if type == 'CO':
@@ -102,7 +123,8 @@ class Animation:
             # time.sleep(0.1)
             # self.move.setTarget(0x0b, 6000)
             # time.sleep(0.1)
-            for i in range(wait / 2):
+            iter = int(wait / 2)
+            for i in range(iter):
                 # self.move.setTarget(0x06, 4000)
                 s.RechargeScreen()
                 # self.move.setTarget(0x06, 8000)
@@ -112,10 +134,15 @@ class Animation:
                 # self.move.setTarget(0x06, 6000)
                 # time.sleep(0.1)
                 # self.move.setTarget(0x00, 6000)
-        # elif type == 'T':
-        #     self.TrickyArm(wait)
+        elif type == 'T':
+            # self.move.setTarget(0x05, 9000)
+            iter = int(wait / 2)
+            for i in range(iter):
+                s.TrickyScreen()
+            # self.move.setTarget(0x05, 4000)
         # elif type == 'F':
         #     self.FunArm(wait)
+        self.myCan.delete('all')
 
 
     # def BatteArm(self, wait):

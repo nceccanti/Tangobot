@@ -413,7 +413,8 @@ if __name__ == '__main__':
     # p = Player(100, n)
     win = tk.Tk()
     a = Animation(win)
-    a.screenControl(5, 'CO')
+    a.screenControl(5, 'CH')
+    a.screenControl(5, "CO")
     win.mainloop()
     # while p.isEnd() and p.tmt():
     #     p.playerTurn()
