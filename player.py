@@ -287,7 +287,7 @@ class Player:
                     if len(enem) == 0:
                         self.s.TTS("You killed all the enemy\'s")
                     else:
-                        self.s.TTS("You killed an enemy! " + str(len(enem)), " enemies remain!")
+                        self.s.TTS("You killed an enemy! " + str(len(enem)) + " enemies remain!")
                 else:
                     self.s.TTS("player hp is " + str(self.hp) + ", enemy hp is" + str(enem[0]))
             else:
