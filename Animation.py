@@ -122,11 +122,12 @@ class Screen:
         self.myCan.update()
 
 class Animation:
-    def __init__(self, win):
+    def __init__(self, win, m):
         self.win = win
         self.win.geometry("1024x600")
         self.win.attributes('-fullscreen',True)
         self.myCan = tk.Canvas(self.win, bg="#222222", width="1024", height="600")
+        self.move = m
 
     def initial(self):
         self.myCan.create_oval(462, 150, 562, 250, fill="black", outline='')

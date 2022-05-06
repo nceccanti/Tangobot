@@ -442,7 +442,7 @@ if __name__ == '__main__':
     # print(n.adjList)
     # print(n.edgeNodes)
     win = tk.Tk()
-    a = Animation(win)
+    a = Animation(win, m)
     a.initial()
     p = Player(100, n, a, m)
     while p.isEnd() and p.tmt():
