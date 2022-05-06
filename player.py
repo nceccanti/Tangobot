@@ -376,6 +376,7 @@ class Player:
 
     def Battle(self):
         battlechoice = ['run', 'fight']
+        self.animation.initial()
         print("would you like to run or fight?")
         self.s.TTS("would you like to run or fight?")
         user = self.voice.listen(battlechoice)
