@@ -25,6 +25,7 @@ class Player:
         self.direction = random.choice(self.map.nodeList[self.map.start][2])
         #self.animation = AnimationController(m)
         self.riddles = [
+
             [
                 "What's white, black and red all over?",
                 "(1): Newspaper",

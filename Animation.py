@@ -3,6 +3,8 @@ import tkinter as tk
 import _thread, threading
 import time
 #from Move import *
+from fireworks import *
+
 
 class Screen:
     def __init__(self, win):
@@ -101,8 +103,9 @@ class Animation:
 
     def screenControl(self, wait, type):
         s = Screen(self.myCan)
-        # if type == 'B':
-        #     #self.BatteArm(wait)
+         if type == 'B':
+            self.BatteArm(wait)
+            self.fireworks()
         if type == 'CO':
             # self.move.setTarget(0x05, 8000)
             # time.sleep(0.1)
