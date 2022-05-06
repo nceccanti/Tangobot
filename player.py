@@ -289,7 +289,8 @@ class Player:
                     else:
                         self.s.TTS("You killed an enemy! " + str(len(enem)) + " enemies remain!")
                 else:
-                    self.s.TTS("player hp is " + str(self.hp) + ", enemy hp is" + str(enem[0]))
+                    we = "player hp is " + self.hp + ", enemy hp is" + enem[0]
+                    self.s.TTS(we)
             else:
                 break
         self.map.nodeList[self.current][3] = ''
@@ -327,7 +328,8 @@ class Player:
                     else:
                         self.s.TTS("You killed an enemy! " + str(len(enem)) + " enemies remain!")
                 else:
-                    self.s.TTS("player hp is " + str(self.hp) + ", enemy hp is " + str(enem[0]))
+                    we = "player hp is " + self.hp + ", enemy hp is" + enem[0]
+                    self.s.TTS(we)
             else:
                 break
         self.map.nodeList[self.current][3] = ''
