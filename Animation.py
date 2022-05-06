@@ -76,6 +76,7 @@ class Animation:
         # elif type == 'F':
         #     self.FunArm(wait)
 
+
     def screenControl(self, wait, type):
         print("ya")
         s = Screen(self.win)
