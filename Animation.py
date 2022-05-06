@@ -107,7 +107,7 @@ class Animation:
             self.BatteArm(wait)
             self.fireworks.main()
         if type == 'CO':
-            # self.move.setTarget(0x05, 8000)
+            #self.move.setTarget(0x05, 8000)
             # time.sleep(0.1)
             # self.move.setTarget(0x0b, 4000)
             # time.sleep(0.1)
