@@ -262,7 +262,6 @@ class Player:
         badguys = random.randint(1, 2)
         self.s.TTS("you have ran into " + str(badguys) + " low level adversaries")
         print("you have ran into", str(badguys), "low level adversaries")
-        self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0
         enem = []
         if self.current in self.enemies.keys():
@@ -276,6 +275,7 @@ class Player:
         print(enem)
         while len(enem) > 0 and self.hp > 0:
             if self.Battle():
+                self.animation.screenControl(5, 'B', badguys)
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(1,12)
                 if player_dmg >= 23:
@@ -301,7 +301,6 @@ class Player:
         badguys = random.randint(3, 4)
         self.s.TTS("you have ran into " + str(badguys) + " medium level adversaries")
         print("you have ran into " + str(badguys) + " medium level adversaries")
-        self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0
         enem = []
         if self.current in self.enemies.keys():
@@ -315,6 +314,7 @@ class Player:
         print(enem)
         while len(enem) > 0 and self.hp > 0:
             if self.Battle():
+                self.animation.screenControl(5, 'B', badguys)
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(1, 12)
                 if player_dmg >= 23:
@@ -340,7 +340,6 @@ class Player:
         badguys = random.randint(5, 6)
         self.s.TTS("you have ran into " + str(badguys) + " hard level adversaries")
         print("you have ran into", str(badguys), "hard level adversaries")
-        self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0
         enem = []
         if self.current in self.enemies.keys():
@@ -354,6 +353,7 @@ class Player:
         print(enem)
         while len(enem) > 0 and self.hp > 0:
             if self.Battle():
+                self.animation.screenControl(5, 'B', badguys)
                 player_dmg = random.randint(5, 26)
                 self.hp -= random.randint(1, 12)
                 if player_dmg >= 23:
