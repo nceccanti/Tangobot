@@ -126,7 +126,7 @@ class Player:
         #cardinal = ''
         next = ''
         while isValid == False:
-            str = 'Your choices are you go: '
+            string = 'Your choices are you go: '
             #print(self.map.nodeList[self.current][2])
             #print(self.map.nodeList[self.current][2])
             #print(self.map.adjList[self.current])
@@ -136,19 +136,19 @@ class Player:
             print(paths)
             for i in paths:
                 if i[0] == 'F':
-                    str += 'Forward, '
+                    string += 'Forward, '
                     choices.append('forward')
                 elif i[0] == "B":
-                    str += 'Backward, '
+                    string += 'Backward, '
                     choices.append('backward')
                 elif i[0] == 'L':
-                    str += "Left, "
+                    string += "Left, "
                     choices.append('left')
                 elif i[0] == 'R':
                     choices.append('right')
-                    str += 'Right, '
-            print(str)
-            self.s.TTS(str)
+                    string += 'Right, '
+            print(string)
+            self.s.TTS(string)
             self.s.TTS("What do you choose?")
             self.NofT += 1
             print(self.enemies)
@@ -172,7 +172,7 @@ class Player:
                 break;
         self.NodeController(self.map.nodeList[self.current][3])
         self.animation.initial()
-        we = "You have " + self.hp + " health"
+        we = "You have " + str(self.hp) + " health"
         self.s.TTS(we)
 
 
