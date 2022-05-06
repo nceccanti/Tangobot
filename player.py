@@ -294,7 +294,7 @@ class Player:
     #Medium battle functionality
     def MediumBattle(self):
         badguys = random.randint(3, 4)
-        self.s.TTS("you have ran into", str(badguys), "medium level adversaries")
+        self.s.TTS("you have ran into " + str(badguys) + " medium level adversaries")
         print("you have ran into " + str(badguys) + " medium level adversaries")
         self.animation.screenControl(5, 'B', badguys)
         enemy_hp = 0
