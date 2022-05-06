@@ -103,9 +103,9 @@ class Animation:
 
     def screenControl(self, wait, type):
         s = Screen(self.myCan)
-         if type == 'B':
+        if type == 'B':
             self.BatteArm(wait)
-            self.fireworks()
+            self.fireworks.main()
         if type == 'CO':
             # self.move.setTarget(0x05, 8000)
             # time.sleep(0.1)
