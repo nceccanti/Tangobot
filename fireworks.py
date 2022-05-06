@@ -7,7 +7,8 @@ GRAVITY = 0.05
 colors = ['red', 'blue', 'yellow', 'white', 'green', 'orange', 'purple', 'pink']
 
 class fireworks:
-    def __init__(self, mycan, idx, total, explosion_speed, x=0., y=0., vx=0., vy=0., size=2., color='red', lifespan=2):
+    def __init__(self, cv,mycan, idx, total, explosion_speed, x=0., y=0., vx=0., vy=0., size=2., color='red', lifespan=2):
+        cv = tk.Tk()
         self.id = idx
         self.x = x
         self.y = y
@@ -44,11 +45,11 @@ class fireworks:
             self.vy += GRAVITY * dt
 
         elif self.cid is not None:
-            mycan.delete(self.cid)
+            self.mycan.delete(self.cid)
             self.cid = None
 
 
-def runner(mycan):
+def runner(mycan, cv):
     t = time()
     explode_points = []
     wait_time = randint(10, 100)
@@ -80,11 +81,11 @@ def runner(mycan):
         total_time += dt
     cv.after(wait_time, runner, mycan)
 
-if __name__ == '__main__':
+def main(self):
     cv = tk.Tk()
     mycan = tk.Canvas(cv, height=600, width=1024)
     mycan.create_rectangle(0, 0, 1024, 1024, fill="black")
     mycan.pack()
-    cv.after(100, runner, mycan)
+    cv.after(100, runner(cv), mycan)
     cv.after(8000, lambda: cv.destroy())
     cv.mainloop()
