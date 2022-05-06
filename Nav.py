@@ -200,7 +200,7 @@ class Nav:
             for i in self.adjList[w].keys():
                 if self.nodeList[i][3] == 'CH':
                     isClose = True
-            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end and isClose:
+            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end and not isClose:
                 self.nodeList[w][3] = 'CH'
                 i += 1
         i = 0
@@ -211,7 +211,7 @@ class Nav:
             for i in self.adjList[w].keys():
                 if self.nodeList[i][3] == 'CO':
                     isClose = True
-            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end and isClose:
+            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end and not isClose:
                 self.nodeList[w][3] = 'CO'
                 i += 1
         i = 0
