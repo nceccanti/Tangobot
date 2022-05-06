@@ -257,8 +257,8 @@ class Player:
     #Coffee shop functionality
     def CoffeeShop(self):
         self.animation.screenControl(5, 'CO', 0)
-        self.shortestPath()
         self.s.TTS("You have made it to Coffee Shop")
+        self.shortestPath()
         print('Coffee Shop')
 
     #Easy battle functionality
