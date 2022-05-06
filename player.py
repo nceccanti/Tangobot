@@ -103,6 +103,7 @@ class Player:
         if self.NofT > 35:
             self.s.TTS("You have taken too many turns, Game over! Loser")
             print("You have taken too many turns, Game over! Loser")
+            sys.exit(0)
             return False
         return True
 
@@ -110,11 +111,14 @@ class Player:
     def isEnd(self):
         if self.current == self.map.end:
             print("Reach end point!")
+            self.s.TTS("Reach end point!")
+            sys.exit(0)
             return False
         if self.hp <= 0:
             s = Speaker()
             s.TTS("You ran out of health")
             print('You ran out of health')
+            sys.exit(0)
             return False
         if self.hp > self.MAXHP:
             self.hp = self.MAXHP
