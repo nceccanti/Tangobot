@@ -171,6 +171,7 @@ class Player:
                 print(self.direction, "player")
                 break;
         self.NodeController(self.map.nodeList[self.current][3])
+        self.animation.initial()
 
     #Selects function based on node attribute
     def NodeController(self, select):
@@ -447,5 +448,4 @@ if __name__ == '__main__':
     p = Player(100, n, a, m)
     while p.isEnd() and p.tmt():
         p.playerTurn()
-        a.initial()
     win.mainloop()
