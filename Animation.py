@@ -5,8 +5,8 @@ import time
 #from Move import *
 
 class Screen:
-    def __init__(self):
-        self.win = tk.Tk()
+    def __init__(self, win):
+        self.win = win
         self.win.geometry("1024x600")
         # self.win.attributes('-fullscreen',True)
         self.myCan = tk.Canvas(self.win, bg="#222222", width="1024", height="600")
@@ -55,10 +55,6 @@ class Screen:
 class Animation:
     def __init__(self):
         print("ani")
-        self.win = tk.Tk()
-        self.win.geometry("1024x600")
-        # self.win.attributes('-fullscreen',True)
-        self.myCan = tk.Canvas(self.win, bg="#222222", width="1024", height="600")
 
     def arm(self, wait, type):
         print("arm")
@@ -79,6 +75,7 @@ class Animation:
         #     self.TrickyArm(wait)
         # elif type == 'F':
         #     self.FunArm(wait)
+        self.win.mainloop()
 
     def screenControl(self, wait, type):
         print("ya")
@@ -86,17 +83,39 @@ class Animation:
         # if type == 'B':
         #     #self.BatteArm(wait)
         if type == 'CO':
+            # self.move.setTarget(0x05, 8000)
+            # time.sleep(0.1)
+            # self.move.setTarget(0x0b, 4000)
+            # time.sleep(0.1)
+            # self.move.setTarget(0x08, 4000)
             iter = int(wait / 1.5)
             for i in range(iter):
                 s.CoffeeScreen()
+            # self.move.setTarget(0x05, 4000)
+            # time.sleep(0.1)
+            # self.move.setTarget(0x0b, 6000)
+            # time.sleep(0.1)
+            # self.move.setTarget(0x08, 6000)
+            # self.move.setTarget(0x00, 6000)
         elif type == 'CH':
-            for i in range(wait):
+            # self.move.setTarget(0x05, 6000)
+            # time.sleep(0.1)
+            # self.move.setTarget(0x0b, 6000)
+            # time.sleep(0.1)
+            for i in range(wait / 2):
+                # self.move.setTarget(0x06, 4000)
                 s.RechargeScreen()
+                # self.move.setTarget(0x06, 8000)
+                s.RechargeScreen()
+                # self.move.setTarget(0x05, 4000)
+                # time.sleep(0.1)
+                # self.move.setTarget(0x06, 6000)
+                # time.sleep(0.1)
+                # self.move.setTarget(0x00, 6000)
         # elif type == 'T':
         #     self.TrickyArm(wait)
         # elif type == 'F':
         #     self.FunArm(wait)
-        s.win.mainloop()
 
 
     # def BatteArm(self, wait):
@@ -157,24 +176,6 @@ class Animation:
     #         self.move.setTarget(0x0a, 7000)
     #         time.sleep(1)
     #     self.move.setTarget(0x05, 4000)
-
-class AnimationController:
-    def __init__(self):
-        print("init")
-        #self.move = m
-    def control(self, time, type):
-        start = timeit.default_timer()
-        #self.move
-        inst = Animation()
-        t1 = threading.Thread(target=inst.arm, args=(time,type))
-        t2 = threading.Thread(target=inst.screenControl, args=(time,type))
-        t1.start()
-        t2.start()
-        t1.join()
-        t2.join()
-        end = timeit.default_timer()
-        print(end-start)
-        print("Done")
 
 
 
