@@ -172,6 +172,8 @@ class Player:
                 break;
         self.NodeController(self.map.nodeList[self.current][3])
         self.animation.initial()
+        self.s.TTS("You have " + str(self.hp) + " health")
+
 
     #Selects function based on node attribute
     def NodeController(self, select):
@@ -283,11 +285,11 @@ class Player:
                 if enem[0] < 1:
                     enem.pop(0)
                     if len(enem) == 0:
-                        print("You killed all the enemy\'s")
+                        self.s.TTS("You killed all the enemy\'s")
                     else:
-                        print("You killed an enemy!", len(enem), "enemies remain!")
+                        self.s.TTS("You killed an enemy! " + str(len(enem)), " enemies remain!")
                 else:
-                    print("\nplayer hp is", self.hp, "\nenemy hp is", enem[0])
+                    self.s.TTS("player hp is " + str(self.hp) + ", enemy hp is" + str(enem[0]))
             else:
                 break
         self.map.nodeList[self.current][3] = ''
@@ -321,11 +323,11 @@ class Player:
                 if enem[0] < 1:
                     enem.pop(0)
                     if len(enem) == 0:
-                        print("You killed all the enemy\'s")
+                        self.s.TTS("You killed all the enemies")
                     else:
-                        print("You killed an enemy!", len(enem), "enemies remain!")
+                        self.s.TTS("You killed an enemy! " + str(len(enem)) + " enemies remain!")
                 else:
-                    print("\nplayer hp is", self.hp, "\nenemy hp is", enem[0])
+                    self.s.TTS("player hp is " + str(self.hp) + ", enemy hp is " + str(enem[0]))
             else:
                 break
         self.map.nodeList[self.current][3] = ''
@@ -359,11 +361,11 @@ class Player:
                 if enem[0] < 1:
                     enem.pop(0)
                     if len(enem) == 0:
-                        print("You killed all the enemy\'s")
+                        self.s.TTS("You killed all the enemies")
                     else:
-                        print("You killed an enemy!", len(enem), "enemies remain!")
+                        self.s.TTS("You killed an enemy! " + str(len(enem)) + " enemies remain!")
                 else:
-                    print("\nplayer hp is", self.hp, "\nenemy hp is", enem[0])
+                    self.s.TTS("player hp is " + str(self.hp) + ", enemy hp is " + str(enem[0]))
             else:
                 break
         self.map.nodeList[self.current][3] = ''
