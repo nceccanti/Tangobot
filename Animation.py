@@ -78,6 +78,16 @@ class Animation:
         # self.win.attributes('-fullscreen',True)
         self.myCan = tk.Canvas(self.win, bg="#222222", width="1024", height="600")
 
+    def initial(self):
+        self.myCan.create_oval(462, 150, 562, 250, fill="black", outline='')
+        self.myCan.create_oval(462, 300, 562, 400, fill="black", outline='')
+        self.myCan.create_rectangle(462, 200, 562, 350, fill="black")
+        self.myCan.create_line(422, 350, 512, 500, 602, 350, smooth=1, fill='black', width=15)
+        self.myCan.create_line(512, 430, 512, 520, smooth=1, fill='black', width=15)
+        self.myCan.create_line(412, 520, 612, 520, smooth=1, fill='black', width=15)
+        self.myCan.pack()
+        self.myCan.update()
+
     def arm(self, wait, type):
         print("arm")
         # self.move.setTarget(0x05, 4000)
@@ -98,8 +108,14 @@ class Animation:
         # elif type == 'F':
         #     self.FunArm(wait)
 
-
     def screenControl(self, wait, type):
+        # self.move.setTarget(0x05, 4000)
+        # self.move.setTarget(0x06, 6000)
+        # self.move.setTarget(0x08, 6000)
+        # self.move.setTarget(0x09, 4000)
+        # self.move.setTarget(0x0a, 6000)
+        # self.move.setTarget(0x0b, 6000)
+        self.myCan.delete('all')
         s = Screen(self.myCan)
         # if type == 'B':
         #     #self.BatteArm(wait)
@@ -143,6 +159,12 @@ class Animation:
         # elif type == 'F':
         #     self.FunArm(wait)
         self.myCan.delete('all')
+        self.myCan.create_oval(462, 150, 562, 250, fill="black", outline='')
+        self.myCan.create_oval(462, 300, 562, 400, fill="black", outline='')
+        self.myCan.create_rectangle(462, 200, 562, 350, fill="black")
+        self.myCan.create_line(422, 350, 512, 500, 602, 350, smooth=1, fill='black', width=15)
+        self.myCan.create_line(512, 430, 512, 520, smooth=1, fill='black', width=15)
+        self.myCan.create_line(412, 520, 612, 520, smooth=1, fill='black', width=15)
 
 
     # def BatteArm(self, wait):

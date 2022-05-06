@@ -413,7 +413,10 @@ if __name__ == '__main__':
     # p = Player(100, n)
     win = tk.Tk()
     a = Animation(win)
+    a.initial()
+    time.sleep(5)
     a.screenControl(5, 'CH')
+    time.sleep(1)
     a.screenControl(5, "CO")
     win.mainloop()
     # while p.isEnd() and p.tmt():
