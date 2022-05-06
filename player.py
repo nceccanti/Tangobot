@@ -447,4 +447,5 @@ if __name__ == '__main__':
     p = Player(100, n, a, m)
     while p.isEnd() and p.tmt():
         p.playerTurn()
+        a.initial()
     win.mainloop()

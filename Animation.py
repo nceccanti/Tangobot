@@ -130,6 +130,7 @@ class Animation:
         self.move = m
 
     def initial(self):
+        self.myCan.delete('all')
         self.myCan.create_oval(462, 150, 562, 250, fill="black", outline='')
         self.myCan.create_oval(462, 300, 562, 400, fill="black", outline='')
         self.myCan.create_rectangle(462, 200, 562, 350, fill="black")
@@ -207,15 +208,16 @@ class Animation:
             self.move.setTarget(0x0a, 7000)
             time.sleep(1)
             self.move.setTarget(0x05, 4000)
-        self.myCan.delete('all')
-        self.myCan.create_oval(462, 150, 562, 250, fill="black", outline='')
-        self.myCan.create_oval(462, 300, 562, 400, fill="black", outline='')
-        self.myCan.create_rectangle(462, 200, 562, 350, fill="black")
-        self.myCan.create_line(422, 350, 512, 500, 602, 350, smooth=1, fill='black', width=15)
-        self.myCan.create_line(512, 430, 512, 520, smooth=1, fill='black', width=15)
-        self.myCan.create_line(412, 520, 612, 520, smooth=1, fill='black', width=15)
-        self.myCan.pack()
-        self.myCan.update()
+        # self.myCan.delete('all')
+        # self.myCan.create_oval(462, 150, 562, 250, fill="black", outline='')
+        # self.myCan.create_oval(462, 300, 562, 400, fill="black", outline='')
+        # self.myCan.create_rectangle(462, 200, 562, 350, fill="black")
+        # self.myCan.create_line(422, 350, 512, 500, 602, 350, smooth=1, fill='black', width=15)
+        # self.myCan.create_line(512, 430, 512, 520, smooth=1, fill='black', width=15)
+        # self.myCan.create_line(412, 520, 612, 520, smooth=1, fill='black', width=15)
+        # self.myCan.pack()
+        # self.myCan.update()
+        #self.initial()
 
 
     # def BatteArm(self, wait):
