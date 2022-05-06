@@ -117,7 +117,7 @@ class Player:
                 sys.exit(0)
                 return False
             else:
-                self.s.TSS("You have to find the key to finish the maze")
+                self.s.TTS("You have to find the key to finish the maze")
                 return True
         if self.hp <= 0:
             s = Speaker()
