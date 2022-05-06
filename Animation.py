@@ -214,6 +214,8 @@ class Animation:
         self.myCan.create_line(422, 350, 512, 500, 602, 350, smooth=1, fill='black', width=15)
         self.myCan.create_line(512, 430, 512, 520, smooth=1, fill='black', width=15)
         self.myCan.create_line(412, 520, 612, 520, smooth=1, fill='black', width=15)
+        self.myCan.pack()
+        self.myCan.update()
 
 
     # def BatteArm(self, wait):
