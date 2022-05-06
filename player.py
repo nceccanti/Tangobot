@@ -76,7 +76,7 @@ class Player:
             time.sleep(1)
         elif dir == 'B':
             self.move.setTarget(0x02, 7000)
-            time.sleep(2.8)
+            time.sleep(2)
             self.move.setTarget(0x02, 6000)
             self.move.setTarget(0x01, 6000)
             self.move.setTarget(0x01, 5000)
@@ -446,7 +446,7 @@ if __name__ == '__main__':
     n.readFile('map2.txt')
     n.postProcess()
     n.addSpecialNodes()
-    # print(n.nodeList)
+    print(n.nodeList)
     # print(n.adjList)
     # print(n.edgeNodes)
     win = tk.Tk()
