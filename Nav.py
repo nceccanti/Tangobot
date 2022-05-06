@@ -196,14 +196,22 @@ class Nav:
         while i < CHARGING:
             w = random.choice(nodes)
             nodes.remove(w)
-            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end:
+            isClose = False
+            for i in self.adjList[w].keys():
+                if self.nodeList[i][3] == 'CH':
+                    isClose = True
+            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end and isClose:
                 self.nodeList[w][3] = 'CH'
                 i += 1
         i = 0
         while i < COFFEE:
             w = random.choice(nodes)
             nodes.remove(w)
-            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end:
+            isClose = False
+            for i in self.adjList[w].keys():
+                if self.nodeList[i][3] == 'CO':
+                    isClose = True
+            if len(self.nodeList[w][3]) == 0 and w != self.start and w != self.end and isClose:
                 self.nodeList[w][3] = 'CO'
                 i += 1
         i = 0
