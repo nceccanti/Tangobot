@@ -73,6 +73,21 @@ class Screen:
         self.myCan.after(1500, self.Riddle())
         self.myCan.update()
 
+    def Circle(self, color, r):
+        self.myCan.create_oval(512-r, 300-r, 512+r, 300+r, fill=color, outline='')
+        self.myCan.pack()
+
+
+    def FunScreen(self):
+        colors = ["#28B463", "#641E16", "#1B4F72", "#512E5F", "#138D75", "#2ECC71", "#943126", "white"]
+        self.Circle("black", 220)
+        self.myCan.update()
+        r = 200
+        for color in colors:
+            self.myCan.after(250, self.Circle(color, r))
+            self.myCan.update()
+            r -= 20
+
 class Animation:
     def __init__(self, win):
         self.win = win
@@ -104,7 +119,6 @@ class Animation:
     def screenControl(self, wait, type):
         s = Screen(self.myCan)
         if type == 'B':
-            self.BatteArm(wait)
             self.fireworks.main()
         if type == 'CO':
             #self.move.setTarget(0x05, 8000)
@@ -143,8 +157,17 @@ class Animation:
             for i in range(iter):
                 s.TrickyScreen()
             # self.move.setTarget(0x05, 4000)
-        # elif type == 'F':
-        #     self.FunArm(wait)
+        elif type == 'F':
+            # self.move.setTarget(0x05, 11000)
+            # time.sleep(0.1)
+            iter = int(wait / 2)
+            for i in range(iter):
+                s.FunScreen()
+            #     self.move.setTarget(0x0a, 1000)
+            #     time.sleep(1)
+            #     self.move.setTarget(0x0a, 7000)
+            #     time.sleep(1)
+            # self.move.setTarget(0x05, 4000)
         self.myCan.delete('all')
 
 
@@ -197,15 +220,15 @@ class Animation:
     #     self.move.setTarget(0x05, 4000)
     #
     # def FunArm(self, wait):
-    #     self.move.setTarget(0x05, 11000)
-    #     time.sleep(0.1)
-    #     iter = int(wait / 2)
-    #     for i in range(iter):
-    #         self.move.setTarget(0x0a, 1000)
-    #         time.sleep(1)
-    #         self.move.setTarget(0x0a, 7000)
-    #         time.sleep(1)
-    #     self.move.setTarget(0x05, 4000)
+        # self.move.setTarget(0x05, 11000)
+        # time.sleep(0.1)
+        # iter = int(wait / 2)
+        # for i in range(iter):
+        #     self.move.setTarget(0x0a, 1000)
+        #     time.sleep(1)
+        #     self.move.setTarget(0x0a, 7000)
+        #     time.sleep(1)
+        # self.move.setTarget(0x05, 4000)
 
 
 
