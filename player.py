@@ -290,7 +290,7 @@ class Player:
                     else:
                         self.s.TTS("You killed an enemy! " + str(len(enem)) + " enemies remain!")
                 else:
-                    we = "player hp is " + self.hp + ", enemy hp is" + enem[0]
+                    we = "player hp is " + str(self.hp) + ", enemy hp is" + enem[0]
                     self.s.TTS(we)
             else:
                 break
@@ -329,7 +329,7 @@ class Player:
                     else:
                         self.s.TTS("You killed an enemy! " + str(len(enem)) + " enemies remain!")
                 else:
-                    we = "player hp is " + self.hp + ", enemy hp is" + enem[0]
+                    we = "player hp is " + str(self.hp) + ", enemy hp is" + enem[0]
                     self.s.TTS(we)
             else:
                 break
@@ -368,7 +368,7 @@ class Player:
                     else:
                         self.s.TTS("You killed an enemy! " + str(len(enem)) + " enemies remain!")
                 else:
-                    we = "player hp is " + self.hp + ", enemy hp is " + enem[0]
+                    we = "player hp is " + str(self.hp) + ", enemy hp is " + enem[0]
                     self.s.TTS(we)
             else:
                 break
